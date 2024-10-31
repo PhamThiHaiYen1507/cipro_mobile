@@ -1,0 +1,52 @@
+name: base_project
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  #state management
+  flutter_mobx: ^2.2.1+1
+  mobx_codegen: ^2.6.1
+  mobx: ^2.3.3+2
+
+  #navigaion
+  go_router: ^14.2.7
+
+  #generator
+  json_annotation: ^4.8.1
+
+  #network
+  either_dart: ^1.0.0
+  retrofit: ">=4.0.0 <5.0.0"
+  dio: ^5.2.1+1
+
+  #logger
+  logger: ^2.3.0
+
+  #util
+  uuid: ^4.4.0
+  intl: ^0.19.0
+
+  #di
+  get_it: ^7.7.0
+  injectable: ^2.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.2
+  retrofit_generator: ">=7.0.0 <8.0.0"
+  flutter_gen_runner:
+  go_router_builder: ^2.7.1
+  injectable_generator:
+
+flutter:
+  uses-material-design: true
