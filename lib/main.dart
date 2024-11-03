@@ -14,7 +14,6 @@ class MainApp extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              Text('Hello World!'),
               Text('Welcome to Flutter!'),
             ],
           ),
