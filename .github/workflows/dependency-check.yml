@@ -1,0 +1,33 @@
+name: OWASP Dependency-Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install OWASP Dependency-Check
+        run: |
+          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v7.0.4/dependency-check-7.0.4-release.zip -o dependency-check.zip
+          unzip dependency-check.zip -d dependency-check
+          export PATH=$PATH:$(pwd)/dependency-check/bin
+
+      - name: Run OWASP Dependency-Check
+        run: |
+          dependency-check/bin/dependency-check.sh --project "MyProject" --scan . --format "ALL" --out dependency-check-report
+
+      - name: Upload Dependency-Check Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependency-check-report
+          path: dependency-check-report
