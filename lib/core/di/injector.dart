@@ -1,5 +1,8 @@
+import 'package:base_project/app/app.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:local_storage/local_storage.dart';
 
 import 'injector.config.dart';
 
@@ -7,17 +10,11 @@ final injector = GetIt.instance;
 
 @InjectableInit()
 Future<void> configureDependencies() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalStorage.init();
+
   injector.init();
 
-  // runApp(
-  //   EasyLocalization(
-  //     supportedLocales: supportLocalizations,
-  //     startLocale: const Locale('vi'),
-  //     saveLocale: true,
-  //     fallbackLocale: const Locale('vi'),
-  //     path: translationsPath,
-  //     assetLoader: const LocalizationLoader(),
-  //     child: const App(),
-  //   ),
-  // );
+  runApp(const App());
 }

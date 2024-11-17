@@ -1,25 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:base_project/core/di/injector.dart';
 
 void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            children: [
-              Text('Welcome to Flutter!'),
-              Text('Welcome to Viet Nam!'),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  configureDependencies();
 }

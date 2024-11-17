@@ -7,3 +7,11 @@ class HomeScreenRoute extends GoRouteData {
     return const HomeScreen();
   }
 }
+
+@immutable
+class LoginScreenRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const LoginScreen();
+  }
+}
