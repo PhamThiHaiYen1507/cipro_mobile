@@ -1,5 +1,6 @@
 import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/gen/assets.gen.dart';
+import 'package:base_project/routes/routes.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
@@ -66,6 +67,7 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                 AppSpacing.h16,
                 TextInputValidator(
                   hintText: 'Password',
+                  obscureText: true,
                   controller: password,
                   style: AppTextStyle.f16R,
                   errorStyle: AppTextStyle.f12R.copyWith(height: 0.4),
@@ -81,9 +83,14 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                 AppSpacing.h16,
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Don\'t have an account? Sign Up',
+                  child: InkWell(
+                    onTap: () => AccountRegisterScreenRoute().push(context),
+                    child: Text(
+                      'Don\'t have an account? Sign Up',
                       style: AppTextStyle.f14R
-                          .copyWith(color: AppColors.primaryColor)),
+                          .copyWith(color: AppColors.primaryColor),
+                    ),
+                  ),
                 ),
                 AppSpacing.h24,
                 Row(
@@ -111,7 +118,7 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                       child: Button(
                         backgroundColor: const Color(0xff111927),
                         padding: AppPadding.a2,
-                        onPressed: () {},
+                        onPressed: controller.doLoginWithGithub,
                         child: SvgPicture.asset(
                           Assets.icons.githubWhite,
                           width: 24,
