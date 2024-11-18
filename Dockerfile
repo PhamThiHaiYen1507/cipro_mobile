@@ -44,7 +44,9 @@ RUN /usr/local/flutter/bin/flutter channel stable && \
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
+RUN /usr/local/flutter/bin/flutter doctor
 RUN /usr/local/flutter/bin/flutter pub get
+RUN /usr/local/flutter/bin/dart run build_runner build --delete-conflicting-outputs
 RUN /usr/local/flutter/bin/flutter build apk
 
 # Stage 2: Run-time image
