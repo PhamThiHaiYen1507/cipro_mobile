@@ -17,6 +17,9 @@ class SelectProjectDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProjectListBuilder(
+      onInitialize: (projects) {
+        if (projects.isNotEmpty) onSelected?.call(projects.first);
+      },
       builder: (projects) {
         return CustomDropdown(
           items: projects,

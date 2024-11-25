@@ -75,9 +75,13 @@ class DashboardProjectHomeScreenRoute extends GoRouteData {
       {required this.role, required this.projectName});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return DashboardProjectHomeScreen(
-        role: AccountRole.from(role), projectName: projectName);
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: DashboardProjectHomeScreen(
+          role: AccountRole.from(role), projectName: projectName),
+    );
   }
 }
 

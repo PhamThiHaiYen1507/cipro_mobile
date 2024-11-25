@@ -8,6 +8,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:base_project/app/builder/app_loading_builder_controller.dart'
+    as _i483;
 import 'package:base_project/core/di/app_module.dart' as _i847;
 import 'package:base_project/core/di/network_module.dart' as _i165;
 import 'package:base_project/core/global/account_manager_controller.dart'
@@ -52,8 +54,6 @@ import 'package:base_project/layers/presentation/login/login_controller.dart'
     as _i737;
 import 'package:base_project/layers/presentation/widgets/account_list_builder/account_list_builder_controller.dart'
     as _i258;
-import 'package:base_project/layers/presentation/widgets/project_list_builder/project_list_builder_controller.dart'
-    as _i618;
 import 'package:base_project/layers/presentation/widgets/scanner_list_builder/scanner_list_builder_controller.dart'
     as _i813;
 import 'package:base_project/layers/presentation/widgets/template_list_builder/template_list_builder_controller.dart'
@@ -76,6 +76,8 @@ extension GetItInjectableX on _i174.GetIt {
     final networkModule = _$NetworkModule();
     final appModule = _$AppModule();
     gh.singleton<_i193.DeeplinkController>(() => _i193.DeeplinkController());
+    gh.singleton<_i483.AppLoadingBuilderController>(
+        () => _i483.AppLoadingBuilderController());
     gh.singleton<_i361.Interceptor>(
       () => _i860.ApiCookieIntercepter(),
       instanceName: 'api_cookie_intercepter',
@@ -106,8 +108,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i31.TemplateInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.factory<_i618.ProjectListBuilderController>(() =>
-        _i618.ProjectListBuilderController(gh<_i194.ProjectInfoRepository>()));
     gh.singleton<_i361.Dio>(
       () => networkModule.getDioGithubApi(
           gh<_i361.Interceptor>(instanceName: 'github_authentication')),
