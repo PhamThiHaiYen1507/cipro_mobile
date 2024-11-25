@@ -33,7 +33,7 @@ jobs:
           output-directory: './dependency-check-report'
           
       - name: List files in report directory
-        run: ls -R ./dependency-check-report
+        run: ls
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
