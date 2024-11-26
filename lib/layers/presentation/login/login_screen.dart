@@ -1,3 +1,4 @@
+import 'package:base_project/app/builder/app_loading_builder_controller.dart';
 import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/gen/assets.gen.dart';
 import 'package:base_project/routes/routes.dart';
@@ -152,9 +153,14 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
     );
   }
 
-  void doLogin() {
+  Future<void> doLogin() async {
     if (formKey.currentState?.validate() == true) {
-      controller.doLogin(context, username.text, password.text);
+      FocusScope.of(context).unfocus();
+      LoadingOverlay.show();
+
+      await controller.doLogin(context, username.text, password.text);
+
+      LoadingOverlay.close();
     }
   }
 

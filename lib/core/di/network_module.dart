@@ -22,7 +22,7 @@ abstract class NetworkModule {
 
   @singleton
   ApiClient getApiClient(Dio dio) =>
-      ApiClient(dio, baseUrl: 'http://cipro-server.duckdns.org:3001');
+      ApiClient(dio, baseUrl: 'http://10.0.2.2:3001');
 
   @singleton
   @Named('github_dio')
