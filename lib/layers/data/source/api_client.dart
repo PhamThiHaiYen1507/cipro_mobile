@@ -67,4 +67,17 @@ abstract class ApiClient {
   Future<BaseResponse> getProjectWorkflowWithName(
     @Query('projectName') String projectName,
   );
+
+  @GET('/phase/{phaseId}')
+  Future<BaseResponse> getPhase(@Path('phaseId') String phaseId);
+
+  @GET('/ticket')
+  Future<BaseResponse> getTickets(@Query('projectName') String projectName);
+
+  @GET('/vuln/progress')
+  Future<BaseResponse> getVulnProgress(
+      @Query('projectName') String projectName);
+
+  @GET('/artifact')
+  Future<BaseResponse> getArtifacts(@Query('projectName') String projectName);
 }

@@ -1,3 +1,4 @@
+import 'package:base_project/layers/domain/entities/phase_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'project_info_model.g.dart';
@@ -14,7 +15,7 @@ class ProjectInfoModel {
 
   final String? createdBy;
 
-  final List<dynamic>? phaseList;
+  final List<PhaseModel> phaseList;
 
   final DateTime? createdAt;
 
@@ -26,7 +27,7 @@ class ProjectInfoModel {
     this.url,
     this.status,
     this.createdBy,
-    this.phaseList,
+    required this.phaseList,
     this.createdAt,
     this.updatedAt,
   });

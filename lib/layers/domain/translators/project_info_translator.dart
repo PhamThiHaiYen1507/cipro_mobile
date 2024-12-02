@@ -1,5 +1,6 @@
 import 'package:base_project/layers/data/response/project_info_response.dart';
 import 'package:base_project/layers/domain/entities/project_info_model.dart';
+import 'package:base_project/layers/domain/translators/phase_translator.dart';
 import 'package:base_project/utils/utils.dart';
 
 extension ProjectInfoTranslator on ProjectInfoResponse {
@@ -7,7 +8,7 @@ extension ProjectInfoTranslator on ProjectInfoResponse {
         projectId: sId ?? Utils.generateId,
         name: name ?? '',
         createdBy: createdBy,
-        phaseList: phaseList,
+        phaseList: phaseList?.map((e) => e.toPhaseModel()).toList() ?? [],
         status: status,
         url: url,
         createdAt: createdAt,

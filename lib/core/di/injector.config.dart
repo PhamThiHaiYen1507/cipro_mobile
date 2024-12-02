@@ -22,14 +22,20 @@ import 'package:base_project/layers/data/repositories/account_info_repository_im
     as _i793;
 import 'package:base_project/layers/data/repositories/activity_history_repository_impl.dart'
     as _i684;
+import 'package:base_project/layers/data/repositories/artifact_repository_impl.dart'
+    as _i167;
 import 'package:base_project/layers/data/repositories/authentication_repository_impl.dart'
     as _i1051;
+import 'package:base_project/layers/data/repositories/phase_repository_impl.dart'
+    as _i218;
 import 'package:base_project/layers/data/repositories/project_info_repository_impl.dart'
     as _i279;
 import 'package:base_project/layers/data/repositories/scanner_info_repository_impl.dart'
     as _i836;
-import 'package:base_project/layers/data/repositories/template_info_repository_impl.dart'
-    as _i31;
+import 'package:base_project/layers/data/repositories/ticket_repository_impl.dart'
+    as _i911;
+import 'package:base_project/layers/data/repositories/vulnerability_repository_impl.dart'
+    as _i1054;
 import 'package:base_project/layers/data/source/api_client.dart' as _i792;
 import 'package:base_project/layers/data/source/github_api_client.dart'
     as _i780;
@@ -38,14 +44,20 @@ import 'package:base_project/layers/domain/repositories/account_info_repository.
     as _i500;
 import 'package:base_project/layers/domain/repositories/activity_history_repository.dart'
     as _i630;
+import 'package:base_project/layers/domain/repositories/artifact_repository.dart'
+    as _i214;
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart'
     as _i717;
+import 'package:base_project/layers/domain/repositories/phase_repository.dart'
+    as _i680;
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart'
     as _i194;
 import 'package:base_project/layers/domain/repositories/scanner_info_repository.dart'
     as _i146;
-import 'package:base_project/layers/domain/repositories/template_info_repository.dart'
-    as _i110;
+import 'package:base_project/layers/domain/repositories/ticket_repository.dart'
+    as _i241;
+import 'package:base_project/layers/domain/repositories/vulnerability_repository.dart'
+    as _i32;
 import 'package:base_project/layers/presentation/account_register/account_register_controller.dart'
     as _i352;
 import 'package:base_project/layers/presentation/dashboard/dashboard_controller.dart'
@@ -54,10 +66,10 @@ import 'package:base_project/layers/presentation/login/login_controller.dart'
     as _i737;
 import 'package:base_project/layers/presentation/widgets/account_list_builder/account_list_builder_controller.dart'
     as _i258;
+import 'package:base_project/layers/presentation/widgets/phase_template_builder/phase_template_builder_controller.dart'
+    as _i261;
 import 'package:base_project/layers/presentation/widgets/scanner_list_builder/scanner_list_builder_controller.dart'
     as _i813;
-import 'package:base_project/layers/presentation/widgets/template_list_builder/template_list_builder_controller.dart'
-    as _i72;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -96,18 +108,24 @@ extension GetItInjectableX on _i174.GetIt {
         () => networkModule.getApiClient(gh<_i361.Dio>()));
     gh.singleton<_i500.AccountInfoRepository>(
         () => _i793.AccountInfoRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.singleton<_i680.PhaseRepository>(
+        () => _i218.PhaseRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.singleton<_i214.ArtifactRepository>(
+        () => _i167.ArtifactRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i144.AccountManagerController>(() =>
         _i144.AccountManagerController(gh<_i500.AccountInfoRepository>()));
     gh.factory<_i258.AccountListBuilderController>(() =>
         _i258.AccountListBuilderController(gh<_i500.AccountInfoRepository>()));
     gh.singleton<_i630.ActivityHistoryRepository>(
         () => _i684.ActivityHistoryRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.singleton<_i241.TicketRepository>(
+        () => _i911.TicketRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i146.ScannerInfoRepository>(
         () => _i836.ScannerInfoRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.singleton<_i110.TemplateInfoRepository>(
-        () => _i31.TemplateInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.singleton<_i32.VulnerabilityRepository>(
+        () => _i1054.VulnerabilityRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i361.Dio>(
       () => networkModule.getDioGithubApi(
           gh<_i361.Interceptor>(instanceName: 'github_authentication')),
@@ -124,8 +142,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i813.ScannerListBuilderController>(() =>
         _i813.ScannerListBuilderController(gh<_i146.ScannerInfoRepository>()));
-    gh.factory<_i72.TemplateListBuilderController>(() =>
-        _i72.TemplateListBuilderController(gh<_i110.TemplateInfoRepository>()));
+    gh.factory<_i261.PhaseTemplateBuilderController>(() =>
+        _i261.PhaseTemplateBuilderController(gh<_i680.PhaseRepository>()));
     gh.singleton<_i780.GithubApiClient>(() => networkModule
         .getGithubApiClient(gh<_i361.Dio>(instanceName: 'github_api_dio')));
     gh.singleton<_i717.AuthenticationRepository>(

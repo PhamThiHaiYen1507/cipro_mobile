@@ -35,6 +35,7 @@ abstract class _DashboardControllerBase with Store {
     switch (route) {
       case Routes.home:
       case Routes.overview:
+      case Routes.phase:
         return (_accountManager.accountInfo?.role.dashboardRoute(route) ??
                 '/') +
             (selectedProjectName != null

@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'phase_response.dart';
+
 part 'project_info_response.g.dart';
 
 @JsonSerializable()
@@ -15,7 +17,7 @@ class ProjectInfoResponse {
 
   String? createdBy;
 
-  List<dynamic>? phaseList;
+  List<PhaseResponse>? phaseList;
 
   DateTime? createdAt;
 

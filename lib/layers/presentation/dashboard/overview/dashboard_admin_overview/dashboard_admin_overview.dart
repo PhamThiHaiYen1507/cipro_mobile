@@ -1,7 +1,7 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
 import 'package:base_project/layers/presentation/widgets/account_list_builder/account_list_builder.dart';
+import 'package:base_project/layers/presentation/widgets/phase_template_builder/phase_template_builder.dart';
 import 'package:base_project/layers/presentation/widgets/scanner_list_builder/scanner_list_builder.dart';
-import 'package:base_project/layers/presentation/widgets/template_list_builder/template_list_builder.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
@@ -108,7 +108,7 @@ class DashboardAdminOverview extends StatelessWidget {
                             ),
                           ),
                         ),
-                        TemplateListBuilder(
+                        PhaseTemplateBuilder(
                           builder: (templates) => Text(
                             Utils.formatNumber(templates.length),
                             style: AppTextStyle.f32B,

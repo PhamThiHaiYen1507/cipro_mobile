@@ -207,6 +207,93 @@ class DashboardTaskScreenRoute extends GoRouteData {
   }
 }
 
+@immutable
+class DashboardEmptyPhaseScreenRoute extends GoRouteData {
+  final String role;
+
+  const DashboardEmptyPhaseScreenRoute(this.role);
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const DashboardEmptyHomeScreen();
+  }
+}
+
+@immutable
+class DashboardPhaseScreenRoute extends GoRouteData {
+  final String role;
+
+  final String projectName;
+
+  const DashboardPhaseScreenRoute(
+      {required this.role, required this.projectName});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: DashboardPhaseScreen(
+        projectName: projectName,
+      ),
+    );
+  }
+}
+
+@immutable
+class PhaseDetailScreenRoute extends GoRouteData {
+  final String phaseId;
+
+  const PhaseDetailScreenRoute(this.phaseId);
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return PhaseDetailScreen(phaseId: phaseId);
+  }
+}
+
+@immutable
+class DashboardTicketScreenRoute extends GoRouteData {
+  final String role;
+
+  final String projectName;
+
+  const DashboardTicketScreenRoute(
+      {required this.role, required this.projectName});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: DashboardTicketScreen(
+        projectName: projectName,
+      ),
+    );
+  }
+}
+
+@immutable
+class DashboardVulnerabilitiesScreenRoute extends GoRouteData {
+  final String role;
+
+  final String projectName;
+
+  const DashboardVulnerabilitiesScreenRoute(
+      {required this.role, required this.projectName});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: DashboardVulnerabilitiesScreen(
+        projectName: projectName,
+      ),
+    );
+  }
+}
+
 CustomTransitionPage _buildPageWithFadeTransition<T>({
   required BuildContext context,
   required GoRouterState state,
