@@ -28,6 +28,27 @@ class AccountInfoRepositoryImpl implements AccountInfoRepository {
   }
 
   @override
+  Future<ApiResponseData<bool>> editAccount(
+      {required String accountId, required AccountInfoModel reuqest}) async {
+    try {
+      await _client.editAccount(accountId, reuqest);
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> deleteAccount(String accountId) async {
+    try {
+      await _client.deleteAccount(accountId);
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
   Future<ApiResponseData<List<AccountInfoModel>?>> getAccountList() async {
     try {
       final res = await _client.getAccounts();

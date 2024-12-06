@@ -19,6 +19,8 @@ abstract class _AccountRegisterControllerBase with Store {
 
   Future<void> onRegisterAccount(BuildContext context, String username,
       String password, String confirmPassword, String email) async {
+    
+    
     final res = await _authenticationRepository.registerAccount(
         username, password, confirmPassword, email);
 

@@ -71,6 +71,7 @@ class _AccountRegisterScreenState
               ),
               AppSpacing.h16,
               TextInputValidator(
+                obscureText: true,
                 hintText: 'Password',
                 controller: password,
                 style: AppTextStyle.f16R,
@@ -92,7 +93,6 @@ class _AccountRegisterScreenState
               AppSpacing.h16,
               TextInputValidator(
                 hintText: 'Email',
-                obscureText: true,
                 controller: email,
                 style: AppTextStyle.f16R,
                 errorStyle: AppTextStyle.f12R.copyWith(height: 0.4),

@@ -1,6 +1,8 @@
 import 'package:base_project/layers/domain/entities/account_info_model.dart';
+import 'package:base_project/layers/presentation/dashboard/account/widgets/edit_account_dialog.dart';
 import 'package:base_project/layers/presentation/widgets/account_list_builder/account_list_builder.dart';
 import 'package:base_project/layers/presentation/widgets/grid_table/grid_table.dart';
+import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/helpers/app_border_radius.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
@@ -75,10 +77,19 @@ class DashboardAccountScreen extends StatelessWidget {
             child: Text('Action'.toUpperCase()),
           );
         },
-        cellBuilder: (context, data, index) => const Align(
+        cellBuilder: (context, data, index) => Align(
           alignment: Alignment.center,
-          child: Text(
-            '',
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                  onPressed: () => AppDialog.dialog(
+                      title: 'Edit Account',
+                      context: context,
+                      content: EditAccountDialog(data)),
+                  icon: const Icon(Icons.edit)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+            ],
           ),
         ),
       ),
