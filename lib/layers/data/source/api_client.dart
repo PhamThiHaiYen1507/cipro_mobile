@@ -1,4 +1,5 @@
 import 'package:base_project/layers/data/response/base_response.dart';
+import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -23,6 +24,13 @@ abstract class ApiClient {
 
   @GET('/account/')
   Future<BaseResponse> getAccountInfo();
+
+  @PATCH('/account/{account_id}')
+  Future<BaseResponse> editAccount(
+      @Path('account_id') String accountId, @Body() AccountInfoModel reuqest);
+
+  @DELETE('/account/')
+  Future<BaseResponse> deleteAccount(@Path('account_id') String accountId);
 
   @GET('/user/project')
   Future<BaseResponse> getProjects();

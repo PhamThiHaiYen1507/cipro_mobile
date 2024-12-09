@@ -93,6 +93,7 @@ abstract class AppDialog {
   static Future<T?> dialog<T>({
     required BuildContext context,
     Widget? content,
+    String? title,
     double? radius,
     EdgeInsetsGeometry? contentPadding,
     EdgeInsets? insetPadding,
@@ -108,6 +109,8 @@ abstract class AppDialog {
         return PopScope(
           canPop: barrierDismissible,
           child: AlertDialog(
+            title: Text(title ?? '',
+                style: AppTextStyle.f16B, textAlign: TextAlign.center),
             insetPadding:
                 insetPadding ?? const EdgeInsets.symmetric(vertical: 18),
             contentPadding: contentPadding ?? 18.padding,

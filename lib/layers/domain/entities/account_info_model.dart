@@ -10,9 +10,9 @@ class AccountInfoModel {
 
   final String username;
 
-  final String email;
+  String email;
 
-  final AccountRole role;
+  AccountRole role;
 
   final List<String> permission;
 
