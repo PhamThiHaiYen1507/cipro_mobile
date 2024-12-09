@@ -80,4 +80,7 @@ abstract class ApiClient {
 
   @GET('/artifact')
   Future<BaseResponse> getArtifacts(@Query('projectName') String projectName);
+
+  @POST('/auth/mobile/github')
+  Future<dynamic> loginWithGithub(@Body() Map<String, dynamic> body);
 }

@@ -1,6 +1,4 @@
 import 'package:base_project/layers/data/source/api_client.dart';
-import 'package:base_project/layers/data/source/github_api_client.dart';
-import 'package:base_project/layers/data/source/github_client.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,28 +35,4 @@ abstract class NetworkModule {
 
     return dio;
   }
-
-  @singleton
-  GithubClient getGithubClient(@Named('github_dio') Dio dio) =>
-      GithubClient(dio, baseUrl: 'https://github.com');
-
-  @singleton
-  @Named('github_api_dio')
-  Dio getDioGithubApi(
-      @Named('github_authentication')
-      Interceptor githubAuthenticationIntercepter) {
-    final dio = Dio(
-      BaseOptions(
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 60),
-        contentType: Headers.jsonContentType,
-      ),
-    )..interceptors.addAll([githubAuthenticationIntercepter]);
-
-    return dio;
-  }
-
-  @singleton
-  GithubApiClient getGithubApiClient(@Named('github_api_dio') Dio dio) =>
-      GithubApiClient(dio, baseUrl: 'https://api.github.com');
 }

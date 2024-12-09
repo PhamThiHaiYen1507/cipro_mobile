@@ -37,9 +37,6 @@ import 'package:base_project/layers/data/repositories/ticket_repository_impl.dar
 import 'package:base_project/layers/data/repositories/vulnerability_repository_impl.dart'
     as _i1054;
 import 'package:base_project/layers/data/source/api_client.dart' as _i792;
-import 'package:base_project/layers/data/source/github_api_client.dart'
-    as _i780;
-import 'package:base_project/layers/data/source/github_client.dart' as _i50;
 import 'package:base_project/layers/domain/repositories/account_info_repository.dart'
     as _i500;
 import 'package:base_project/layers/domain/repositories/activity_history_repository.dart'
@@ -124,34 +121,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i836.ScannerInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.singleton<_i717.AuthenticationRepository>(
+        () => _i1051.AuthenticationRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i32.VulnerabilityRepository>(
         () => _i1054.VulnerabilityRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.singleton<_i361.Dio>(
-      () => networkModule.getDioGithubApi(
-          gh<_i361.Interceptor>(instanceName: 'github_authentication')),
-      instanceName: 'github_api_dio',
-    );
-    gh.singleton<_i50.GithubClient>(() => networkModule
-        .getGithubClient(gh<_i361.Dio>(instanceName: 'github_dio')));
-    await gh.factoryAsync<List<dynamic>>(
-      () => appModule.createGlobalControllers(
-        gh<_i193.DeeplinkController>(),
-        gh<_i144.AccountManagerController>(),
-      ),
-      preResolve: true,
-    );
-    gh.factory<_i813.ScannerListBuilderController>(() =>
-        _i813.ScannerListBuilderController(gh<_i146.ScannerInfoRepository>()));
-    gh.factory<_i261.PhaseTemplateBuilderController>(() =>
-        _i261.PhaseTemplateBuilderController(gh<_i680.PhaseRepository>()));
-    gh.singleton<_i780.GithubApiClient>(() => networkModule
-        .getGithubApiClient(gh<_i361.Dio>(instanceName: 'github_api_dio')));
-    gh.singleton<_i717.AuthenticationRepository>(
-        () => _i1051.AuthenticationRepositoryImpl(
-              gh<_i792.ApiClient>(),
-              gh<_i50.GithubClient>(),
-              gh<_i780.GithubApiClient>(),
-            ));
     gh.factory<_i877.DashboardController>(() => _i877.DashboardController(
           gh<_i144.AccountManagerController>(),
           gh<_i717.AuthenticationRepository>(),
@@ -163,6 +136,17 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i193.DeeplinkController>(),
           gh<_i144.AccountManagerController>(),
         ));
+    await gh.factoryAsync<List<dynamic>>(
+      () => appModule.createGlobalControllers(
+        gh<_i193.DeeplinkController>(),
+        gh<_i144.AccountManagerController>(),
+      ),
+      preResolve: true,
+    );
+    gh.factory<_i813.ScannerListBuilderController>(() =>
+        _i813.ScannerListBuilderController(gh<_i146.ScannerInfoRepository>()));
+    gh.factory<_i261.PhaseTemplateBuilderController>(() =>
+        _i261.PhaseTemplateBuilderController(gh<_i680.PhaseRepository>()));
     return this;
   }
 }

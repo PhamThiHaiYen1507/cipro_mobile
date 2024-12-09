@@ -28,7 +28,8 @@ class ThreatResponse {
 
 @JsonSerializable()
 class ThreatScoreResponse {
-  int? total;
+  double? total;
+
   ThreatScoreDetailsResponse? details;
 
   ThreatScoreResponse();
