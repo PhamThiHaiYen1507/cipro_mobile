@@ -16,8 +16,6 @@ import 'package:base_project/core/global/account_manager_controller.dart'
     as _i144;
 import 'package:base_project/core/global/deeplink_controller.dart' as _i193;
 import 'package:base_project/core/network/api_cookie_intercepter.dart' as _i860;
-import 'package:base_project/core/network/github_authentication_intercepter.dart'
-    as _i184;
 import 'package:base_project/layers/data/repositories/account_info_repository_impl.dart'
     as _i793;
 import 'package:base_project/layers/data/repositories/activity_history_repository_impl.dart'
@@ -37,8 +35,6 @@ import 'package:base_project/layers/data/repositories/ticket_repository_impl.dar
 import 'package:base_project/layers/data/repositories/vulnerability_repository_impl.dart'
     as _i1054;
 import 'package:base_project/layers/data/source/api_client.dart' as _i792;
-import 'package:base_project/layers/domain/entities/account_info_model.dart'
-    as _i274;
 import 'package:base_project/layers/domain/repositories/account_info_repository.dart'
     as _i500;
 import 'package:base_project/layers/domain/repositories/activity_history_repository.dart'
@@ -97,14 +93,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i361.Dio>(() => networkModule
         .getDio(gh<_i361.Interceptor>(instanceName: 'api_cookie_intercepter')));
-    gh.singleton<_i361.Dio>(
-      () => networkModule.getDioGithub(),
-      instanceName: 'github_dio',
-    );
-    gh.singleton<_i361.Interceptor>(
-      () => _i184.GithubAuthenticationIntercepter(),
-      instanceName: 'github_authentication',
-    );
     gh.singleton<_i792.ApiClient>(
         () => networkModule.getApiClient(gh<_i361.Dio>()));
     gh.singleton<_i500.AccountInfoRepository>(
@@ -117,6 +105,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i144.AccountManagerController(gh<_i500.AccountInfoRepository>()));
     gh.factory<_i258.AccountListBuilderController>(() =>
         _i258.AccountListBuilderController(gh<_i500.AccountInfoRepository>()));
+    gh.factory<_i798.DashboardAccountController>(() =>
+        _i798.DashboardAccountController(gh<_i500.AccountInfoRepository>()));
     gh.singleton<_i630.ActivityHistoryRepository>(
         () => _i684.ActivityHistoryRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i241.TicketRepository>(
@@ -125,11 +115,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i836.ScannerInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.singleton<_i798.DashboardAccountController>(
-        () => _i798.DashboardAccountController(
-              gh<_i500.AccountInfoRepository>(),
-              gh<_i274.AccountInfoModel>(),
-            ));
     gh.singleton<_i717.AuthenticationRepository>(
         () => _i1051.AuthenticationRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i32.VulnerabilityRepository>(

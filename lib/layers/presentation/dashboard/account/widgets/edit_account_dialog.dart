@@ -24,7 +24,7 @@ class EditAccountDialog extends MobxStatefulWidget<DashboardAccountController> {
 
   @override
   DashboardAccountController? createController() =>
-      DashboardAccountController(injector(), accountInfo);
+      DashboardAccountController(injector());
 }
 
 class _EditAccountDialogState

@@ -9,16 +9,14 @@ import 'package:mobx/mobx.dart';
 
 part 'dashboard_account_controller.g.dart';
 
-@singleton
+@injectable
 class DashboardAccountController = _DashboardAccountControllerBase
     with _$DashboardAccountController;
 
 abstract class _DashboardAccountControllerBase with Store {
-  final AccountInfoModel accountInfoTmp;
   final AccountInfoRepository _accountInfoRepository;
 
-  _DashboardAccountControllerBase(
-      this._accountInfoRepository, this.accountInfoTmp);
+  _DashboardAccountControllerBase(this._accountInfoRepository);
 
   @observable
   AccountInfoModel? accountInfo;

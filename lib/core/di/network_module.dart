@@ -21,18 +21,4 @@ abstract class NetworkModule {
   @singleton
   ApiClient getApiClient(Dio dio) =>
       ApiClient(dio, baseUrl: 'http://10.0.2.2:3001');
-
-  @singleton
-  @Named('github_dio')
-  Dio getDioGithub() {
-    final dio = Dio(
-      BaseOptions(
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 60),
-        contentType: Headers.jsonContentType,
-      ),
-    );
-
-    return dio;
-  }
 }
