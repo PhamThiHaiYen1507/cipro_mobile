@@ -72,7 +72,7 @@ class DashboardProjectHomeScreenRoute extends GoRouteData {
   final String projectName;
 
   const DashboardProjectHomeScreenRoute(
-      {required this.role, required this.projectName});
+      {required this.role, this.projectName = ''});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -92,7 +92,7 @@ class DashboardMemberOverviewRoute extends GoRouteData {
   final String projectName;
 
   const DashboardMemberOverviewRoute(
-      {required this.role, required this.projectName});
+      {required this.role, this.projectName = ''});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
@@ -161,8 +161,7 @@ class DashboardScriptScreenRoute extends GoRouteData {
 
   final String projectName;
 
-  const DashboardScriptScreenRoute(
-      {required this.role, required this.projectName});
+  const DashboardScriptScreenRoute({required this.role, this.projectName = ''});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -225,8 +224,7 @@ class DashboardPhaseScreenRoute extends GoRouteData {
 
   final String projectName;
 
-  const DashboardPhaseScreenRoute(
-      {required this.role, required this.projectName});
+  const DashboardPhaseScreenRoute({required this.role, this.projectName = ''});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -258,8 +256,7 @@ class DashboardTicketScreenRoute extends GoRouteData {
 
   final String projectName;
 
-  const DashboardTicketScreenRoute(
-      {required this.role, required this.projectName});
+  const DashboardTicketScreenRoute({required this.role, this.projectName = ''});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
@@ -280,7 +277,7 @@ class DashboardVulnerabilitiesScreenRoute extends GoRouteData {
   final String projectName;
 
   const DashboardVulnerabilitiesScreenRoute(
-      {required this.role, required this.projectName});
+      {required this.role, this.projectName = ''});
 
   @override
   Page<void> buildPage(BuildContext context, GoRouterState state) {
