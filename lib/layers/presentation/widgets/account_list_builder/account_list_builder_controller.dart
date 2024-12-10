@@ -16,11 +16,11 @@ abstract class _AccountListBuilderControllerBase with Store {
   List<AccountInfoModel> accounts = [];
 
   _AccountListBuilderControllerBase(this._accountInfoRepository) {
-    _getAccountList();
+    getAccountList();
   }
 
   @action
-  Future<void> _getAccountList() async {
+  Future<void> getAccountList() async {
     final res = await _accountInfoRepository.getAccountList();
 
     res.map(

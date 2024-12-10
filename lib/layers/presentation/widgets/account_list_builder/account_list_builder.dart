@@ -8,10 +8,12 @@ import 'account_list_builder_controller.dart';
 class AccountListBuilder
     extends MobxStatefulWidget<AccountListBuilderController> {
   final Widget Function(List<AccountInfoModel> accounts) builder;
+  final void Function(AccountListBuilderController controller)? onInitialize;
 
   const AccountListBuilder({
     super.key,
     required this.builder,
+    this.onInitialize,
   });
 
   @override
@@ -21,6 +23,12 @@ class AccountListBuilder
 
 class _AccountListBuilderState
     extends MobxState<AccountListBuilder, AccountListBuilderController> {
+  @override
+  void initState() {
+    super.initState();
+    widget.onInitialize?.call(controller);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) => widget.builder(controller.accounts));

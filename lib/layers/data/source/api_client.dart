@@ -26,10 +26,10 @@ abstract class ApiClient {
   Future<BaseResponse> getAccountInfo();
 
   @PATCH('/account/{account_id}')
-  Future<BaseResponse> editAccount(
-      @Path('account_id') String accountId, @Body() AccountInfoModel reuqest);
+  Future<BaseResponse> editAccount(@Path('account_id') String accountId,
+      @Body() Map<String, AccountInfoModel> reuqest);
 
-  @DELETE('/account/')
+  @DELETE('/account/{account_id}')
   Future<BaseResponse> deleteAccount(@Path('account_id') String accountId);
 
   @GET('/user/project')

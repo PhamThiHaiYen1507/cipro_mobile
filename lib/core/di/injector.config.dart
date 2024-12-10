@@ -40,8 +40,6 @@ import 'package:base_project/layers/data/source/api_client.dart' as _i792;
 import 'package:base_project/layers/data/source/github_api_client.dart'
     as _i780;
 import 'package:base_project/layers/data/source/github_client.dart' as _i50;
-import 'package:base_project/layers/domain/entities/account_info_model.dart'
-    as _i274;
 import 'package:base_project/layers/domain/repositories/account_info_repository.dart'
     as _i500;
 import 'package:base_project/layers/domain/repositories/activity_history_repository.dart'
@@ -62,8 +60,6 @@ import 'package:base_project/layers/domain/repositories/vulnerability_repository
     as _i32;
 import 'package:base_project/layers/presentation/account_register/account_register_controller.dart'
     as _i352;
-import 'package:base_project/layers/presentation/dashboard/account/dashboard_account_controller.dart'
-    as _i798;
 import 'package:base_project/layers/presentation/dashboard/dashboard_controller.dart'
     as _i877;
 import 'package:base_project/layers/presentation/login/login_controller.dart'
@@ -128,11 +124,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i836.ScannerInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.singleton<_i798.DashboardAccountController>(
-        () => _i798.DashboardAccountController(
-              gh<_i500.AccountInfoRepository>(),
-              gh<_i274.AccountInfoModel>(),
-            ));
     gh.singleton<_i32.VulnerabilityRepository>(
         () => _i1054.VulnerabilityRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i361.Dio>(
