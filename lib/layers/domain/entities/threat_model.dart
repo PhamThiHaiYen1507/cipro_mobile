@@ -36,7 +36,7 @@ class ThreatModel {
 
 @JsonSerializable()
 class ThreatScoreModel {
-  final int total;
+  final double total;
 
   final ThreatScoreDetailsModel? details;
 
