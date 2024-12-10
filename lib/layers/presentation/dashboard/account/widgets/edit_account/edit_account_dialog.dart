@@ -4,6 +4,7 @@ import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:base_project/layers/presentation/common/button/button.dart';
 import 'package:base_project/layers/presentation/common/text_input_validator/text_input_validator.dart';
 import 'package:base_project/layers/presentation/dashboard/account/widgets/edit_account/edit_account_controller.dart';
+import 'package:base_project/layers/presentation/dashboard/account/widgets/permission_group.dart';
 import 'package:base_project/layers/presentation/widgets/custom_dropdown/custom_dropdown.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
@@ -87,7 +88,17 @@ class _EditAccountDialogState
                                 ),
                               );
                             })),
-                    ...widget.accountInfo.getSelectedPermissions(permissionGroups)
+                    AppSpacing.h16,
+                    ...permissionGroups.map((group) {
+                      return PermissionGroup(
+                        groupName: group.capitalize(),
+                        permissions: allPermissions
+                            .where((p) => p.startsWith("$group:"))
+                            .toList(),
+                        userPermissions:
+                            controller.accountInfo?.permission ?? [],
+                      );
+                    }),
                   ],
                 ),
               ),

@@ -4,6 +4,47 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'account_info_model.g.dart';
 
+const List<String> permissionGroups = [
+  "ticket",
+  "task",
+  "phase",
+  "project",
+  "artifact",
+  "user",
+];
+const List<String> allPermissions = [
+  "ticket:create",
+  "ticket:read",
+  "ticket:update",
+  "ticket:delete",
+  "task:create",
+  "task:read",
+  "task:update",
+  "task:delete",
+  "phase:create",
+  "phase:read",
+  "phase:update",
+  "phase:delete",
+  "project:create",
+  "project:read",
+  "project:update",
+  "project:delete",
+  "artifact:create",
+  "artifact:read",
+  "artifact:update",
+  "artifact:delete",
+  "user:create",
+  "user:read",
+  "user:update",
+  "user:delete",
+];
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
+  }
+}
+
 @JsonSerializable()
 class AccountInfoModel {
   final String accountId;
@@ -18,46 +59,6 @@ class AccountInfoModel {
 
   final List<ThirdPartyInfoModel> thirdParty;
 
-  @JsonKey(includeToJson: false)
-  List<PermissionGroup> permissionGroups = [
-    PermissionGroup(groupName: "Ticket", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-    PermissionGroup(groupName: "Task", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-    PermissionGroup(groupName: "Atifacts", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-    PermissionGroup(groupName: "Phase", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-    PermissionGroup(groupName: "Project", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-    PermissionGroup(groupName: "User", actions: [
-      PermissionAction(name: "create", isChecked: false),
-      PermissionAction(name: "read", isChecked: false),
-      PermissionAction(name: "update", isChecked: false),
-      PermissionAction(name: "delete", isChecked: false),
-    ]),
-  ];
-
   AccountInfoModel({
     required this.accountId,
     required this.username,
@@ -67,65 +68,14 @@ class AccountInfoModel {
     required this.thirdParty,
   });
 
-  static AccountInfoModel fromJson(
-          Map<String, dynamic> json, List<PermissionGroup> permissionGroups) =>
-      _$AccountInfoModelFromJson({
-        ...json,
-        'permissionGroups':
-            updatePermissionsFromApi(json['permission'], permissionGroups),
-      });
+  factory AccountInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$AccountInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = _$AccountInfoModelToJson(AccountInfoModel(
-        accountId: accountId,
-        username: username,
-        email: email,
-        role: role,
-        permission: getSelectedPermissions(permissionGroups),
-        thirdParty: thirdParty));
+    final Map<String, dynamic> data = _$AccountInfoModelToJson(this);
     data.remove('accountId');
     data.remove('username');
     data.remove('thirdParty');
     return data;
   }
-
-  List<String> getSelectedPermissions(List<PermissionGroup>? permissionGroups) {
-    final permission = <String>[];
-    if (permissionGroups != null) {
-      for (var group in permissionGroups) {
-        for (var action in group.actions) {
-          if (action.isChecked) {
-            permission.add("${group.groupName.toLowerCase()}:${action.name}");
-          }
-        }
-      }
-    }
-
-    return permission;
-  }
-
-  static List<PermissionGroup> updatePermissionsFromApi(
-      List<String> apiPermissions, List<PermissionGroup> permissionGroups) {
-    for (var group in permissionGroups) {
-      for (var action in group.actions) {
-        final key = "${group.groupName.toLowerCase()}:${action.name}";
-        action.isChecked = apiPermissions.contains(key);
-      }
-    }
-    return permissionGroups;
-  }
-}
-
-class PermissionAction {
-  final String name;
-  bool isChecked;
-
-  PermissionAction({required this.name, this.isChecked = false});
-}
-
-class PermissionGroup {
-  final String groupName;
-  final List<PermissionAction> actions;
-
-  PermissionGroup({required this.groupName, required this.actions});
 }
