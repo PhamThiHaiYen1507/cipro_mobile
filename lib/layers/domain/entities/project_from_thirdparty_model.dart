@@ -12,7 +12,11 @@ class ProjectFromThirdPartyModel {
   factory ProjectFromThirdPartyModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectFromThirdPartyModelFromJson(json);
 
-  ProjectFromThirdPartyModel(this.name, this.url, this.status, this.owner);
+  ProjectFromThirdPartyModel(
+      {required this.name,
+      required this.url,
+      required this.status,
+      required this.owner});
 
   Map<String, dynamic> toJson() => _$ProjectFromThirdPartyModelToJson(this);
 }
