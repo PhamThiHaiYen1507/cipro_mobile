@@ -91,4 +91,7 @@ abstract class ApiClient {
 
   @POST('/auth/mobile/github')
   Future<dynamic> loginWithGithub(@Body() Map<String, dynamic> body);
+
+  @GET('/thirdParty/github/repo')
+  Future<BaseResponse> getGithubRepos();
 }
