@@ -21,8 +21,8 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Build
-        run: dart run build_runner build --delete-conflicting-outputs && flutter build apk
+      # - name: Build
+      #   run: dart run build_runner build --delete-conflicting-outputs && flutter build apk
       - name: Download sonar-scanner
         run: |
           curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-linux-x64.zip
