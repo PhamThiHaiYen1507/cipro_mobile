@@ -1,6 +1,10 @@
 import 'package:base_project/core/global/account_manager_controller.dart';
+import 'package:base_project/layers/domain/entities/project_info_model.dart';
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart';
+import 'package:base_project/layers/domain/repositories/project_info_repository.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/add_project.dart';
 import 'package:base_project/routes/routes.dart';
+import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -16,19 +20,44 @@ abstract class _DashboardControllerBase with Store {
 
   final AuthenticationRepository _authenticationRepository;
 
-  _DashboardControllerBase(
-      this._accountManager, this._authenticationRepository);
+  final ProjectInfoRepository _projectInfoRepository;
+
+  _DashboardControllerBase(this._accountManager, this._authenticationRepository,
+      this._projectInfoRepository);
 
   @observable
   String? selectedProjectName;
 
-  @action
-  void setSelectedProjectName(
-      BuildContext context, String current, String? name) {
-    selectedProjectName = name;
+  @observable
+  ProjectInfoModel? selectedProjectImport;
 
-    context
-        .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
+  @action
+  Future<void> setSelectedProjectName(BuildContext context, String current,
+      String? name, String? projectId) async {
+    if (projectId != '-1') {
+      selectedProjectName = name;
+
+      context
+          .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
+    } else {
+      final res = await _projectInfoRepository.getRepoThirdParty();
+      AppDialog.dialog(
+          context: context,
+          content: ImportProjectDialog(
+            projects: res.right ?? [],
+            selectedProject: selectedProjectImport,
+            onSelected: (project) {
+              selectedProjectImport = project;
+            },
+            onCancel: () {
+              context.pop();
+            },
+            onImport: () {
+              print('Importing project: ${selectedProjectImport?.name}');
+              context.pop();
+            },
+          ));
+    }
   }
 
   String dashboardRoute(String route) {

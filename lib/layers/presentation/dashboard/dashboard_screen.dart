@@ -53,10 +53,11 @@ class _DashboardScreenState
                 Expanded(
                   child: Observer(
                     builder: (_) => SelectProjectDropdown(
+                      role: widget.role,
                       selectedProjectName: controller.selectedProjectName,
                       onSelected: (project) {
-                        controller.setSelectedProjectName(
-                            context, widget.current, project.name);
+                        controller.setSelectedProjectName(context,
+                            widget.current, project.name, project.projectId);
                       },
                     ),
                   ),

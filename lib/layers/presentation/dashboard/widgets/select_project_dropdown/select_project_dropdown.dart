@@ -1,18 +1,23 @@
 import 'package:base_project/layers/domain/entities/project_info_model.dart';
 import 'package:base_project/layers/presentation/widgets/custom_dropdown/custom_dropdown.dart';
 import 'package:base_project/layers/presentation/widgets/project_list_builder/project_list_builder.dart';
+import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
 class SelectProjectDropdown extends StatelessWidget {
+  final AccountRole role;
   final String? selectedProjectName;
 
   final void Function(ProjectInfoModel)? onSelected;
 
   const SelectProjectDropdown(
-      {super.key, this.selectedProjectName, this.onSelected});
+      {super.key,
+      this.selectedProjectName,
+      this.onSelected,
+      required this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,12 @@ class SelectProjectDropdown extends StatelessWidget {
       },
       builder: (projects) {
         return CustomDropdown(
-          items: projects,
+          items: [
+            ...projects,
+            if (role == AccountRole.manager)
+              ProjectInfoModel(
+                  name: "Add new project", phaseList: [], projectId: '-1'),
+          ],
           fitScreen: true,
           fitSize: true,
           selectedItem: projects.firstWhereOrNull(
