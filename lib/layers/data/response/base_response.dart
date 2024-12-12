@@ -10,6 +10,8 @@ class BaseResponse {
 
   String? message;
 
+  String? status;
+
   BaseResponse();
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) =>

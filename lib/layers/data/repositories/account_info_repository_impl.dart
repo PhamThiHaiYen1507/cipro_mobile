@@ -31,8 +31,8 @@ class AccountInfoRepositoryImpl implements AccountInfoRepository {
   Future<ApiResponseData<bool>> editAccount(
       {required String accountId, required AccountInfoModel reuqest}) async {
     try {
-      await _client.editAccount(accountId, reuqest);
-      return const Right(true);
+      final res = await _client.editAccount(accountId, {'data': reuqest});
+      return Right(res.status == 'success');
     } on Exception catch (e, stackTrace) {
       return Left(e.handlerApiException(stackTrace));
     }
@@ -41,8 +41,8 @@ class AccountInfoRepositoryImpl implements AccountInfoRepository {
   @override
   Future<ApiResponseData<bool>> deleteAccount(String accountId) async {
     try {
-      await _client.deleteAccount(accountId);
-      return const Right(true);
+      final res = await _client.deleteAccount(accountId);
+      return Right(res.status == 'success');
     } on Exception catch (e, stackTrace) {
       return Left(e.handlerApiException(stackTrace));
     }
