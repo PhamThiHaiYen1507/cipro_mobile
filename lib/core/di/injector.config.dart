@@ -15,6 +15,7 @@ import 'package:base_project/core/di/network_module.dart' as _i165;
 import 'package:base_project/core/global/account_manager_controller.dart'
     as _i144;
 import 'package:base_project/core/global/deeplink_controller.dart' as _i193;
+import 'package:base_project/core/global/notification_controller.dart' as _i966;
 import 'package:base_project/core/network/api_cookie_intercepter.dart' as _i860;
 import 'package:base_project/layers/data/repositories/account_info_repository_impl.dart'
     as _i793;
@@ -24,6 +25,8 @@ import 'package:base_project/layers/data/repositories/artifact_repository_impl.d
     as _i167;
 import 'package:base_project/layers/data/repositories/authentication_repository_impl.dart'
     as _i1051;
+import 'package:base_project/layers/data/repositories/notification_repository_impl.dart'
+    as _i719;
 import 'package:base_project/layers/data/repositories/phase_repository_impl.dart'
     as _i218;
 import 'package:base_project/layers/data/repositories/project_info_repository_impl.dart'
@@ -43,6 +46,8 @@ import 'package:base_project/layers/domain/repositories/artifact_repository.dart
     as _i214;
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart'
     as _i717;
+import 'package:base_project/layers/domain/repositories/notification_repository.dart'
+    as _i740;
 import 'package:base_project/layers/domain/repositories/phase_repository.dart'
     as _i680;
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart'
@@ -101,12 +106,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i218.PhaseRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i214.ArtifactRepository>(
         () => _i167.ArtifactRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.singleton<_i144.AccountManagerController>(() =>
-        _i144.AccountManagerController(gh<_i500.AccountInfoRepository>()));
-    gh.factory<_i258.AccountListBuilderController>(() =>
-        _i258.AccountListBuilderController(gh<_i500.AccountInfoRepository>()));
     gh.factory<_i798.DashboardAccountController>(() =>
         _i798.DashboardAccountController(gh<_i500.AccountInfoRepository>()));
+    gh.factory<_i258.AccountListBuilderController>(() =>
+        _i258.AccountListBuilderController(gh<_i500.AccountInfoRepository>()));
     gh.singleton<_i630.ActivityHistoryRepository>(
         () => _i684.ActivityHistoryRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i241.TicketRepository>(
@@ -115,32 +118,42 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i836.ScannerInfoRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i194.ProjectInfoRepository>(
         () => _i279.ProjectInfoRepositoryImpl(gh<_i792.ApiClient>()));
+    gh.factory<_i740.NotificationRepository>(
+        () => _i719.NotificationRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i717.AuthenticationRepository>(
         () => _i1051.AuthenticationRepositoryImpl(gh<_i792.ApiClient>()));
     gh.singleton<_i32.VulnerabilityRepository>(
         () => _i1054.VulnerabilityRepositoryImpl(gh<_i792.ApiClient>()));
-    gh.factory<_i877.DashboardController>(() => _i877.DashboardController(
-          gh<_i144.AccountManagerController>(),
-          gh<_i717.AuthenticationRepository>(),
-        ));
     gh.factory<_i352.AccountRegisterController>(() =>
         _i352.AccountRegisterController(gh<_i717.AuthenticationRepository>()));
-    gh.factory<_i737.LoginController>(() => _i737.LoginController(
-          gh<_i717.AuthenticationRepository>(),
-          gh<_i193.DeeplinkController>(),
-          gh<_i144.AccountManagerController>(),
-        ));
+    gh.factory<_i813.ScannerListBuilderController>(() =>
+        _i813.ScannerListBuilderController(gh<_i146.ScannerInfoRepository>()));
+    gh.factory<_i261.PhaseTemplateBuilderController>(() =>
+        _i261.PhaseTemplateBuilderController(gh<_i680.PhaseRepository>()));
+    gh.singleton<_i966.NotificationController>(
+        () => _i966.NotificationController(gh<_i740.NotificationRepository>()));
+    gh.singleton<_i144.AccountManagerController>(
+        () => _i144.AccountManagerController(
+              gh<_i500.AccountInfoRepository>(),
+              gh<_i966.NotificationController>(),
+            ));
     await gh.factoryAsync<List<dynamic>>(
       () => appModule.createGlobalControllers(
+        gh<_i966.NotificationController>(),
         gh<_i193.DeeplinkController>(),
         gh<_i144.AccountManagerController>(),
       ),
       preResolve: true,
     );
-    gh.factory<_i813.ScannerListBuilderController>(() =>
-        _i813.ScannerListBuilderController(gh<_i146.ScannerInfoRepository>()));
-    gh.factory<_i261.PhaseTemplateBuilderController>(() =>
-        _i261.PhaseTemplateBuilderController(gh<_i680.PhaseRepository>()));
+    gh.factory<_i737.LoginController>(() => _i737.LoginController(
+          gh<_i717.AuthenticationRepository>(),
+          gh<_i193.DeeplinkController>(),
+          gh<_i144.AccountManagerController>(),
+        ));
+    gh.factory<_i877.DashboardController>(() => _i877.DashboardController(
+          gh<_i144.AccountManagerController>(),
+          gh<_i717.AuthenticationRepository>(),
+        ));
     return this;
   }
 }

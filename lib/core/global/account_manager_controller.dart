@@ -1,3 +1,4 @@
+import 'package:base_project/core/global/notification_controller.dart';
 import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:base_project/layers/domain/repositories/account_info_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -12,7 +13,10 @@ class AccountManagerController = _AccountManagerControllerBase
 abstract class _AccountManagerControllerBase with Store {
   final AccountInfoRepository _accountInfoRepository;
 
-  _AccountManagerControllerBase(this._accountInfoRepository);
+  final NotificationController _notificationController;
+
+  _AccountManagerControllerBase(
+      this._accountInfoRepository, this._notificationController);
 
   @observable
   AccountInfoModel? accountInfo;
@@ -23,6 +27,8 @@ abstract class _AccountManagerControllerBase with Store {
 
     res.map((right) {
       accountInfo = right;
+
+      _notificationController.setNotificationToken();
     });
   }
 }
