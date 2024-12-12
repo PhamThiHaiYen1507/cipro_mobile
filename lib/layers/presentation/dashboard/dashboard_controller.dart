@@ -3,9 +3,7 @@ import 'package:base_project/core/global/account_manager_controller.dart';
 import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart';
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart';
-import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/import_project_dialog.dart';
 import 'package:base_project/routes/routes.dart';
-import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -33,30 +31,19 @@ abstract class _DashboardControllerBase with Store {
   ProjectFromThirdPartyModel? selectedProjectImport;
 
   @action
-  Future<void> setSelectedProjectName(BuildContext context, String current,
-      String? name, String? projectId) async {
-    if (projectId != '-1') {
-      selectedProjectName = name;
+  Future<void> setSelectedProjectName(
+      BuildContext context, String current, String? name) async {
+    selectedProjectName = name;
 
-      context
-          .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
-    } else {
-      LoadingOverlay.show();
-      final res = await _projectInfoRepository.getProjectFromThirdParties();
-      LoadingOverlay.close();
-      AppDialog.dialog(
-          context: context,
-          content: ImportProjectDialog(
-            projects: res.right ?? [],
-            selectedProject: selectedProjectImport,
-            onSelected: (project) => selectedProjectImport = project,
-            onCancel: () => context.pop(),
-            onImport: () {
-              if (selectedProjectImport != null) {}
-              context.pop();
-            },
-          ));
-    }
+    context
+        .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
+  }
+
+  Future<List<ProjectFromThirdPartyModel>?> getRepoGithub() async {
+    LoadingOverlay.show();
+    final res = await _projectInfoRepository.getProjectFromThirdParties();
+    LoadingOverlay.close();
+    return res.fold((left) => null, (right) => right);
   }
 
   String dashboardRoute(String route) {
