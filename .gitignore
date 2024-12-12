@@ -1,5 +1,6 @@
 # Miscellaneous
 *.class
+*.lock
 *.log
 *.pyc
 *.swp
@@ -30,6 +31,10 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+lib/**/*.g.dart
+lib/**/*.freezed.dart
+lib/constant/assets.gen.dart
+lib/core/di/injector.config.dart
 
 # Symbolication related
 app.*.symbols
@@ -41,3 +46,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# FVM Version Cache
+.fvm/

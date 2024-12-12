@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569847946310",
+    "project_id": "cipro-c8f5d",
+    "storage_bucket": "cipro-c8f5d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569847946310:android:1b4baa140a9a5b73047e47",
+        "android_client_info": {
+          "package_name": "com.pthy.cipro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbYbd-fBs9WKm8qQxPVhz_c2wDKZ5MdOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

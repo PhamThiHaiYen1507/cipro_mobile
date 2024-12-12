@@ -1,4 +1,4 @@
-name: OWASP Dependency-Check
+name: OWASP Dependency-Check for Flutter
 
 on:
   push:
@@ -16,18 +16,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install OWASP Dependency-Check
-        run: |
-          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v7.0.4/dependency-check-7.0.4-release.zip -o dependency-check.zip
-          unzip dependency-check.zip -d dependency-check
-          export PATH=$PATH:$(pwd)/dependency-check/bin
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.4'
+
+      - name: Flutter Pub Get
+        run: flutter pub get
 
       - name: Run OWASP Dependency-Check
-        run: |
-          dependency-check/bin/dependency-check.sh --project "MyProject" --scan . --format "ALL" --out dependency-check-report
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'base_project'
+          path: '.'
+          format: 'HTML'
+          output-directory: './dependency-check-report'
+          
+      - name: List files in report directory
+        run: ls
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: dependency-check-report
+          path: './dependency-check-report/dependency-check-report.html'

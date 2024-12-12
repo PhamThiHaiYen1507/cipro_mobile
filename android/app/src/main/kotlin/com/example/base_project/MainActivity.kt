@@ -1,4 +1,4 @@
-package com.example.base_project
+package com.pthy.cipro
 
 import io.flutter.embedding.android.FlutterActivity
 
