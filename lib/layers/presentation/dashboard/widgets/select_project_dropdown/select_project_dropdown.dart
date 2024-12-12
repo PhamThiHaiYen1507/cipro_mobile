@@ -43,7 +43,9 @@ class SelectProjectDropdown extends StatelessWidget {
               padding: AppPadding.a8,
               child: Row(
                 children: [
-                  const Icon(Icons.event_note),
+                  item.projectId != '-1'
+                      ? const Icon(Icons.event_note)
+                      : const Icon(Icons.add),
                   Expanded(
                       child: TextMarqueeWidget(
                     child: Text(

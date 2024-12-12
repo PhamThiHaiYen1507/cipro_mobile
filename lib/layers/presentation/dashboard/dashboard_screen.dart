@@ -1,6 +1,8 @@
 import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/presentation/dashboard/dashboard_controller.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/import_project_dialog.dart';
 import 'package:base_project/routes/routes.dart';
+import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/enum/bottom_navigation_type.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
@@ -55,9 +57,33 @@ class _DashboardScreenState
                     builder: (_) => SelectProjectDropdown(
                       role: widget.role,
                       selectedProjectName: controller.selectedProjectName,
-                      onSelected: (project) {
-                        controller.setSelectedProjectName(context,
-                            widget.current, project.name, project.projectId);
+                      onSelected: (project) async {
+                        if (project.projectId != '-1') {
+                          controller.setSelectedProjectName(
+                              context, widget.current, project.name);
+                        } else {
+                          final res = await controller.getRepoGithub();
+                          res != null
+                              ? AppDialog.dialog(
+                                  context: context,
+                                  content: Observer(
+                                      builder: (_) => ImportProjectDialog(
+                                            projects: res,
+                                            selectedProject: controller
+                                                .selectedProjectImport,
+                                            onSelected: (project) => controller
+                                                    .selectedProjectImport =
+                                                project,
+                                            onCancel: () => context.pop(),
+                                            onImport: () {
+                                              if (controller
+                                                      .selectedProjectImport !=
+                                                  null) {}
+                                              context.pop();
+                                            },
+                                          )))
+                              : null;
+                        }
                       },
                     ),
                   ),
