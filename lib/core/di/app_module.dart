@@ -20,6 +20,7 @@ abstract class AppModule {
     ];
 
     MobxManager.createControllers(controllers);
+
     return controllers;
   }
 }
