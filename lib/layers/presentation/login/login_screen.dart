@@ -128,7 +128,7 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                         ),
                       ),
                     ),
-                    AppSpacing.w8,
+                    AppSpacing.w83,
                     SizedBox.square(
                       dimension: 36,
                       child: Button.border(
