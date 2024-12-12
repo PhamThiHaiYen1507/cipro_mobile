@@ -18,6 +18,7 @@ abstract class AppModule {
       deeplinkController,
       accountManagerController,
     ];
+
     MobxManager.createControllers(controllers);
 
     return controllers;
