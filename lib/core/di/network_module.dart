@@ -14,6 +14,7 @@ abstract class NetworkModule {
         contentType: Headers.jsonContentType,
       ),
     )..interceptors.addAll([apiCookieIntercepter]);
+
     return dio;
   }
 
