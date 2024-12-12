@@ -1,4 +1,3 @@
-import 'package:base_project/core/logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -19,8 +18,6 @@ abstract class _NotificationControllerBase with Store {
   Future<void> setNotificationToken() async {
     await FirebaseMessaging.instance.requestPermission();
     final token = await FirebaseMessaging.instance.getToken();
-
-    logD(token);
 
     if (token != null) {
       _notificationRepository.setNotificationToken(token: token);
