@@ -131,7 +131,7 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                     AppSpacing.w83,
                     SizedBox.squarer(
                       dimension: 36,
-                      child: Button.borde(
+                      child: Button.border(
                         side: const BorderSide(color: Color(0xffFC6D25)),
                         backgroundColor: Colors.white,
                         padding: AppPadding.a2,
