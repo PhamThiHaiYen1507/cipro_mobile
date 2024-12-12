@@ -1,11 +1,12 @@
-import 'package:base_project/layers/domain/entities/project_info_model.dart';
+import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/presentation/widgets/custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ImportProjectDialog extends StatelessWidget {
-  final List<ProjectInfoModel> projects;
-  final ProjectInfoModel? selectedProject;
-  final Function(ProjectInfoModel) onSelected;
+  final List<ProjectFromThirdPartyModel> projects;
+  final ProjectFromThirdPartyModel? selectedProject;
+  final Function(ProjectFromThirdPartyModel) onSelected;
   final VoidCallback onCancel;
   final VoidCallback onImport;
 
@@ -32,30 +33,32 @@ class ImportProjectDialog extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
-            CustomDropdown<ProjectInfoModel>(
-              items: projects,
-              fitScreen: true,
-              fitSize: true,
-              selectedItem: selectedProject,
-              onSelected: onSelected,
-              itemBuilder: (item) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.folder, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          item.name ?? '',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+            Observer(
+              builder: (_) => CustomDropdown<ProjectFromThirdPartyModel>(
+                items: projects,
+                fitScreen: true,
+                fitSize: true,
+                selectedItem: selectedProject,
+                onSelected: (item) => onSelected(item),
+                itemBuilder: (item) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.folder, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            item.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 24),
             Row(

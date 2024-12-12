@@ -129,11 +129,14 @@ class _DashboardProjectHomeScreenState
                                       children: [
                                         const Icon(Icons.account_circle),
                                         AppSpacing.a8,
-                                        TextMarqueeWidget(
-                                          child: Text(
-                                            '${e.account?.username} (${e.name})',
-                                            style: AppTextStyle.f16M.copyWith(
-                                                color: AppColors.primaryColor),
+                                        Expanded(
+                                          child: TextMarqueeWidget(
+                                            child: Text(
+                                              '${e.account?.username} (${e.name})',
+                                              style: AppTextStyle.f16M.copyWith(
+                                                  color:
+                                                      AppColors.primaryColor),
+                                            ),
                                           ),
                                         )
                                       ],

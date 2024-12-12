@@ -1,8 +1,9 @@
+import 'package:base_project/app/builder/app_loading_builder_controller.dart';
 import 'package:base_project/core/global/account_manager_controller.dart';
-import 'package:base_project/layers/domain/entities/project_info_model.dart';
+import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart';
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart';
-import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/add_project.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/import_project_dialog.dart';
 import 'package:base_project/routes/routes.dart';
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ abstract class _DashboardControllerBase with Store {
   String? selectedProjectName;
 
   @observable
-  ProjectInfoModel? selectedProjectImport;
+  ProjectFromThirdPartyModel? selectedProjectImport;
 
   @action
   Future<void> setSelectedProjectName(BuildContext context, String current,
@@ -40,20 +41,18 @@ abstract class _DashboardControllerBase with Store {
       context
           .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
     } else {
-      final res = await _projectInfoRepository.getRepoThirdParty();
+      LoadingOverlay.show();
+      final res = await _projectInfoRepository.getProjectFromThirdParties();
+      LoadingOverlay.close();
       AppDialog.dialog(
           context: context,
           content: ImportProjectDialog(
             projects: res.right ?? [],
             selectedProject: selectedProjectImport,
-            onSelected: (project) {
-              selectedProjectImport = project;
-            },
-            onCancel: () {
-              context.pop();
-            },
+            onSelected: (project) => selectedProjectImport = project,
+            onCancel: () => context.pop(),
             onImport: () {
-              print('Importing project: ${selectedProjectImport?.name}');
+              if (selectedProjectImport != null) {}
               context.pop();
             },
           ));

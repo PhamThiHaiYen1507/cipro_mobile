@@ -7,11 +7,13 @@ import 'package:base_project/layers/data/response/project_member_info_response.d
 import 'package:base_project/layers/data/response/workflow_info_response.dart';
 import 'package:base_project/layers/data/source/api_client.dart';
 import 'package:base_project/layers/domain/entities/project_activity_info_model.dart';
+import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/domain/entities/project_info_model.dart';
 import 'package:base_project/layers/domain/entities/project_member_info_model.dart';
 import 'package:base_project/layers/domain/entities/workflow_info_model.dart';
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart';
 import 'package:base_project/layers/domain/translators/project_activity_info_translator.dart';
+import 'package:base_project/layers/domain/translators/project_from_thirdparty_translator.dart';
 import 'package:base_project/layers/domain/translators/project_info_translator.dart';
 import 'package:base_project/layers/domain/translators/project_member_info_translator.dart';
 import 'package:base_project/layers/domain/translators/workflow_info_translator.dart';
@@ -109,6 +111,21 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Right(res
           .getItems(WorkflowInfoResponse.fromJson)
           ?.map((e) => e.toWorkflowInfoModel())
+          .toList());
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<List<ProjectFromThirdPartyModel>?>>
+      getProjectFromThirdParties() async {
+    try {
+      final res = await _client.getGithubRepos();
+
+      return Right(res
+          .getItems(ProjectFromThirdPartyModel.fromJson)
+          ?.map((e) => e.toProjectFromThirdPartyModel())
           .toList());
     } on Exception catch (e, stackTrace) {
       return Left(e.handlerApiException(stackTrace));
