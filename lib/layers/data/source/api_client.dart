@@ -100,4 +100,7 @@ abstract class ApiClient {
 
   @POST('/webhook/project')
   Future<BaseResponse> testProject(@Body() Map<String, dynamic> body);
+
+  @POST('/project')
+  Future<BaseResponse> importProject(@Body() Map<String, dynamic> body);
 }

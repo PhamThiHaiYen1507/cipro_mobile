@@ -25,4 +25,11 @@ abstract class ProjectInfoRepository {
 
   Future<ApiResponseData<List<ProjectFromThirdPartyModel>?>>
       getProjectFromThirdParties();
+
+  Future<ApiResponseData<bool>> importProject({
+    String? name,
+    String? owner,
+    String? status,
+    String? url,
+  });
 }

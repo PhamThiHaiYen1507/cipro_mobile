@@ -131,4 +131,21 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> importProject(
+      {String? name, String? owner, String? status, String? url}) async {
+    try {
+      await _client.importProject({
+        'data': {
+          'type': 'import',
+          'data': {'name': name, 'owner': owner, 'status': status, 'url': url}
+        }
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

@@ -13,14 +13,14 @@ abstract class _ProjectBuilderControllerBase with Store {
   final String? projectName;
 
   _ProjectBuilderControllerBase(this._projectInfoRepository, this.projectName) {
-    _getProjectInfo();
+    getProjectInfo();
   }
 
   @observable
   ProjectInfoModel? project;
 
   @action
-  Future<void> _getProjectInfo() async {
+  Future<void> getProjectInfo() async {
     final res =
         await _projectInfoRepository.getProjectWithName(projectName ?? '');
 

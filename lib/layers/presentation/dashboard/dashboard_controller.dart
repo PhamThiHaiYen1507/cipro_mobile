@@ -70,4 +70,17 @@ abstract class _DashboardControllerBase with Store {
 
     return res.fold((left) => false, (right) => true);
   }
+
+  Future<bool> importProject() async {
+    final res = await _projectInfoRepository.importProject(
+      name: selectedProjectImport?.name,
+      owner: selectedProjectImport?.owner,
+      status: selectedProjectImport?.status,
+      url: selectedProjectImport?.url,
+    );
+
+    return res.fold((left) => false, (right) {
+      return true;
+    });
+  }
 }
