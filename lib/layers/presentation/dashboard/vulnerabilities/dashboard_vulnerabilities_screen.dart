@@ -208,6 +208,7 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
                         ),
                         AppSpacing.h16,
                         Container(
+                          width: double.maxFinite,
                           padding: AppPadding.a16,
                           decoration: context.defaultBox,
                           child: Column(
@@ -238,6 +239,10 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
                                         return previousValue;
                                       },
                                     );
+
+                                    if (counts.isEmpty) {
+                                      return const SizedBox();
+                                    }
 
                                     return PieChart(
                                       dataMap: counts,
