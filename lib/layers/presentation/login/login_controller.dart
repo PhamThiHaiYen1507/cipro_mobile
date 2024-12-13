@@ -93,4 +93,8 @@ abstract class _LoginControllerBase with Store {
       });
     }
   }
+
+  void testProject() {
+    _authenticationRepository.testProject();
+  }
 }

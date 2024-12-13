@@ -93,4 +93,15 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> testProject() async {
+    try {
+      await _client.testProject({'projectName': 'base_project'});
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

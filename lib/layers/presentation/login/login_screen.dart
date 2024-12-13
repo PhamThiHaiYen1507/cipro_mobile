@@ -128,14 +128,14 @@ class _LoginScreenState extends MobxState<LoginScreen, LoginController> {
                         ),
                       ),
                     ),
-                    AppSpacing.w83,
-                    SizedBox.squarer(
+                    AppSpacing.w8,
+                    SizedBox.square(
                       dimension: 36,
                       child: Button.border(
                         side: const BorderSide(color: Color(0xffFC6D25)),
                         backgroundColor: Colors.white,
                         padding: AppPadding.a2,
-                        onPressed: () {},
+                        onPressed: controller.testProject,
                         child: SvgPicture.asset(
                           Assets.icons.gitlab,
                           fit: BoxFit.contain,

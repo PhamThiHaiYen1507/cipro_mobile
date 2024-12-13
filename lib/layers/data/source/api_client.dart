@@ -97,4 +97,7 @@ abstract class ApiClient {
 
   @GET('/thirdParty/github/repo')
   Future<BaseResponse> getGithubRepos();
+
+  @POST('/webhook/project')
+  Future<BaseResponse> testProject(@Body() Map<String, dynamic> body);
 }
