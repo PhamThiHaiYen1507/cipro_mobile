@@ -15,7 +15,7 @@ class ArtifactBuilder extends MobxStatefulWidget<ArtifactBuilderController> {
     super.key,
     required this.projectName,
     required this.builder,
-  });
+  }) : super(tag: projectName);
 
   @override
   MobxState<MobxStatefulWidget<ArtifactBuilderController>,

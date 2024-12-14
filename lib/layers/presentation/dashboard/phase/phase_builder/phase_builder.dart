@@ -9,7 +9,10 @@ import 'phase_builder_controller.dart';
 class PhaseBuilder extends MobxStatefulWidget<PhaseBuilderController> {
   final String phaseId;
 
-  final Widget Function(PhaseModel? phase) builder;
+  final Widget Function(
+    PhaseBuilderController controller,
+    PhaseModel? phase,
+  ) builder;
 
   const PhaseBuilder({
     super.key,
@@ -30,6 +33,7 @@ class _PhaseBuilderState
     extends MobxState<PhaseBuilder, PhaseBuilderController> {
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) => widget.builder(controller.phase));
+    return Observer(
+        builder: (context) => widget.builder(controller, controller.phase));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:base_project/core/di/injector.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:base_project/layers/presentation/dashboard/account/widgets/delete_account_dialog.dart';
@@ -44,7 +45,7 @@ class _DashboardAccountScreenState
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Username'.toUpperCase()),
           );
@@ -56,7 +57,7 @@ class _DashboardAccountScreenState
         columnWidth: const TableSpan(extent: FixedSpanExtent(180)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.centerLeft,
             child: Text('Email'.toUpperCase()),
           );
@@ -69,7 +70,7 @@ class _DashboardAccountScreenState
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Role'.toUpperCase()),
           );
@@ -92,7 +93,7 @@ class _DashboardAccountScreenState
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Action'.toUpperCase()),
           );

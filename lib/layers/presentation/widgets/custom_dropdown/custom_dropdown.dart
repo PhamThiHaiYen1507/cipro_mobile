@@ -1,4 +1,5 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/presentation/widgets/custom_tooltip/custom_tooltip.dart';
 import 'package:base_project/utils/helpers/app_border_radius.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
@@ -121,7 +122,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                         Icons.keyboard_arrow_down_rounded,
                         color: isSelected
                             ? (widget.selectedColor ?? AppColors.primaryColor)
-                            : Colors.black.withOpacity(0.8),
+                            : Colors.black.o(0.8),
                       )
                     ],
                   ),
@@ -139,7 +140,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                       Icons.keyboard_arrow_down_rounded,
                       color: isSelected
                           ? AppColors.primaryColor
-                          : Colors.black.withOpacity(0.8),
+                          : Colors.black.o(0.8),
                     )
                   ],
                 )),

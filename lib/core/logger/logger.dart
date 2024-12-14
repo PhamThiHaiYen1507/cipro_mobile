@@ -36,7 +36,9 @@ void _log(Level level, dynamic message,
             dynamic mess = e;
             try {
               if (![String, int, num, double, List, Map, Set]
-                  .contains(mess.runtimeType)) mess = e.toJson();
+                  .contains(mess.runtimeType)) {
+                mess = e.toJson();
+              }
             } catch (_) {}
 
             return mess is Map ? mess.prettyJson : mess;
@@ -50,7 +52,9 @@ void _log(Level level, dynamic message,
         dynamic v = value;
         try {
           if (![String, int, num, double, List, Map, Set]
-              .contains(v.runtimeType)) v = value.toJson();
+              .contains(v.runtimeType)) {
+            v = value.toJson();
+          }
         } catch (_) {}
         json[key] = v;
       });

@@ -103,4 +103,40 @@ abstract class ApiClient {
 
   @POST('/project')
   Future<BaseResponse> importProject(@Body() Map<String, dynamic> body);
+
+  @POST('/task')
+  Future<BaseResponse> createNewTask(@Body() Map<String, dynamic> body);
+
+  @PATCH('/phase/{phaseId}/task/add/{taskId}')
+  Future<BaseResponse> addTaskToPhase(
+    @Path('phaseId') String phaseId,
+    @Path('taskId') String taskId,
+  );
+
+  @GET('/task')
+  Future<BaseResponse> getTasks({
+    @Query('projectName') String? projectName,
+    @Query('filter') String? filter,
+  });
+
+  @PATCH('/phase/{phaseId}/artifact/add')
+  Future<BaseResponse> createArtifact({
+    @Path('phaseId') required String phaseId,
+    @Body() required Map<String, dynamic> body,
+  });
+
+  @PATCH('/phase/{phaseId}/artifact/delete/{artifactId}')
+  Future<BaseResponse> deleteArtifact(
+    @Path('phaseId') String phaseId,
+    @Path('artifactId') String artifactId,
+  );
+
+  @PATCH('/artifact/{artifactId}')
+  Future<BaseResponse> updateArtifact({
+    @Path('artifactId') required String artifactId,
+    @Body() required Map<String, dynamic> body,
+  });
+
+  @POST('/threat')
+  Future<BaseResponse> createThreat(@Body() Map<String, dynamic> body);
 }

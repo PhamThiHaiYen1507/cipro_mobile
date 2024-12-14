@@ -1,4 +1,5 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/presentation/dashboard/vulnerabilities/vulnerability_progress_builder/vulnerability_progress_builder.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/artifact_builder/artifact_builder.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
@@ -109,8 +110,7 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
                                       style: AppTextStyle.f32B,
                                     ),
                                     Container(
-                                      color: AppColors.primaryColor
-                                          .withOpacity(0.4),
+                                      color: AppColors.primaryColor.o(0.4),
                                       child: Row(
                                         children: [
                                           Expanded(

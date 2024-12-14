@@ -35,8 +35,9 @@ abstract class _DashboardControllerBase with Store {
       BuildContext context, String current, String? name) async {
     selectedProjectName = name;
 
-    context
-        .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
+    final route = '/${current.split('/')[3]}';
+
+    context.go(dashboardRoute(route));
   }
 
   Future<List<ProjectFromThirdPartyModel>?> getRepoGithub() async {

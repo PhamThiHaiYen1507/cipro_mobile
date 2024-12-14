@@ -80,7 +80,10 @@ class DashboardProjectHomeScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: DashboardProjectHomeScreen(
-          role: AccountRole.from(role), projectName: projectName),
+        key: ValueKey(projectName),
+        role: AccountRole.from(role),
+        projectName: projectName,
+      ),
     );
   }
 }
@@ -169,6 +172,7 @@ class DashboardScriptScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: DashboardScriptScreen(
+        key: ValueKey(projectName),
         projectName: projectName,
       ),
     );
@@ -232,6 +236,7 @@ class DashboardPhaseScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: DashboardPhaseScreen(
+        key: ValueKey(projectName),
         projectName: projectName,
       ),
     );
@@ -240,13 +245,19 @@ class DashboardPhaseScreenRoute extends GoRouteData {
 
 @immutable
 class PhaseDetailScreenRoute extends GoRouteData {
+  final String projectName;
+
   final String phaseId;
 
-  const PhaseDetailScreenRoute(this.phaseId);
+  const PhaseDetailScreenRoute(
+      {required this.phaseId, required this.projectName});
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return PhaseDetailScreen(phaseId: phaseId);
+    return PhaseDetailScreen(
+      phaseId: phaseId,
+      projectName: projectName,
+    );
   }
 }
 
@@ -264,6 +275,7 @@ class DashboardTicketScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: DashboardTicketScreen(
+        key: ValueKey(projectName),
         projectName: projectName,
       ),
     );
@@ -285,6 +297,7 @@ class DashboardVulnerabilitiesScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: DashboardVulnerabilitiesScreen(
+        key: ValueKey(projectName),
         projectName: projectName,
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/domain/entities/phase_model.dart';
 import 'package:base_project/layers/presentation/widgets/grid_table/grid_table.dart';
 import 'package:base_project/layers/presentation/widgets/project_builder/project_builder.dart';
@@ -24,7 +25,7 @@ class DashboardPhaseScreen extends StatelessWidget {
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Name'.toUpperCase()),
           );
@@ -36,7 +37,7 @@ class DashboardPhaseScreen extends StatelessWidget {
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Description'.toUpperCase()),
           );
@@ -48,7 +49,7 @@ class DashboardPhaseScreen extends StatelessWidget {
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Task'.toUpperCase()),
           );
@@ -60,7 +61,7 @@ class DashboardPhaseScreen extends StatelessWidget {
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Artifact'.toUpperCase()),
           );
@@ -72,13 +73,15 @@ class DashboardPhaseScreen extends StatelessWidget {
         columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
         headerBuilder: (context) {
           return Container(
-            color: AppColors.greyColor.withOpacity(0.2),
+            color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
             child: Text('Detail'.toUpperCase()),
           );
         },
         cellBuilder: (context, data, index) => IconButton(
-          onPressed: () => PhaseDetailScreenRoute(data.id).push(context),
+          onPressed: () => PhaseDetailScreenRoute(
+                  phaseId: data.id, projectName: projectName ?? '')
+              .push(context),
           icon: const Icon(Icons.more_vert_rounded),
         ),
       ),

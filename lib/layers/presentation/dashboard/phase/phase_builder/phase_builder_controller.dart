@@ -13,14 +13,14 @@ abstract class _PhaseBuilderControllerBase with Store {
   final String phaseId;
 
   _PhaseBuilderControllerBase(this._phaseRepository, this.phaseId) {
-    _getPhase();
+    getPhase();
   }
 
   @observable
   PhaseModel? phase;
 
   @action
-  Future<void> _getPhase() async {
+  Future<void> getPhase() async {
     final res = await _phaseRepository.getPhase(phaseId);
 
     res.map((right) {

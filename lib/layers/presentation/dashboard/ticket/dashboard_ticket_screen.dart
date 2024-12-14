@@ -1,4 +1,5 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/domain/entities/ticket_model.dart';
 import 'package:base_project/layers/presentation/widgets/grid_table/grid_table.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
@@ -25,7 +26,7 @@ class DashboardTicketScreen extends StatelessWidget {
               columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
               headerBuilder: (context) {
                 return Container(
-                  color: AppColors.greyColor.withOpacity(0.2),
+                  color: AppColors.greyColor.o(0.2),
                   padding: AppPadding.h8,
                   alignment: Alignment.centerLeft,
                   child: Text('Name'.toUpperCase()),
@@ -41,7 +42,7 @@ class DashboardTicketScreen extends StatelessWidget {
               columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
               headerBuilder: (context) {
                 return Container(
-                  color: AppColors.greyColor.withOpacity(0.2),
+                  color: AppColors.greyColor.o(0.2),
                   alignment: Alignment.center,
                   child: Text('Priority'.toUpperCase()),
                 );
@@ -55,7 +56,7 @@ class DashboardTicketScreen extends StatelessWidget {
               columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
               headerBuilder: (context) {
                 return Container(
-                  color: AppColors.greyColor.withOpacity(0.2),
+                  color: AppColors.greyColor.o(0.2),
                   alignment: Alignment.center,
                   child: Text('Status'.toUpperCase()),
                 );
@@ -69,7 +70,7 @@ class DashboardTicketScreen extends StatelessWidget {
               columnWidth: const TableSpan(extent: FixedSpanExtent(170)),
               headerBuilder: (context) {
                 return Container(
-                  color: AppColors.greyColor.withOpacity(0.2),
+                  color: AppColors.greyColor.o(0.2),
                   alignment: Alignment.centerLeft,
                   child: Text('Assigned to'.toUpperCase()),
                 );
@@ -84,7 +85,7 @@ class DashboardTicketScreen extends StatelessWidget {
               columnWidth: const TableSpan(extent: FixedSpanExtent(170)),
               headerBuilder: (context) {
                 return Container(
-                  color: AppColors.greyColor.withOpacity(0.2),
+                  color: AppColors.greyColor.o(0.2),
                   alignment: Alignment.center,
                   child: Text('Created At'.toUpperCase()),
                 );

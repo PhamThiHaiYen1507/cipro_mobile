@@ -1,6 +1,10 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/presentation/common/button/button.dart';
 import 'package:base_project/layers/presentation/dashboard/phase/phase_builder/phase_builder.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/create_artifact_button/create_artifact_button.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/create_task_button/create_task_button.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/create_threat_button/create_threat_button.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
@@ -9,16 +13,22 @@ import 'package:base_project/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
+import '../../widgets/add_task_phase_button/add_task_phase_button.dart';
+import 'artifact_item/artifact_item.dart';
+
 class PhaseDetailScreen extends StatelessWidget {
+  final String projectName;
+
   final String phaseId;
 
-  const PhaseDetailScreen({super.key, required this.phaseId});
+  const PhaseDetailScreen(
+      {super.key, required this.phaseId, required this.projectName});
 
   @override
   Widget build(BuildContext context) {
     return PhaseBuilder(
       phaseId: phaseId,
-      builder: (phase) {
+      builder: (c, phase) {
         if (phase == null) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
@@ -104,7 +114,7 @@ class PhaseDetailScreen extends StatelessWidget {
                     ),
                     AppSpacing.h8,
                     Container(
-                      color: AppColors.primaryColor.withOpacity(0.4),
+                      color: AppColors.primaryColor.o(0.4),
                       child: Row(
                         children: [
                           Expanded(
@@ -165,30 +175,15 @@ class PhaseDetailScreen extends StatelessWidget {
                       },
                     ),
                     AppSpacing.h32,
-                    Button(
-                      padding: AppPadding.a8,
-                      onPressed: () {},
-                      backgroundColor: Colors.orangeAccent,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add),
-                          Text('Create a new task'),
-                        ],
-                      ),
+                    CreateTaskButton(
+                      projectName: projectName,
+                      onCreateSuccess: () {},
                     ),
                     AppSpacing.h16,
-                    Button(
-                      padding: AppPadding.a8,
-                      onPressed: () {},
-                      backgroundColor: AppColors.primaryColor,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add),
-                          Text('Add tasks'),
-                        ],
-                      ),
+                    AddTaskPhaseButton(
+                      projectName: projectName,
+                      phaseId: phaseId,
+                      onAddSuccess: c.getPhase,
                     ),
                     AppSpacing.h16,
                     Button(
@@ -198,7 +193,7 @@ class PhaseDetailScreen extends StatelessWidget {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.remove),
+                          Icon(Icons.remove, color: Colors.white),
                           Text('Remove selected tasks'),
                         ],
                       ),
@@ -227,65 +222,22 @@ class PhaseDetailScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final artifact = phase.artifacts[index];
 
-                          return Container(
-                            margin: AppPadding.a8,
-                            padding: AppPadding.a16,
-                            decoration: context.defaultBox,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  artifact.name,
-                                  style: AppTextStyle.f18B,
-                                ),
-                                Text(artifact.type.name),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon:
-                                          const Icon(Icons.mode_edit_outlined),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                          Icons.delete_outline_outlined),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
+                          return ArtifactItem(
+                            artifact: artifact,
+                            phaseId: phaseId,
+                            onDeleteSuccess: c.getPhase,
+                            onUpdateSuccess: c.getPhase,
                           );
                         },
                       ),
                     ),
                     AppSpacing.h32,
-                    Button(
-                      padding: AppPadding.a8,
-                      onPressed: () {},
-                      backgroundColor: AppColors.primaryColor,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.add),
-                          Text('Add a new artifact'),
-                        ],
-                      ),
+                    CreateArtifactButton(
+                      phaseId: phaseId,
+                      onCreateSuccess: c.getPhase,
                     ),
                     AppSpacing.h16,
-                    Button(
-                      padding: AppPadding.a8,
-                      onPressed: () {},
-                      backgroundColor: Colors.orangeAccent,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.bug_report),
-                          Text('Add a new threat'),
-                        ],
-                      ),
-                    ),
+                    const CreateThreatButton(),
                     AppSpacing.h16,
                     Button(
                       padding: AppPadding.a8,
@@ -294,7 +246,7 @@ class PhaseDetailScreen extends StatelessWidget {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.bug_report),
+                          Icon(Icons.bug_report, color: Colors.white),
                           Text('Threat dictionary'),
                         ],
                       ),
