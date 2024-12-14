@@ -106,7 +106,7 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: Column(spacing: 16, mainAxisSize: MainAxisSize.min, children: [
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
         TextInputValidator(
           controller: name,
           label: 'Name',
@@ -129,7 +129,6 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
           onChanged: (date) => selectedDueDate = date,
         ),
         Row(
-          spacing: 16,
           children: [
             Expanded(
               child: Button(
