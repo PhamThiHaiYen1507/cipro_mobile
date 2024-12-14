@@ -147,6 +147,7 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
       key: formKey,
       child: SingleChildScrollView(
         child: Column(
+            spacing: 16,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -203,6 +204,7 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                 style: AppTextStyle.f16R.copyWith(color: Colors.cyan),
               ),
               Row(
+                spacing: 16,
                 children: [
                   Expanded(
                     child: Button(
