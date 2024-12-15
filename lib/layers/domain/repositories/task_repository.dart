@@ -18,4 +18,9 @@ abstract class TaskRepository {
     required String projectName,
     String? filter,
   });
+
+  Future<ApiResponseData<bool>> deleteTask({
+    required String taskId,
+    required String phaseId,
+  });
 }

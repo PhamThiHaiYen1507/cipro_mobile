@@ -65,4 +65,16 @@ class TaskRepositoryImpl implements TaskRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> deleteTask(
+      {required String taskId, required String phaseId}) async {
+    try {
+      await _client.deleteTask(phaseId, taskId);
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

@@ -131,6 +131,12 @@ abstract class ApiClient {
     @Path('artifactId') String artifactId,
   );
 
+  @PATCH('/phase/{phaseId}/task/delete/{taskId}')
+  Future<BaseResponse> deleteTask(
+    @Path('phaseId') String phaseId,
+    @Path('taskId') String taskId,
+  );
+
   @PATCH('/artifact/{artifactId}')
   Future<BaseResponse> updateArtifact({
     @Path('artifactId') required String artifactId,
@@ -139,4 +145,7 @@ abstract class ApiClient {
 
   @POST('/threat')
   Future<BaseResponse> createThreat(@Body() Map<String, dynamic> body);
+
+  @GET('/threat')
+  Future<BaseResponse> getThreats();
 }
