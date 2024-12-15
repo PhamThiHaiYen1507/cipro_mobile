@@ -5,6 +5,7 @@ import 'package:base_project/layers/presentation/widgets/custom_dropdown/custom_
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
+import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
 import 'package:base_project/utils/helpers/text_input_validator.dart';
 import 'package:base_project/utils/utils.dart';
@@ -151,12 +152,14 @@ class _CreateThreatFormState extends State<CreateThreatForm> {
               validator: (value) => TextValidate.validateEmpty(value,
                   errorText: 'Name cannot be empty'),
             ),
+            AppSpacing.h16,
             TextInputValidator(
               controller: description,
               label: 'Description',
               validator: (value) => TextValidate.validateEmpty(value,
                   errorText: 'Description cannot be empty'),
             ),
+            AppSpacing.h16,
             Row(
               children: [
                 const Text('Type: ', style: AppTextStyle.f14B),
@@ -173,6 +176,7 @@ class _CreateThreatFormState extends State<CreateThreatForm> {
                 ))
               ],
             ),
+            AppSpacing.h16,
             const TextMarqueeWidget(
               child: Text(
                   'Damage: How big would the damage be if the attack succeeded?',
@@ -285,6 +289,7 @@ class _CreateThreatFormState extends State<CreateThreatForm> {
                     child: const Text('Cancel'),
                   ),
                 ),
+                AppSpacing.w16,
                 Expanded(
                   child: Button(
                     onPressed: () {

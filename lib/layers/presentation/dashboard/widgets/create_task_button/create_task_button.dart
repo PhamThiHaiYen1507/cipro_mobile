@@ -5,6 +5,7 @@ import 'package:base_project/layers/presentation/widgets/calendar_picker/calenda
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
+import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/text_input_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -113,21 +114,25 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
           validator: (value) => TextValidate.validateEmpty(value,
               errorText: 'Name cannot be empty'),
         ),
+        AppSpacing.h16,
         TextInputValidator(
           controller: description,
           label: 'Description',
           validator: (value) => TextValidate.validateEmpty(value,
               errorText: 'Description cannot be empty'),
         ),
+        AppSpacing.h16,
         const TextInputValidator(
           label: 'Status',
           initialText: 'active',
           enabled: false,
         ),
+        AppSpacing.h16,
         CalendarPicker(
           initialDate: selectedDueDate,
           onChanged: (date) => selectedDueDate = date,
         ),
+        AppSpacing.h16,
         Row(
           children: [
             Expanded(
@@ -137,6 +142,7 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
                 child: const Text('Cancel'),
               ),
             ),
+            AppSpacing.w16,
             Expanded(
               child: Button(
                 onPressed: () {

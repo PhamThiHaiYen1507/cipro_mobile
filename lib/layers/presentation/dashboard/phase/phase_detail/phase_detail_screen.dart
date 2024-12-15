@@ -1,33 +1,49 @@
+import 'package:base_project/core/di/injector.dart';
 import 'package:base_project/core/extensions/build_context_extension.dart';
 import 'package:base_project/core/extensions/color_extension.dart';
+import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/presentation/common/button/button.dart';
 import 'package:base_project/layers/presentation/dashboard/phase/phase_builder/phase_builder.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/create_artifact_button/create_artifact_button.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/create_task_button/create_task_button.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/create_threat_button/create_threat_button.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/threat_dictionary_button/threat_dictionary_button.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
 import 'package:base_project/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
 import '../../widgets/add_task_phase_button/add_task_phase_button.dart';
 import 'artifact_item/artifact_item.dart';
+import 'phase_detail_controller.dart';
 
-class PhaseDetailScreen extends StatelessWidget {
+class PhaseDetailScreen extends MobxStatefulWidget<PhaseDetailController> {
   final String projectName;
 
   final String phaseId;
 
   const PhaseDetailScreen(
-      {super.key, required this.phaseId, required this.projectName});
+      {super.key, required this.phaseId, required this.projectName})
+      : super(tag: phaseId);
 
+  @override
+  _PhaseDetailScreenState createState() => _PhaseDetailScreenState();
+
+  @override
+  PhaseDetailController? createController() =>
+      PhaseDetailController(injector(), phaseId);
+}
+
+class _PhaseDetailScreenState
+    extends MobxState<PhaseDetailScreen, PhaseDetailController> {
   @override
   Widget build(BuildContext context) {
     return PhaseBuilder(
-      phaseId: phaseId,
+      phaseId: widget.phaseId,
       builder: (c, phase) {
         if (phase == null) {
           return const Scaffold(
@@ -152,7 +168,10 @@ class PhaseDetailScreen extends StatelessWidget {
                     AppSpacing.h16,
                     Row(
                       children: [
-                        Checkbox(value: false, onChanged: (value) {}),
+                        Opacity(
+                          opacity: 0,
+                          child: Checkbox(value: false, onChanged: (value) {}),
+                        ),
                         const Expanded(child: Text('Name')),
                         const Expanded(child: Text('Status')),
                         const Expanded(child: Text('Description')),
@@ -162,7 +181,14 @@ class PhaseDetailScreen extends StatelessWidget {
                       (e) {
                         return Row(
                           children: [
-                            Checkbox(value: false, onChanged: (value) {}),
+                            Observer(
+                              builder: (context) => Checkbox(
+                                value: controller.taskIds.contains(e.taskId),
+                                onChanged: (v) =>
+                                    controller.onChandedSelectedTask(
+                                        v ?? false, e.taskId),
+                              ),
+                            ),
                             Expanded(child: Text(e.name ?? '')),
                             Expanded(child: Text(e.status ?? '')),
                             Expanded(
@@ -176,19 +202,21 @@ class PhaseDetailScreen extends StatelessWidget {
                     ),
                     AppSpacing.h32,
                     CreateTaskButton(
-                      projectName: projectName,
+                      projectName: widget.projectName,
                       onCreateSuccess: () {},
                     ),
                     AppSpacing.h16,
                     AddTaskPhaseButton(
-                      projectName: projectName,
-                      phaseId: phaseId,
+                      projectName: widget.projectName,
+                      phaseId: widget.phaseId,
                       onAddSuccess: c.getPhase,
                     ),
                     AppSpacing.h16,
                     Button(
                       padding: AppPadding.a8,
-                      onPressed: () {},
+                      onPressed: () => controller
+                          .onRemoveSelectedTask()
+                          .then((value) => c.getPhase()),
                       backgroundColor: Colors.red,
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -224,7 +252,7 @@ class PhaseDetailScreen extends StatelessWidget {
 
                           return ArtifactItem(
                             artifact: artifact,
-                            phaseId: phaseId,
+                            phaseId: widget.phaseId,
                             onDeleteSuccess: c.getPhase,
                             onUpdateSuccess: c.getPhase,
                           );
@@ -233,24 +261,13 @@ class PhaseDetailScreen extends StatelessWidget {
                     ),
                     AppSpacing.h32,
                     CreateArtifactButton(
-                      phaseId: phaseId,
+                      phaseId: widget.phaseId,
                       onCreateSuccess: c.getPhase,
                     ),
                     AppSpacing.h16,
                     const CreateThreatButton(),
                     AppSpacing.h16,
-                    Button(
-                      padding: AppPadding.a8,
-                      onPressed: () {},
-                      backgroundColor: Colors.cyan,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.bug_report, color: Colors.white),
-                          Text('Threat dictionary'),
-                        ],
-                      ),
-                    ),
+                    const ThreatDictionaryButton(),
                   ],
                 ),
               )
