@@ -14,6 +14,19 @@ final injector = GetIt.instance;
 Future<void> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // SQL Injection
+  String getUserData(String userId) {
+    String query = "SELECT * FROM users WHERE id = '$userId'";
+    return query; // Không sử dụng tham số hoá -> SQL Injection
+  }
+
+// Hardcoded Secrets
+  String apiKey = "1234567890ABCDEF"; // Lộ thông tin bảo mật
+
+  print(apiKey);
+
+  print(getUserData(apiKey));
+
   await Future.wait([
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
