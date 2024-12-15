@@ -5,6 +5,7 @@ import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
+import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
 import 'package:base_project/utils/helpers/text_input_validator.dart';
 import 'package:flutter/material.dart';
@@ -156,24 +157,28 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'Name cannot be empty'),
               ),
+              AppSpacing.h16,
               TextInputValidator(
                 controller: url,
                 label: 'URL',
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'URL cannot be empty'),
               ),
+              AppSpacing.h16,
               TextInputValidator(
                 controller: version,
                 label: 'Version',
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'Version cannot be empty'),
               ),
+              AppSpacing.h16,
               TextInputValidator(
                 controller: cpe,
                 label: 'Cpe string',
                 hintText:
                     'Hint: You can autofill name and version of the artifact by filling in the CPE string. Example of CPE string: cpe:2.3:a:apache:tomcat:3.0:*:*:*:*:*:*:* ',
               ),
+              AppSpacing.h16,
               const Text('Type', style: AppTextStyle.f14B),
               IgnorePointer(
                 ignoring: widget.isUpdate,
@@ -202,6 +207,7 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                 'After creating artifact, vulnerabilities will be automatically discovered and added to it.',
                 style: AppTextStyle.f16R.copyWith(color: Colors.cyan),
               ),
+              AppSpacing.h16,
               Row(
                 children: [
                   Expanded(
@@ -211,6 +217,7 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                       child: const Text('Cancel'),
                     ),
                   ),
+                  AppSpacing.w16,
                   Expanded(
                     child: Button(
                       onPressed: () {
