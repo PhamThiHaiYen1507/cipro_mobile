@@ -106,30 +106,32 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: Column(spacing: 16, mainAxisSize: MainAxisSize.min, children: [
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
         TextInputValidator(
           controller: name,
           label: 'Name',
           validator: (value) => TextValidate.validateEmpty(value,
               errorText: 'Name cannot be empty'),
         ),
+        const SizedBox(height: 16),
         TextInputValidator(
           controller: description,
           label: 'Description',
           validator: (value) => TextValidate.validateEmpty(value,
               errorText: 'Description cannot be empty'),
         ),
+        const SizedBox(height: 16),
         const TextInputValidator(
           label: 'Status',
           initialText: 'active',
           enabled: false,
         ),
+        const SizedBox(height: 16),
         CalendarPicker(
           initialDate: selectedDueDate,
           onChanged: (date) => selectedDueDate = date,
         ),
         Row(
-          spacing: 16,
           children: [
             Expanded(
               child: Button(
@@ -138,6 +140,7 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
                 child: const Text('Cancel'),
               ),
             ),
+            const SizedBox(width: 16),
             Expanded(
               child: Button(
                 onPressed: () {

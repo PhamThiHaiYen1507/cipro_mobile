@@ -147,7 +147,6 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
       key: formKey,
       child: SingleChildScrollView(
         child: Column(
-            spacing: 16,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -157,24 +156,28 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'Name cannot be empty'),
               ),
+              const SizedBox(height: 16),
               TextInputValidator(
                 controller: url,
                 label: 'URL',
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'URL cannot be empty'),
               ),
+              const SizedBox(height: 16),
               TextInputValidator(
                 controller: version,
                 label: 'Version',
                 validator: (value) => TextValidate.validateEmpty(value,
                     errorText: 'Version cannot be empty'),
               ),
+              const SizedBox(height: 16),
               TextInputValidator(
                 controller: cpe,
                 label: 'Cpe string',
                 hintText:
                     'Hint: You can autofill name and version of the artifact by filling in the CPE string. Example of CPE string: cpe:2.3:a:apache:tomcat:3.0:*:*:*:*:*:*:* ',
               ),
+              const SizedBox(height: 16),
               const Text('Type', style: AppTextStyle.f14B),
               IgnorePointer(
                 ignoring: widget.isUpdate,
@@ -204,7 +207,6 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                 style: AppTextStyle.f16R.copyWith(color: Colors.cyan),
               ),
               Row(
-                spacing: 16,
                 children: [
                   Expanded(
                     child: Button(
@@ -213,6 +215,7 @@ class _CreateArtifactFormState extends State<CreateArtifactForm> {
                       child: const Text('Cancel'),
                     ),
                   ),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Button(
                       onPressed: () {
