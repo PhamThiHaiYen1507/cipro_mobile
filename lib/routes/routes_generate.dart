@@ -262,6 +262,24 @@ class PhaseDetailScreenRoute extends GoRouteData {
 }
 
 @immutable
+class TicketDetailScreenRoute extends GoRouteData {
+  final String projectName;
+
+  final String ticketId;
+
+  const TicketDetailScreenRoute(
+      {required this.ticketId, required this.projectName});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return TicketDetailScreen(
+      ticketId: ticketId,
+      projectName: projectName,
+    );
+  }
+}
+
+@immutable
 class DashboardTicketScreenRoute extends GoRouteData {
   final String role;
 

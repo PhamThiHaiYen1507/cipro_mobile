@@ -148,4 +148,13 @@ abstract class ApiClient {
 
   @GET('/threat')
   Future<BaseResponse> getThreats();
+
+  @POST('/ticket')
+  Future<BaseResponse> createTicket(@Body() Map<String, dynamic> body);
+
+  @GET('/ticket/{ticketId}')
+  Future<BaseResponse> getTicket(@Path('ticketId') String ticketId);
+
+  @GET('/history/{ticketId}')
+  Future<BaseResponse> getTicketHistory(@Path('ticketId') String ticketId);
 }

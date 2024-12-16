@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
@@ -26,6 +27,8 @@ class GridTable<T> extends StatelessWidget {
 
   final int pinnedRowCount;
 
+  final Function(int index)? onTapRow;
+
   const GridTable({
     super.key,
     required this.items,
@@ -33,6 +36,7 @@ class GridTable<T> extends StatelessWidget {
     this.headerHeight = 44,
     this.rowHeight = 44,
     this.pinnedRowCount = 1,
+    this.onTapRow,
   });
 
   @override
@@ -80,6 +84,15 @@ class GridTable<T> extends StatelessWidget {
       default:
         return TableSpan(
           extent: FixedSpanExtent(rowHeight),
+          recognizerFactories: <Type, GestureRecognizerFactory>{
+            if (onTapRow != null)
+              TapGestureRecognizer:
+                  GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
+                () => TapGestureRecognizer(),
+                (TapGestureRecognizer t) =>
+                    t.onTap = () => onTapRow!(index - 1),
+              ),
+          },
         );
     }
   }
