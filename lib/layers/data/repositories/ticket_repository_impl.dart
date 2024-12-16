@@ -87,4 +87,22 @@ class TicketRepositoryImpl extends TicketRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> updateTicket({
+    required String ticketId,
+    String? status,
+    String? assigneeId,
+  }) async {
+    try {
+      await _client.updateTicketStatus(ticketId, {
+        'data': {if (status != null) 'status': status},
+        'assigneeId': assigneeId,
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

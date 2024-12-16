@@ -322,6 +322,25 @@ class DashboardVulnerabilitiesScreenRoute extends GoRouteData {
   }
 }
 
+@immutable
+class DashboardTemplateScreenRoute extends GoRouteData {
+  final String role;
+
+  final String projectName;
+
+  const DashboardTemplateScreenRoute(
+      {required this.role, this.projectName = ''});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: const DashboardTemplateScreen(),
+    );
+  }
+}
+
 CustomTransitionPage _buildPageWithFadeTransition<T>({
   required BuildContext context,
   required GoRouterState state,

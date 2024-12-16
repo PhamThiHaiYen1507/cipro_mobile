@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../layers/presentation/account_register/account_register_screen.dart';
+import '../layers/presentation/dashboard/template/dashboard_template_screen.dart';
 import '../layers/presentation/dashboard/ticket/ticket_detail/ticket_detail_screen.dart';
 
 part 'routes.g.dart';
@@ -70,6 +71,8 @@ part 'routes_generate.dart';
                         path: ':role${Routes.ticket}'),
                     TypedGoRoute<DashboardVulnerabilitiesScreenRoute>(
                         path: ':role${Routes.vulnerability}'),
+                    TypedGoRoute<DashboardTemplateScreenRoute>(
+                        path: ':role${Routes.template}'),
                   ]),
                 ])
           ],
@@ -96,6 +99,7 @@ abstract class Routes {
   static const String ticket = '/ticket';
   static const String vulnerability = '/vulnerability';
   static const String ticketDetail = '/ticket_detail';
+  static const String template = '/template';
 
   static GoRouter routes = GoRouter(
     debugLogDiagnostics: kDebugMode,

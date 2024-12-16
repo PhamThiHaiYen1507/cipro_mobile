@@ -42,4 +42,74 @@ class PhaseRepositoryImpl implements PhaseRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> deletePhaseTemplate(String templateId) async {
+    try {
+      await _client.deleteTemplate(templateId);
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> createPhaseTemplate({
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+  }) async {
+    try {
+      await _client.createPhaseTemplate({
+        "data": {
+          "name": name,
+          "description": description,
+          "isPrivate": isPrivate,
+          "phases": phases
+              .map((e) => {
+                    "name": e.name,
+                    "description": e.description,
+                    "order": e.order
+                  })
+              .toList(),
+        }
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> updatePhaseTemplate({
+    required String templateId,
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+  }) async {
+    try {
+      await _client.updatePhaseTemplate(templateId, {
+        "data": {
+          "name": name,
+          "description": description,
+          "isPrivate": isPrivate,
+          "phases": phases
+              .map((e) => {
+                    "name": e.name,
+                    "description": e.description,
+                    "order": e.order
+                  })
+              .toList(),
+        }
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

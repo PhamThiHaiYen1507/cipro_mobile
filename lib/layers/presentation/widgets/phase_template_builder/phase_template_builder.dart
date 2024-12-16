@@ -7,7 +7,8 @@ import 'phase_template_builder_controller.dart';
 
 class PhaseTemplateBuilder
     extends MobxStatefulWidget<PhaseTemplateBuilderController> {
-  final Widget Function(List<PhaseTemplateModel> templates) builder;
+  final Widget Function(PhaseTemplateBuilderController controller,
+      List<PhaseTemplateModel> templates) builder;
 
   const PhaseTemplateBuilder({
     super.key,
@@ -23,7 +24,7 @@ class _PhaseTemplateBuilderState
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => widget.builder(controller.templates),
+      builder: (_) => widget.builder(controller, controller.templates),
     );
   }
 }

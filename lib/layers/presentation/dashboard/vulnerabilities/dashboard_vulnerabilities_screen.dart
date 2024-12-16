@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
+import '../../../domain/entities/threat_model.dart';
+import '../../../domain/entities/vulnerability_model.dart';
+
 class DashboardVulnerabilitiesScreen extends StatelessWidget {
   final String projectName;
 
@@ -321,36 +324,7 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         final vuln = e.vulnerabilityList[index];
 
-                                        return Row(
-                                          children: [
-                                            const Padding(
-                                              padding: AppPadding.a16,
-                                              child: Icon(Icons.bug_report),
-                                            ),
-                                            Expanded(
-                                                child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  vuln.cveId ?? '',
-                                                  style: AppTextStyle.f16M,
-                                                ),
-                                                getText('Description',
-                                                    vuln.description ?? ''),
-                                                getText(
-                                                    'Score',
-                                                    Utils.formatNumber(
-                                                        vuln.score,
-                                                        defaultValue: '')),
-                                                getText('Severity',
-                                                    vuln.severity ?? ''),
-                                                getText('CWEs',
-                                                    vuln.cwes.join(', ')),
-                                              ],
-                                            ))
-                                          ],
-                                        );
+                                        return VulnerabilityItem(vuln: vuln);
                                       },
                                     ),
                                     ListView.separated(
@@ -360,34 +334,7 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         final threat = e.threatList[index];
 
-                                        return Row(
-                                          children: [
-                                            const Padding(
-                                              padding: AppPadding.a16,
-                                              child: Icon(Icons.bug_report),
-                                            ),
-                                            Expanded(
-                                                child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  threat.name ?? '',
-                                                  style: AppTextStyle.f16M,
-                                                ),
-                                                getText('Description',
-                                                    threat.description ?? ''),
-                                                getText(
-                                                    'Score',
-                                                    Utils.formatNumber(
-                                                        threat.score?.total,
-                                                        defaultValue: '')),
-                                                getText('Status',
-                                                    threat.status?.value ?? ''),
-                                              ],
-                                            ))
-                                          ],
-                                        );
+                                        return ThreatItem(threat: threat);
                                       },
                                     )
                                   ]))
@@ -401,6 +348,79 @@ class DashboardVulnerabilitiesScreen extends StatelessWidget {
             ),
           );
         });
+  }
+}
+
+class VulnerabilityItem extends StatelessWidget {
+  final VulnerabilityModel vuln;
+
+  const VulnerabilityItem({super.key, required this.vuln});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: AppPadding.a16,
+          child: Icon(Icons.bug_report),
+        ),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              vuln.cveId ?? '',
+              style: AppTextStyle.f16M,
+            ),
+            getText('Description', vuln.description ?? ''),
+            getText('Score', Utils.formatNumber(vuln.score, defaultValue: '')),
+            getText('Severity', vuln.severity ?? ''),
+            getText('CWEs', vuln.cwes.join(', ')),
+          ],
+        ))
+      ],
+    );
+  }
+
+  Widget getText(String title, String content) {
+    return Text.rich(TextSpan(children: [
+      TextSpan(text: title, style: AppTextStyle.f14B),
+      const TextSpan(text: ': ', style: AppTextStyle.f14B),
+      TextSpan(text: content),
+    ]));
+  }
+}
+
+class ThreatItem extends StatelessWidget {
+  final ThreatModel threat;
+
+  const ThreatItem({super.key, required this.threat});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Padding(
+          padding: AppPadding.a16,
+          child: Icon(Icons.bug_report),
+        ),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              threat.name ?? '',
+              style: AppTextStyle.f16M,
+            ),
+            getText('Description', threat.description ?? ''),
+            getText('Score',
+                Utils.formatNumber(threat.score?.total, defaultValue: '')),
+            getText('Status', threat.status?.value ?? ''),
+          ],
+        ))
+      ],
+    );
   }
 
   Widget getText(String title, String content) {

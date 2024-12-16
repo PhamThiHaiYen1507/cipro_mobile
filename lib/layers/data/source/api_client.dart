@@ -157,4 +157,18 @@ abstract class ApiClient {
 
   @GET('/history/{ticketId}')
   Future<BaseResponse> getTicketHistory(@Path('ticketId') String ticketId);
+
+  @PATCH('/ticket/{ticketId}')
+  Future<BaseResponse> updateTicketStatus(
+      @Path('ticketId') String ticketId, @Body() Map<String, dynamic> body);
+
+  @DELETE('/phase/template/{templateId}')
+  Future<BaseResponse> deleteTemplate(@Path('templateId') String templateId);
+
+  @POST('/phase/template')
+  Future<BaseResponse> createPhaseTemplate(@Body() Map<String, dynamic> body);
+
+  @PATCH('/phase/template/{templateId}')
+  Future<BaseResponse> updatePhaseTemplate(
+      @Path('templateId') String templateId, @Body() Map<String, dynamic> body);
 }

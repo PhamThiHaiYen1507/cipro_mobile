@@ -7,7 +7,7 @@ import 'activity_history_builder_controller.dart';
 
 class ActivityHistoryBuilder
     extends MobxStatefulWidget<ActivityHistoryBuilderController> {
-  final Widget Function(List<ActivityHistoryInfoModel>?) builder;
+  final Widget Function(List<ActivityHistoryInfoModel> histories) builder;
 
   const ActivityHistoryBuilder({
     super.key,

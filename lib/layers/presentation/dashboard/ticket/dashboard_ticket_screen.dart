@@ -6,6 +6,7 @@ import 'package:base_project/layers/presentation/widgets/grid_table/grid_table.d
 import 'package:base_project/routes/routes.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
+import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
@@ -101,6 +102,7 @@ class DashboardTicketScreen extends StatelessWidget {
 
           return Column(
             children: [
+              AppSpacing.h16,
               Padding(
                 padding: AppPadding.h16,
                 child: CreateTicketButton(

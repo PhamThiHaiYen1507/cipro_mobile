@@ -12,7 +12,9 @@ abstract class _TicketHistoryBuilderControllerBase with Store {
 
   final String ticketId;
 
-  _TicketHistoryBuilderControllerBase(this._ticketRepository, this.ticketId);
+  _TicketHistoryBuilderControllerBase(this._ticketRepository, this.ticketId) {
+    getHistories();
+  }
 
   @observable
   List<ActivityHistoryInfoModel> histories = [];

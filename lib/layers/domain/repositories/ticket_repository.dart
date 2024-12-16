@@ -20,4 +20,10 @@ abstract class TicketRepository {
   });
 
   Future<ApiResponseData<TicketModel?>> getTicket(String ticketId);
+
+  Future<ApiResponseData<bool>> updateTicket({
+    required String ticketId,
+    String? status,
+    String? assigneeId,
+  });
 }
