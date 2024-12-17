@@ -45,7 +45,7 @@ class _CreateTicketButtonState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.add, color: Colors.white),
-          Text('Create a new task'),
+          Text('Create a new ticket'),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
+import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -51,6 +52,7 @@ class _AddTaskPhaseButtonState
 
   void showSelectTask() {
     AppDialog.dialog(
+      backgroundColor: Colors.white,
       context: context,
       insetPadding: const EdgeInsets.all(16),
       title: 'Add task to phase',
@@ -58,6 +60,7 @@ class _AddTaskPhaseButtonState
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text('Select row to add task to phase'),
+          AppSpacing.h16,
           const Row(
             children: [
               Expanded(
@@ -93,7 +96,14 @@ class _AddTaskPhaseButtonState
 
                       return InkWell(
                         onTap: () => addTaskToPhase(task.taskId),
-                        child: Padding(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              border: Border(
+                            bottom: BorderSide(
+                              color: AppColors.primaryColor,
+                              width: 1,
+                            ),
+                          )),
                           padding: AppPadding.v8,
                           child: Row(
                             children: [

@@ -1,3 +1,4 @@
+import 'package:base_project/app/builder/app_loading_builder_controller.dart';
 import 'package:base_project/layers/domain/repositories/task_repository.dart';
 import 'package:mobx/mobx.dart';
 
@@ -36,7 +37,9 @@ abstract class _PhaseDetailControllerBase with Store {
   }
 
   Future<void> onRemoveSelectedTask() async {
+    LoadingOverlay.show();
     await Future.wait(taskIds
         .map((e) => _taskRepository.deleteTask(taskId: e, phaseId: phaseId)));
+    LoadingOverlay.close();
   }
 }
