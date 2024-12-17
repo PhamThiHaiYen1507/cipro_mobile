@@ -68,13 +68,15 @@ class _AddMemberButtonState
                     style: AppTextStyle.f16R.copyWith(color: Colors.grey),
                   ),
                 ),
-                itemBuilder: (item) => Container(
-                  width: double.maxFinite,
-                  padding: AppPadding.a8,
-                  child: Text(
-                    item.account?.username ?? '',
-                  ),
-                ),
+                itemBuilder: (item) => item.account?.username.isNotEmpty == true
+                    ? Container(
+                        width: double.maxFinite,
+                        padding: AppPadding.a8,
+                        child: Text(
+                          item.account?.username ?? '',
+                        ),
+                      )
+                    : const SizedBox(),
                 selectedItem: value,
                 onSelected: (item) => selectedUser.value = item,
               ),
