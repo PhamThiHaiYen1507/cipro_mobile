@@ -171,4 +171,13 @@ abstract class ApiClient {
   @PATCH('/phase/template/{templateId}')
   Future<BaseResponse> updatePhaseTemplate(
       @Path('templateId') String templateId, @Body() Map<String, dynamic> body);
+
+  @PATCH('/project/{projectName}/member')
+  Future<BaseResponse> addMemberToProject(
+    @Path('projectName') String projectName,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @GET('/user/getAll')
+  Future<BaseResponse> getAllUser();
 }

@@ -189,7 +189,7 @@ class _TicketDetailScreenState
                         const Text('Assignee', style: AppTextStyle.f16B),
                         ProjectMemberBuilder(
                           projectName: widget.projectName,
-                          builder: (members) {
+                          builder: (_, members) {
                             return CustomDropdown(
                               items: members,
                               fitSize: true,

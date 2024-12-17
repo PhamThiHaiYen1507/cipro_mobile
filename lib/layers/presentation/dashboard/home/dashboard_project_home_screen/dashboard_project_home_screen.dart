@@ -1,6 +1,7 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
 import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/domain/entities/project_activity_info_model.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/add_member_button/add_member_button.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/project_info/project_info.dart';
 import 'package:base_project/layers/presentation/widgets/project_activity_builder/project_activity_builder.dart';
 import 'package:base_project/layers/presentation/widgets/project_member_builder/project_member_builder.dart';
@@ -98,7 +99,7 @@ class DashboardProjectHomeScreen extends StatelessWidget {
           AppSpacing.h16,
           ProjectMemberBuilder(
               projectName: projectName,
-              builder: (members) {
+              builder: (c, members) {
                 return Container(
                   width: double.maxFinite,
                   padding: AppPadding.a16,
@@ -139,7 +140,11 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                                 ),
                               )
                               .toList(),
-                        )
+                        ),
+                        AddMemberButton(
+                          onAddSuccess: c.getProjectMembers,
+                          projectName: projectName,
+                        ),
                       ]),
                 );
               }),

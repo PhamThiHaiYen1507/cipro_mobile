@@ -32,4 +32,11 @@ abstract class ProjectInfoRepository {
     String? status,
     String? url,
   });
+
+  Future<ApiResponseData<bool>> addMemberToProject({
+    required String projectName,
+    required String accountId,
+  });
+
+  Future<ApiResponseData<List<ProjectMemberInfoModel>>> getAllUser();
 }

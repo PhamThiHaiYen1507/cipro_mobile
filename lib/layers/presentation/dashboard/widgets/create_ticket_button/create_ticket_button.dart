@@ -176,7 +176,7 @@ class _CreateTicketFormState extends State<CreateTicketForm> {
           AppSpacing.h16,
           ProjectMemberBuilder(
             projectName: widget.projectName,
-            builder: (members) => CustomDropdown(
+            builder: (_, members) => CustomDropdown(
               items: members,
               fitSize: true,
               placeHolderBuilder: () => Padding(
