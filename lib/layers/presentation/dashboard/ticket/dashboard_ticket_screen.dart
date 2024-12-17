@@ -120,7 +120,9 @@ class DashboardTicketScreen extends StatelessWidget {
                     onTapRow: (index) => TicketDetailScreenRoute(
                       ticketId: tickets[index].id,
                       projectName: projectName,
-                    ).push(context),
+                    ).push(context).then((_) {
+                      c.getTickets();
+                    }),
                   ),
                 ),
               ),
