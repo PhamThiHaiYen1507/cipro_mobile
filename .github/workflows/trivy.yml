@@ -28,4 +28,3 @@ jobs:
         with:
           scan-type: fs
           severity: HIGH,CRITICAL
-          target: pubspec.lock
