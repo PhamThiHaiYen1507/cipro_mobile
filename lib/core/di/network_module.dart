@@ -19,5 +19,5 @@ abstract class NetworkModule {
 
   @singleton
   ApiClient getApiClient(Dio dio) =>
-      ApiClient(dio, baseUrl: 'https://cipro-server.duckdns.org');
+      ApiClient(dio, baseUrl: 'http://10.0.2.2:3001');
 }

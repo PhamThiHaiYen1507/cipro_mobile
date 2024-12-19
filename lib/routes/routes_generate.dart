@@ -44,12 +44,14 @@ class DashboardScreenRoute extends ShellRouteData {
             BottomNavigationType.script,
             BottomNavigationType.ticket,
             BottomNavigationType.vulnerability,
+            BottomNavigationType.notification,
           ],
         AccountRole.member => [
             BottomNavigationType.overview,
             BottomNavigationType.ticket,
             BottomNavigationType.task,
             BottomNavigationType.vulnerability,
+            BottomNavigationType.notification,
           ]
       },
       child: navigator,
@@ -337,6 +339,22 @@ class DashboardTemplateScreenRoute extends GoRouteData {
       context: context,
       state: state,
       child: const DashboardTemplateScreen(),
+    );
+  }
+}
+
+@immutable
+class DashboardNotificationScreenRoute extends GoRouteData {
+  final String role;
+
+  const DashboardNotificationScreenRoute({required this.role});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: const DashboardNotificationScreen(),
     );
   }
 }

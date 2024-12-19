@@ -69,6 +69,10 @@ class MobxManager {
     log('${instance.runtimeType} created with tag "$tagName"',
         name: _debugName);
 
+    if (instance is MobxLifeCircle) {
+      (instance as MobxLifeCircle).onInit();
+    }
+
     return instance;
   }
 
@@ -99,6 +103,10 @@ class MobxManager {
 
     log('${instance.runtimeType} created with tag "$tagName"',
         name: _debugName);
+
+    if (instance is MobxLifeCircle) {
+      (instance as MobxLifeCircle).onInit();
+    }
 
     return instance;
   }
@@ -223,5 +231,7 @@ abstract class MobxLongLifeWidget<C extends Store> extends StatelessWidget {
 }
 
 mixin MobxLifeCircle {
-  void onClose();
+  void onClose() {}
+
+  void onInit() {}
 }
