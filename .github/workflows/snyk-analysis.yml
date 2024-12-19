@@ -1,4 +1,4 @@
-name: Snyk Security Scan
+name: Snyk Flutter Scan
 
 on:
   push:
@@ -11,22 +11,30 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install Flutter
+      - name: Set up Flutter environment
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.24.5'
 
-      - name: Flutter Pub Get
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Run Snyk to check vulnerabilities
-        uses: snyk/actions@v2
+      - name: Run Snyk to check for vulnerabilities
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+        id: snyk
+        with:
+          snyk-version: v1.391.0
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.13"
+      - name: Snyk version
+        run: echo "${{ steps.snyk.outputs.version }}"
+      - name: Snyk monitor 
+        run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --file=pubspec.yaml --package-manager=dart
