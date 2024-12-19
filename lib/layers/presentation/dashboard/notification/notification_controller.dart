@@ -18,6 +18,8 @@ abstract class _NotificationScreenControllerBase with Store, MobxLifeCircle {
   final NotificationRepository _notificationRepository;
 
   _NotificationScreenControllerBase(this._notificationRepository) {
+    getNotifications();
+
     FirebaseMessaging.onMessage.listen((message) {
       if (message.data.isNotEmpty) {
         final data =

@@ -33,6 +33,7 @@ class _DashboardNotificationScreenState extends MobxState<
             decoration: context.defaultBox,
             padding: AppPadding.a16,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   notification.title,
