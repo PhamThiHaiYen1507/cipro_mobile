@@ -22,7 +22,8 @@ class _DashboardNotificationScreenState extends MobxState<
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      return ListView.builder(
+      return ListView.separated(
+        separatorBuilder: (context, index) => AppSpacing.h16,
         itemCount: controller.notifications.length,
         itemBuilder: (context, index) {
           final notification = controller.notifications[index];
