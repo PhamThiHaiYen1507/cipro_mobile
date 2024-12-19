@@ -97,4 +97,87 @@ abstract class ApiClient {
 
   @GET('/thirdParty/github/repo')
   Future<BaseResponse> getGithubRepos();
+
+  @POST('/webhook/project')
+  Future<BaseResponse> testProject(@Body() Map<String, dynamic> body);
+
+  @POST('/project')
+  Future<BaseResponse> importProject(@Body() Map<String, dynamic> body);
+
+  @POST('/task')
+  Future<BaseResponse> createNewTask(@Body() Map<String, dynamic> body);
+
+  @PATCH('/phase/{phaseId}/task/add/{taskId}')
+  Future<BaseResponse> addTaskToPhase(
+    @Path('phaseId') String phaseId,
+    @Path('taskId') String taskId,
+  );
+
+  @GET('/task')
+  Future<BaseResponse> getTasks({
+    @Query('projectName') String? projectName,
+    @Query('filter') String? filter,
+  });
+
+  @PATCH('/phase/{phaseId}/artifact/add')
+  Future<BaseResponse> createArtifact({
+    @Path('phaseId') required String phaseId,
+    @Body() required Map<String, dynamic> body,
+  });
+
+  @PATCH('/phase/{phaseId}/artifact/delete/{artifactId}')
+  Future<BaseResponse> deleteArtifact(
+    @Path('phaseId') String phaseId,
+    @Path('artifactId') String artifactId,
+  );
+
+  @PATCH('/phase/{phaseId}/task/delete/{taskId}')
+  Future<BaseResponse> deleteTask(
+    @Path('phaseId') String phaseId,
+    @Path('taskId') String taskId,
+  );
+
+  @PATCH('/artifact/{artifactId}')
+  Future<BaseResponse> updateArtifact({
+    @Path('artifactId') required String artifactId,
+    @Body() required Map<String, dynamic> body,
+  });
+
+  @POST('/threat')
+  Future<BaseResponse> createThreat(@Body() Map<String, dynamic> body);
+
+  @GET('/threat')
+  Future<BaseResponse> getThreats();
+
+  @POST('/ticket')
+  Future<BaseResponse> createTicket(@Body() Map<String, dynamic> body);
+
+  @GET('/ticket/{ticketId}')
+  Future<BaseResponse> getTicket(@Path('ticketId') String ticketId);
+
+  @GET('/history/{ticketId}')
+  Future<BaseResponse> getTicketHistory(@Path('ticketId') String ticketId);
+
+  @PATCH('/ticket/{ticketId}')
+  Future<BaseResponse> updateTicketStatus(
+      @Path('ticketId') String ticketId, @Body() Map<String, dynamic> body);
+
+  @DELETE('/phase/template/{templateId}')
+  Future<BaseResponse> deleteTemplate(@Path('templateId') String templateId);
+
+  @POST('/phase/template')
+  Future<BaseResponse> createPhaseTemplate(@Body() Map<String, dynamic> body);
+
+  @PATCH('/phase/template/{templateId}')
+  Future<BaseResponse> updatePhaseTemplate(
+      @Path('templateId') String templateId, @Body() Map<String, dynamic> body);
+
+  @PATCH('/project/{projectName}/member')
+  Future<BaseResponse> addMemberToProject(
+    @Path('projectName') String projectName,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @GET('/user/getAll')
+  Future<BaseResponse> getAllUser();
 }

@@ -1,5 +1,7 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/domain/entities/project_activity_info_model.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/add_member_button/add_member_button.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/project_info/project_info.dart';
 import 'package:base_project/layers/presentation/widgets/project_activity_builder/project_activity_builder.dart';
 import 'package:base_project/layers/presentation/widgets/project_member_builder/project_member_builder.dart';
@@ -15,7 +17,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
-class DashboardProjectHomeScreen extends StatefulWidget {
+class DashboardProjectHomeScreen extends StatelessWidget {
   final AccountRole role;
 
   final String projectName;
@@ -23,13 +25,6 @@ class DashboardProjectHomeScreen extends StatefulWidget {
   const DashboardProjectHomeScreen(
       {super.key, required this.projectName, required this.role});
 
-  @override
-  State<DashboardProjectHomeScreen> createState() =>
-      _DashboardProjectHomeScreenState();
-}
-
-class _DashboardProjectHomeScreenState
-    extends State<DashboardProjectHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -52,7 +47,7 @@ class _DashboardProjectHomeScreenState
                         ),
                       ),
                       ProjectActivityBuilder(
-                        projectName: widget.projectName,
+                        projectName: projectName,
                         builder: (activities) {
                           final commits = activities
                               .where((element) => element.action == 'commit')
@@ -84,7 +79,7 @@ class _DashboardProjectHomeScreenState
                         ),
                       ),
                       ProjectActivityBuilder(
-                        projectName: widget.projectName,
+                        projectName: projectName,
                         builder: (activities) {
                           final pullRequests = activities
                               .where((element) => element.action == 'pr')
@@ -103,8 +98,8 @@ class _DashboardProjectHomeScreenState
           ),
           AppSpacing.h16,
           ProjectMemberBuilder(
-              projectName: widget.projectName,
-              builder: (members) {
+              projectName: projectName,
+              builder: (c, members) {
                 return Container(
                   width: double.maxFinite,
                   padding: AppPadding.a16,
@@ -145,15 +140,19 @@ class _DashboardProjectHomeScreenState
                                 ),
                               )
                               .toList(),
-                        )
+                        ),
+                        AddMemberButton(
+                          onAddSuccess: c.getProjectMembers,
+                          projectName: projectName,
+                        ),
                       ]),
                 );
               }),
           AppSpacing.h16,
-          ProjectInfo(projectName: widget.projectName),
+          ProjectInfo(projectName: projectName),
           AppSpacing.h16,
           ProjectActivityBuilder(
-              projectName: widget.projectName,
+              projectName: projectName,
               builder: (activities) {
                 final Map<String?, List<ProjectActivityInfoModel>> data = {};
 
@@ -220,8 +219,7 @@ class _DashboardProjectHomeScreenState
                                             (element) => element.action == 'pr')
                                         .length
                                         .toDouble(),
-                                    color:
-                                        AppColors.primaryColor.withOpacity(0.4),
+                                    color: AppColors.primaryColor.o(0.4),
                                   ),
                                   BarChartRodData(
                                     toY: e.value

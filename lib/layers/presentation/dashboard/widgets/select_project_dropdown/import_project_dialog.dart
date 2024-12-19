@@ -36,6 +36,7 @@ class ImportProjectDialog extends StatelessWidget {
               items: projects,
               fitScreen: true,
               fitSize: true,
+              constraints: const BoxConstraints(maxHeight: 250),
               selectedItem: selectedProject,
               onSelected: (item) => onSelected(item),
               itemBuilder: (item) {

@@ -10,7 +10,8 @@ class ProjectMemberBuilder
     extends MobxStatefulWidget<ProjectMemberBuilderController> {
   final String? projectName;
 
-  final Widget Function(List<ProjectMemberInfoModel> members) builder;
+  final Widget Function(ProjectMemberBuilderController controller,
+      List<ProjectMemberInfoModel> members) builder;
 
   const ProjectMemberBuilder({
     super.key,
@@ -32,6 +33,7 @@ class _ProjectMemberBuilderState
     extends MobxState<ProjectMemberBuilder, ProjectMemberBuilderController> {
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) => widget.builder(controller.members));
+    return Observer(
+        builder: (_) => widget.builder(controller, controller.members));
   }
 }

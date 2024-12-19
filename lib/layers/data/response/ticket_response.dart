@@ -34,4 +34,6 @@ class TicketResponse {
   factory TicketResponse.fromJson(Map<String, dynamic> json) =>
       _$TicketResponseFromJson(json);
   Map<String, dynamic> toJson() => _$TicketResponseToJson(this);
+
+  toActivityHistoryInfoModel() {}
 }

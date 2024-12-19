@@ -26,6 +26,13 @@ jobs:
       - name: Scan dependencies with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: fs
-          severity: HIGH,CRITICAL
-          target: pubspec.lock
+          scan-type: 'repo'
+          format: 'sarif'
+          severity: 'HIGH,CRITICAL,MEDIUM,LOW'
+          vuln-type: 'os,library'
+          output: 'trivy-results.sarif'
+          
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'

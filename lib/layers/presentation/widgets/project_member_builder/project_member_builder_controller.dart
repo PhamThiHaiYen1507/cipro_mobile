@@ -14,14 +14,14 @@ abstract class _ProjectMemberBuilderControllerBase with Store {
 
   _ProjectMemberBuilderControllerBase(
       this._projectInfoRepository, this.projectName) {
-    _getProjectMembers();
+    getProjectMembers();
   }
 
   @observable
   List<ProjectMemberInfoModel> members = [];
 
   @action
-  Future<void> _getProjectMembers() async {
+  Future<void> getProjectMembers() async {
     final res = await _projectInfoRepository.getProjectMembers(projectName);
 
     res.map((right) {

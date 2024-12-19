@@ -6,9 +6,9 @@ part 'phase_model.g.dart';
 
 @JsonSerializable()
 class PhaseModel {
-  final String? name;
+  String? name;
 
-  final String? description;
+  String? description;
 
   final int order;
 

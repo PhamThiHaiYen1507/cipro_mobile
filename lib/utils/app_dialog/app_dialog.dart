@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/core/extensions/number_extension.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_border_radius.dart';
@@ -59,7 +60,7 @@ abstract class AppDialog {
                       child: Container(
                           decoration: BoxDecoration(
                               borderRadius: 5.radius,
-                              color: AppColors.midGrey.withOpacity(0.5)),
+                              color: AppColors.midGrey.o(0.5)),
                           width: 36,
                           height: 5)),
                   AppSpacing.h4,
@@ -79,7 +80,7 @@ abstract class AppDialog {
                     child: Container(
                         decoration: BoxDecoration(
                             borderRadius: 5.radius,
-                            color: AppColors.midGrey.withOpacity(0.5)),
+                            color: AppColors.midGrey.o(0.5)),
                         width: 36,
                         height: 5)),
                 AppSpacing.h4,
@@ -98,6 +99,7 @@ abstract class AppDialog {
     EdgeInsetsGeometry? contentPadding,
     EdgeInsets? insetPadding,
     bool barrierDismissible = true,
+    Color? backgroundColor,
   }) async {
     return showDialog<T>(
       context: context,
@@ -111,6 +113,7 @@ abstract class AppDialog {
           child: AlertDialog(
             title: Text(title ?? '',
                 style: AppTextStyle.f16B, textAlign: TextAlign.center),
+            backgroundColor: backgroundColor,
             insetPadding:
                 insetPadding ?? const EdgeInsets.symmetric(vertical: 18),
             contentPadding: contentPadding ?? 18.padding,
@@ -126,7 +129,7 @@ abstract class AppDialog {
 
   static void showNotification({
     required BuildContext context,
-    required String title,
+    String? title,
     required String message,
     required NotificationType type,
   }) {
@@ -141,9 +144,9 @@ abstract class AppDialog {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  if (title.isNotEmpty)
+                  if (title?.isNotEmpty == true)
                     Text(
-                      title,
+                      title!,
                       style: AppTextStyle.f16B,
                     ),
                   AppSpacing.h4,
@@ -163,7 +166,7 @@ abstract class AppDialog {
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         boxShadows: [
           BoxShadow(
-            color: AppColors.greyColor.withOpacity(0.8),
+            color: AppColors.greyColor.o(0.8),
             blurRadius: 4,
           ),
         ],

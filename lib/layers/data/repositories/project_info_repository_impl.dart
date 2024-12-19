@@ -131,4 +131,50 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> importProject(
+      {String? name, String? owner, String? status, String? url}) async {
+    try {
+      await _client.importProject({
+        'data': {
+          'type': 'import',
+          'data': {'name': name, 'owner': owner, 'status': status, 'url': url}
+        }
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> addMemberToProject(
+      {required String projectName, required String accountId}) async {
+    try {
+      await _client.addMemberToProject(Uri.encodeComponent(projectName), {
+        'data': {'accountId': accountId}
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<List<ProjectMemberInfoModel>>> getAllUser() async {
+    try {
+      final res = await _client.getAllUser();
+
+      return Right(res
+              .getItems(ProjectMemberInfoResponse.fromJson)
+              ?.map((e) => e.toProjectMemberInfoModel())
+              .toList() ??
+          []);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

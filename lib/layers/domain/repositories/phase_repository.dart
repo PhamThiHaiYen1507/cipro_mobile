@@ -6,4 +6,21 @@ abstract class PhaseRepository {
   Future<ApiResponseData<List<PhaseTemplateModel>?>> getTemplateList();
 
   Future<ApiResponseData<PhaseModel?>> getPhase(String phaseId);
+
+  Future<ApiResponseData<bool>> deletePhaseTemplate(String templateId);
+
+  Future<ApiResponseData<bool>> createPhaseTemplate({
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+  });
+
+  Future<ApiResponseData<bool>> updatePhaseTemplate({
+    required String templateId,
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+  });
 }

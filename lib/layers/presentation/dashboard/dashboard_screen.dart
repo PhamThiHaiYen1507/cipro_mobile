@@ -1,10 +1,13 @@
 import 'package:base_project/core/state_manager/mobx_manager.dart';
+import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/presentation/dashboard/dashboard_controller.dart';
 import 'package:base_project/layers/presentation/dashboard/widgets/select_project_dropdown/import_project_dialog.dart';
+import 'package:base_project/layers/presentation/widgets/project_list_builder/project_list_builder_controller.dart';
 import 'package:base_project/routes/routes.dart';
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/enum/bottom_navigation_type.dart';
+import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -67,21 +70,24 @@ class _DashboardScreenState
                               ? AppDialog.dialog(
                                   context: context,
                                   content: Observer(
-                                      builder: (_) => ImportProjectDialog(
-                                            projects: res,
-                                            selectedProject: controller
-                                                .selectedProjectImport,
-                                            onSelected: (project) => controller
-                                                    .selectedProjectImport =
-                                                project,
-                                            onCancel: () => context.pop(),
-                                            onImport: () {
-                                              if (controller
-                                                      .selectedProjectImport !=
-                                                  null) {}
-                                              context.pop();
-                                            },
-                                          )))
+                                    builder: (_) => ImportProjectDialog(
+                                      projects: res,
+                                      selectedProject:
+                                          controller.selectedProjectImport,
+                                      onSelected: (project) => controller
+                                          .selectedProjectImport = project,
+                                      onCancel: () => context.pop(),
+                                      onImport: () {
+                                        if (controller.selectedProjectImport !=
+                                            null) {
+                                          onImport(controller
+                                              .selectedProjectImport!);
+                                        }
+                                        context.pop();
+                                      },
+                                    ),
+                                  ),
+                                )
                               : null;
                         }
                       },
@@ -117,6 +123,28 @@ class _DashboardScreenState
         ),
       ),
     );
+  }
+
+  Future<void> onImport(ProjectFromThirdPartyModel selectedProject) async {
+    final res = await controller.importProject();
+
+    if (res) {
+      MobxManager.get<ProjectListBuilderController>().getProjects();
+
+      AppDialog.showNotification(
+        context: context,
+        title: 'Import project',
+        message: 'Import project success',
+        type: NotificationType.success,
+      );
+    } else {
+      AppDialog.showNotification(
+        context: context,
+        title: 'Import project',
+        message: 'Import project failed',
+        type: NotificationType.error,
+      );
+    }
   }
 
   Future<void> logout() async {

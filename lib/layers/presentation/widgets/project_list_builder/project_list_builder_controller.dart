@@ -14,14 +14,14 @@ abstract class _ProjectListBuilderControllerBase with Store {
 
   _ProjectListBuilderControllerBase(
       this._projectInfoRepository, this.onInitialize) {
-    _getProjects();
+    getProjects();
   }
 
   @observable
   List<ProjectInfoModel> projects = [];
 
   @action
-  Future<void> _getProjects() async {
+  Future<void> getProjects() async {
     final res = await _projectInfoRepository.getProjects();
 
     res.map((right) {

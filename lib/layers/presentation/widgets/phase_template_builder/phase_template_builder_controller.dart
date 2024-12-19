@@ -12,7 +12,9 @@ class PhaseTemplateBuilderController = _PhaseTemplateBuilderControllerBase
 abstract class _PhaseTemplateBuilderControllerBase with Store {
   final PhaseRepository _phaseRepository;
 
-  _PhaseTemplateBuilderControllerBase(this._phaseRepository);
+  _PhaseTemplateBuilderControllerBase(this._phaseRepository) {
+    fetchTemplateList();
+  }
 
   @observable
   List<PhaseTemplateModel> templates = [];

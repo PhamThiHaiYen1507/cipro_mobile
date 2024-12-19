@@ -1,3 +1,4 @@
+import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/utils/helpers/app_border_radius.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class Button extends StatelessWidget {
             disabledForegroundColor: disabledForegroundColor ?? Colors.white,
             disabledBackgroundColor: disabledBackgroundColor ??
                 backgroundColor ??
-                AppColors.primaryColor.withOpacity(0.5),
+                AppColors.primaryColor.o(0.5),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: borderRadius ?? AppBorderRadius.sm,

@@ -9,7 +9,8 @@ import 'ticket_builder_controller.dart';
 class TicketBuilder extends MobxStatefulWidget<TicketBuilderController> {
   final String projectName;
 
-  final Widget Function(List<TicketModel> tickets) builder;
+  final Widget Function(
+      TicketBuilderController controller, List<TicketModel> tickets) builder;
 
   const TicketBuilder(
       {super.key, required this.projectName, required this.builder})
@@ -28,6 +29,7 @@ class _TicketBuilderState
     extends MobxState<TicketBuilder, TicketBuilderController> {
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) => widget.builder(controller.tickets));
+    return Observer(
+        builder: (context) => widget.builder(controller, controller.tickets));
   }
 }

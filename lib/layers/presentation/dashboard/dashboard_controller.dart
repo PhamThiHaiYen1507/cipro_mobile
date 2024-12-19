@@ -35,8 +35,9 @@ abstract class _DashboardControllerBase with Store {
       BuildContext context, String current, String? name) async {
     selectedProjectName = name;
 
-    context
-        .go([current, if (name != null) Uri.encodeComponent(name)].join('/'));
+    final route = '/${current.split('/')[3]}';
+
+    context.go(dashboardRoute(route));
   }
 
   Future<List<ProjectFromThirdPartyModel>?> getRepoGithub() async {
@@ -69,5 +70,18 @@ abstract class _DashboardControllerBase with Store {
     final res = await _authenticationRepository.logout();
 
     return res.fold((left) => false, (right) => true);
+  }
+
+  Future<bool> importProject() async {
+    final res = await _projectInfoRepository.importProject(
+      name: selectedProjectImport?.name,
+      owner: selectedProjectImport?.owner,
+      status: selectedProjectImport?.status,
+      url: selectedProjectImport?.url,
+    );
+
+    return res.fold((left) => false, (right) {
+      return true;
+    });
   }
 }

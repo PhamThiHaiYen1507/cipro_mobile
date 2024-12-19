@@ -1,9 +1,11 @@
 import 'package:base_project/layers/domain/entities/activity_history_info_model.dart';
 import 'package:base_project/layers/domain/repositories/activity_history_repository.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'activity_history_builder_controller.g.dart';
 
+@injectable
 class ActivityHistoryBuilderController = _ActivityHistoryBuilderControllerBase
     with _$ActivityHistoryBuilderController;
 
@@ -18,7 +20,7 @@ abstract class _ActivityHistoryBuilderControllerBase with Store {
   List<ActivityHistoryInfoModel> histories = [];
 
   @action
-  void _getHistories() async {
+  Future<void> _getHistories() async {
     final res = await _activityHistoryRepository.getActivityHistory();
 
     res.map((right) {

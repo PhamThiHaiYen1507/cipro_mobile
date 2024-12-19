@@ -13,14 +13,14 @@ abstract class _TicketBuilderControllerBase with Store {
   final String projectName;
 
   _TicketBuilderControllerBase(this._ticketRepository, this.projectName) {
-    _getTickets();
+    getTickets();
   }
 
   @observable
   List<TicketModel> tickets = [];
 
   @action
-  Future<void> _getTickets() async {
+  Future<void> getTickets() async {
     final res = await _ticketRepository.getTickets(projectName);
 
     res.map((right) {

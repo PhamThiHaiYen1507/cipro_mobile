@@ -12,4 +12,6 @@ abstract class AuthenticationRepository {
       String username, String password, String confirmPassword, String email);
 
   Future<ApiResponseData<bool>> logout();
+
+  Future<ApiResponseData<bool>> testProject();
 }
