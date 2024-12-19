@@ -24,8 +24,17 @@ jobs:
         run: flutter pub get
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions@v3
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+        id: snyk
         with:
-          args: test
+          snyk-version: v1.391.0
+      - uses: actions/setup-go@v1
+        with:
+          go-version: "1.13"
+      - name: Snyk version
+        run: echo "${{ steps.snyk.outputs.version }}"
+      - name: Snyk monitor 
+        run: snyk monitor
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
