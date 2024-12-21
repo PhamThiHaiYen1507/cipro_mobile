@@ -31,12 +31,9 @@ jobs:
           path: '.'
           format: 'SARIF'
           output-directory: './dependency-check-report'
-          
-      - name: Navigate to report folder and list file report
-        run: cd ./dependency-check-report && ls && cd ../
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: './dependency-check-report/dependency-check-report.sarif'
+          path: /github/workspace/reports/dependency-check-report.sarif
