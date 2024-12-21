@@ -29,7 +29,7 @@ jobs:
         with:
           project: 'base_project'
           path: '.'
-          format: 'sarif'
+          format: 'SARIF'
           output-directory: './dependency-check-report'
           
       - name: Navigate to report folder and list file report
