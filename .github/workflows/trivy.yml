@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      security-events: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,16 +26,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Scan dependencies with Trivy
-        uses: aquasecurity/trivy-action@master
+      - name: Run Trivy scan
+        run: |
+          mkdir -p reports
+          trivy fs --format sarif --output reports/trivy-results.sarif .
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          scan-type: 'fs'
-          format: 'sarif'
-          severity: 'HIGH,CRITICAL,MEDIUM,LOW'
-          vuln-type: 'os,library'
-          output: 'trivy-results.sarif'
-          
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: reports/trivy-results.sarif
