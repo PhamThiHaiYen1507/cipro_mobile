@@ -11,6 +11,8 @@ on:
 jobs:
   trivy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,7 +28,7 @@ jobs:
       - name: Scan dependencies with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'repo'
+          scan-type: 'fs'
           format: 'sarif'
           severity: 'HIGH,CRITICAL,MEDIUM,LOW'
           vuln-type: 'os,library'
