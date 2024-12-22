@@ -34,7 +34,7 @@ jobs:
 
       - name: Verify Report File
         run: |
-          if [ -f ./dependency-check-report.sarif ]; then
+          if [ -f ./dependency-check-report.json ]; then
           echo "Report file exists."
           else
           echo "Report file not found!"
