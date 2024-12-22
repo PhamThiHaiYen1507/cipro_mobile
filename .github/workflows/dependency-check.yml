@@ -29,8 +29,8 @@ jobs:
         with:
           project: 'base_project'
           path: '.'
-          format: 'SARIF'
-          out: './dependency-check-report.sarif'
+          format: 'JSON'
+          out: './dependency-check-report.json'
 
       - name: Verify Report File
         run: |
@@ -45,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: dependency-check-report.sarif
+          path: dependency-check-report.json
