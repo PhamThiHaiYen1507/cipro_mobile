@@ -30,7 +30,16 @@ jobs:
           project: 'base_project'
           path: '.'
           format: 'SARIF'
-          out: './dependency-check-report'
+          out: './dependency-check-report.sarif'
+
+      - name: Verify Report File
+        run: |
+          if [ -f ./dependency-check-report.sarif ]; then
+          echo "Report file exists."
+          else
+          echo "Report file not found!"
+          exit 1
+          fi
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
