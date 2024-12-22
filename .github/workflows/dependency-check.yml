@@ -30,7 +30,7 @@ jobs:
           project: 'base_project'
           path: '.'
           format: 'SARIF'
-          output-directory: './dependency-check-report'
+          out: './dependency-check-report'
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
