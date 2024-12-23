@@ -29,14 +29,20 @@ jobs:
         with:
           project: 'base_project'
           path: '.'
-          format: 'HTML'
-          output-directory: './dependency-check-report'
-          
-      - name: List files in report directory
-        run: ls
+          format: 'JSON'
+          out: './dependency-check-report.json'
+
+      - name: Verify Report File
+        run: |
+          if [ -f ./dependency-check-report.json ]; then
+          echo "Report file exists."
+          else
+          echo "Report file not found!"
+          exit 1
+          fi
 
       - name: Upload Dependency-Check Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: './dependency-check-report/dependency-check-report.html'
+          path: dependency-check-report.json
