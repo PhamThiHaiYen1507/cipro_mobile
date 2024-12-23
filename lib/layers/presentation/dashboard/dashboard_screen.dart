@@ -111,7 +111,7 @@ class _DashboardScreenState
           currentIndex: currentIndex >= 0 ? currentIndex : 0,
           onTap: (i) =>
               context.go(controller.dashboardRoute(widget.navItems[i].route)),
-          type: BottomNavigationBarType.fixed,
+          type: BottomNavigationBarType.shifting,
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.grey,
           items: widget.navItems

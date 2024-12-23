@@ -180,4 +180,7 @@ abstract class ApiClient {
 
   @GET('/user/getAll')
   Future<BaseResponse> getAllUser();
+
+  @GET('/notification')
+  Future<BaseResponse> getNotifications();
 }

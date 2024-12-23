@@ -10,7 +10,8 @@ enum BottomNavigationType {
   script(icon: Icons.code, title: 'Script'),
   account(icon: Icons.account_box_outlined, title: 'Account'),
   template(icon: Icons.raw_on_rounded, title: 'Template'),
-  scanningTool(icon: Icons.flag_outlined, title: 'Scanning Tool');
+  scanningTool(icon: Icons.flag_outlined, title: 'Scanning Tool'),
+  notification(icon: Icons.notifications, title: 'Notification');
 
   final IconData icon;
 
