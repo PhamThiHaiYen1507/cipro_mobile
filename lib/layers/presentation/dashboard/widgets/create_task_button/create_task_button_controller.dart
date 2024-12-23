@@ -18,12 +18,17 @@ abstract class _CreateTaskButtonControllerBase with Store {
     required String name,
     required String description,
     required DateTime dueDate,
+    required String phaseId,
+    required String assigneeId,
   }) async {
     final res = await _taskRepository.createNewTask(
-        projectName: projectName,
-        name: name,
-        description: description,
-        dueDate: dueDate);
+      projectName: projectName,
+      name: name,
+      description: description,
+      dueDate: dueDate,
+      phaseId: phaseId,
+      assigneeId: assigneeId,
+    );
 
     return res.fold((left) => false, (right) => true);
   }

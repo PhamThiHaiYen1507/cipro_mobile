@@ -1,12 +1,15 @@
 import 'package:base_project/core/extensions/base_response_extension.dart';
 import 'package:base_project/core/extensions/exception_extension.dart';
 import 'package:base_project/core/type_def/api_response_data.dart';
+import 'package:base_project/layers/data/response/resolution_response.dart';
 import 'package:base_project/layers/data/response/ticket_response.dart';
 import 'package:base_project/layers/data/source/api_client.dart';
 import 'package:base_project/layers/domain/entities/activity_history_info_model.dart';
+import 'package:base_project/layers/domain/entities/resolution_model.dart';
 import 'package:base_project/layers/domain/entities/ticket_model.dart';
 import 'package:base_project/layers/domain/repositories/ticket_repository.dart';
 import 'package:base_project/layers/domain/translators/activity_history_info_translator.dart';
+import 'package:base_project/layers/domain/translators/resolution_translator.dart';
 import 'package:base_project/layers/domain/translators/ticket_translator.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
@@ -101,6 +104,36 @@ class TicketRepositoryImpl extends TicketRepository {
       });
 
       return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> addResolution(
+      {required String cveId, required String resolution}) async {
+    try {
+      await _client.addResolution({
+        'data': {'cveId': cveId, 'description': resolution}
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<List<ResolutionModel>>> getResolution(
+      {required List<String> cveIds}) async {
+    try {
+      final res = await _client.getResolution(cveIds);
+
+      return Right(res
+              .getItems(ResolutionResponse.fromJson)
+              ?.map((e) => e.toResolutionModel())
+              .toList() ??
+          []);
     } on Exception catch (e, stackTrace) {
       return Left(e.handlerApiException(stackTrace));
     }

@@ -29,6 +29,8 @@ class TicketResponse {
 
   DateTime? updatedAt;
 
+  String? createBy;
+
   TicketResponse();
 
   factory TicketResponse.fromJson(Map<String, dynamic> json) =>

@@ -107,6 +107,12 @@ abstract class ApiClient {
   @POST('/task')
   Future<BaseResponse> createNewTask(@Body() Map<String, dynamic> body);
 
+  @PATCH('/task/{taskId}')
+  Future<BaseResponse> updateTask(
+    @Path('taskId') String taskId,
+    @Body() Map<String, dynamic> body,
+  );
+
   @PATCH('/phase/{phaseId}/task/add/{taskId}')
   Future<BaseResponse> addTaskToPhase(
     @Path('phaseId') String phaseId,
@@ -165,8 +171,13 @@ abstract class ApiClient {
   @DELETE('/phase/template/{templateId}')
   Future<BaseResponse> deleteTemplate(@Path('templateId') String templateId);
 
-  @POST('/phase/template')
+  @POST('/phase/template/create')
   Future<BaseResponse> createPhaseTemplate(@Body() Map<String, dynamic> body);
+
+  @POST('/phase/template')
+  Future<BaseResponse> createPhaseFromTemplate(
+    @Body() Map<String, dynamic> body,
+  );
 
   @PATCH('/phase/template/{templateId}')
   Future<BaseResponse> updatePhaseTemplate(
@@ -183,4 +194,14 @@ abstract class ApiClient {
 
   @GET('/notification')
   Future<BaseResponse> getNotifications();
+
+  @PATCH('/vuln/resolution')
+  Future<BaseResponse> addResolution(@Body() Map<String, dynamic> body);
+
+  @GET('/vuln/resolution')
+  Future<BaseResponse> getResolution(@Query('cveId') List<String> cveIds);
+
+  @GET('/activity/scan')
+  Future<BaseResponse> getScanActivities(
+      @Query('projectName') String projectName);
 }

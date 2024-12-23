@@ -3,9 +3,11 @@ import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/domain/entities/project_member_info_model.dart';
 import 'package:base_project/layers/domain/entities/ticket_model.dart';
 import 'package:base_project/layers/presentation/common/button/button.dart';
+import 'package:base_project/layers/presentation/common/text_input_validator/text_input_validator.dart';
 import 'package:base_project/layers/presentation/dashboard/ticket/ticket_history_builder/ticket_history_builder.dart';
 import 'package:base_project/layers/presentation/widgets/custom_dropdown/custom_dropdown.dart';
 import 'package:base_project/layers/presentation/widgets/project_member_builder/project_member_builder.dart';
+import 'package:base_project/layers/presentation/widgets/resolution_builder/resolution_builder.dart';
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_border_radius.dart';
@@ -13,9 +15,11 @@ import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
+import 'package:base_project/utils/helpers/text_input_validator.dart';
 import 'package:base_project/utils/utils.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../vulnerabilities/dashboard_vulnerabilities_screen.dart';
 import '../ticket_detail_builder/ticket_detail_builder.dart';
@@ -42,6 +46,10 @@ class TicketDetailScreen extends MobxStatefulWidget<TicketDetailController> {
 
 class _TicketDetailScreenState
     extends MobxState<TicketDetailScreen, TicketDetailController> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final TextEditingController resolution = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final statusColors = {
@@ -235,7 +243,56 @@ class _TicketDetailScreenState
                         const Text('Vulnerabilities', style: AppTextStyle.f16B),
                         ...ticket.targetedVulnerability.map((e) => Padding(
                               padding: AppPadding.v8,
-                              child: VulnerabilityItem(vuln: e),
+                              child: Column(
+                                children: [
+                                  VulnerabilityItem(vuln: e),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Button(
+                                        onPressed: () => showAddResolutionPopup(
+                                            e.cveId ?? ''),
+                                        backgroundColor: Colors.transparent,
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.add,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                            Text(
+                                              'Add resolution',
+                                              style: AppTextStyle.f14B.copyWith(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Button(
+                                        onPressed: () =>
+                                            showResolutionView(e.cveId ?? ''),
+                                        backgroundColor: Colors.transparent,
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.menu_book_rounded,
+                                              color: AppColors.primaryColor,
+                                            ),
+                                            AppSpacing.w4,
+                                            Text(
+                                              'View resolution',
+                                              style: AppTextStyle.f14B.copyWith(
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ))
                       ],
                     );
@@ -272,5 +329,126 @@ class _TicketDetailScreenState
     }
 
     return false;
+  }
+
+  void showAddResolutionPopup(String cveId) {
+    AppDialog.dialog(
+      context: context,
+      title: 'Add resolution',
+      content: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextInputValidator(
+              controller: resolution,
+              label: 'Description',
+              minLines: 5,
+              maxLines: 5,
+              validator: (value) => TextValidate.validateEmpty(value,
+                  errorText: 'Description cannot be empty'),
+            ),
+            AppSpacing.h16,
+            Row(
+              children: [
+                Expanded(
+                  child: Button(
+                    backgroundColor: Colors.red,
+                    onPressed: context.pop,
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                AppSpacing.w16,
+                Expanded(
+                  child: Button(
+                    onPressed: () async {
+                      if (formKey.currentState?.validate() == true) {
+                        context.pop();
+                        final result = await controller.onAddResolution(
+                          cveId,
+                          resolution.text,
+                        );
+
+                        if (result) {
+                          AppDialog.showNotification(
+                            context: context,
+                            message: 'Add resolution success',
+                            type: NotificationType.success,
+                          );
+                        } else {
+                          AppDialog.showNotification(
+                            context: context,
+                            message: 'Add resolution failed',
+                            type: NotificationType.error,
+                          );
+                        }
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showResolutionView(String cveId) {
+    AppDialog.dialog(
+      context: context,
+      title: 'Resolution',
+      insetPadding: AppPadding.a16,
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ResolutionBuilder(
+          cveIds: [cveId],
+          builder: (resolutions) {
+            if (resolutions.isEmpty) {
+              return const Text(
+                'Please add the resolution',
+                style: AppTextStyle.f14B,
+                textAlign: TextAlign.center,
+              );
+            }
+
+            final resolution = resolutions.first.resolution;
+
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: resolution.length,
+              itemBuilder: (context, index) {
+                final data = resolution[index];
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.account_circle),
+                        AppSpacing.w8,
+                        Text(data.createdBy, style: AppTextStyle.f14B),
+                      ],
+                    ),
+                    Text.rich(TextSpan(children: [
+                      const TextSpan(
+                          text: 'Description: ', style: AppTextStyle.f14B),
+                      TextSpan(text: data.description)
+                    ])),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    resolution.dispose();
+    super.dispose();
   }
 }

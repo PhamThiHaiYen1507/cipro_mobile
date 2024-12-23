@@ -16,14 +16,14 @@ abstract class _ProjectMemberInfoBuilderControllerBase with Store {
 
   _ProjectMemberInfoBuilderControllerBase(
       this._projectInfoRepository, this.memberId, this.accountId) {
-    _getProjectMemberFromId();
+    getProjectMemberFromId();
   }
 
   @observable
   ProjectMemberInfoModel? member;
 
   @action
-  Future<void> _getProjectMemberFromId() async {
+  Future<void> getProjectMemberFromId() async {
     final res = await _projectInfoRepository.getProjectMemberFromId(
       memberId: memberId,
       accountId: accountId,

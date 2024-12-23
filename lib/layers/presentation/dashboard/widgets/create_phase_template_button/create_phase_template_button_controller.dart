@@ -47,4 +47,24 @@ abstract class _CreatePhaseTemplateButtonControllerBase with Store {
 
     return res.fold((left) => false, (right) => true);
   }
+
+  Future<bool> onCreateNewPhaseFromTemplate({
+    required String projectName,
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+    String? templateId,
+  }) async {
+    final res = await _phaseRepository.createPhaseFromTemplate(
+      projectName: projectName,
+      name: name,
+      description: description,
+      isPrivate: isPrivate,
+      phases: phases,
+      templateId: templateId,
+    );
+
+    return res.fold((left) => false, (right) => true);
+  }
 }

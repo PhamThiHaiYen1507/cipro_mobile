@@ -16,13 +16,18 @@ class TaskRepositoryImpl implements TaskRepository {
   TaskRepositoryImpl(this._client);
 
   @override
-  Future<ApiResponseData<bool>> createNewTask(
-      {required String projectName,
-      required String name,
-      required String description,
-      required DateTime dueDate}) async {
+  Future<ApiResponseData<bool>> createNewTask({
+    required String projectName,
+    required String name,
+    required String description,
+    required DateTime dueDate,
+    required String phaseId,
+    required String assigneeId,
+  }) async {
     try {
       await _client.createNewTask({
+        'assigneeId': assigneeId,
+        'phaseId': phaseId,
         'data': {
           'projectName': projectName,
           'name': name,
@@ -71,6 +76,20 @@ class TaskRepositoryImpl implements TaskRepository {
       {required String taskId, required String phaseId}) async {
     try {
       await _client.deleteTask(phaseId, taskId);
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
+
+  @override
+  Future<ApiResponseData<bool>> updateTask(
+      {required String taskId, required bool active}) async {
+    try {
+      await _client.updateTask(taskId, {
+        'data': {'status': active ? 'active' : 'completed'}
+      });
 
       return const Right(true);
     } on Exception catch (e, stackTrace) {

@@ -7,6 +7,8 @@ abstract class TaskRepository {
     required String name,
     required String description,
     required DateTime dueDate,
+    required String phaseId,
+    required String assigneeId,
   });
 
   Future<ApiResponseData<bool>> addTaskToPhase({
@@ -22,5 +24,10 @@ abstract class TaskRepository {
   Future<ApiResponseData<bool>> deleteTask({
     required String taskId,
     required String phaseId,
+  });
+
+  Future<ApiResponseData<bool>> updateTask({
+    required String taskId,
+    required bool active,
   });
 }

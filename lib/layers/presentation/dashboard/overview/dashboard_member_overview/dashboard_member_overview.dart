@@ -86,7 +86,7 @@ class DashboardMemberOverview extends StatelessWidget {
               AppSpacing.h16,
               ProjectMemberInfoBuilder(
                 accountId: accountManager.accountInfo?.accountId ?? '',
-                builder: (member) {
+                builder: (_, member) {
                   return Column(
                     children: member?.taskAssigned.map(
                           (e) {

@@ -28,4 +28,11 @@ abstract class _TicketDetailControllerBase with Store {
 
     return res.fold((left) => false, (right) => true);
   }
+
+  Future<bool> onAddResolution(String cveId, String resolution) async {
+    final res = await _ticketRepository.addResolution(
+        cveId: cveId, resolution: resolution);
+
+    return res.fold((_) => false, (right) => true);
+  }
 }

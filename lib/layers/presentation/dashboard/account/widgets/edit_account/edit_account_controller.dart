@@ -1,5 +1,6 @@
 import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:base_project/layers/domain/repositories/account_info_repository.dart';
+import 'package:base_project/layers/presentation/dashboard/notification/settings/notification_settings_screen.dart';
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
@@ -48,12 +49,15 @@ abstract class _EditAccountControllerBase with Store {
     if (accountInfo != null) {
       accountInfo!.role = role;
       accountInfo = AccountInfoModel(
-          accountId: accountInfo!.accountId,
-          username: accountInfo!.username,
-          role: role,
-          email: accountInfo!.email,
-          permission: accountInfo!.permission,
-          thirdParty: accountInfo!.thirdParty);
+        accountId: accountInfo!.accountId,
+        username: accountInfo!.username,
+        role: role,
+        email: accountInfo!.email,
+        permission: accountInfo!.permission,
+        thirdParty: accountInfo!.thirdParty,
+        notifications:
+            NotificationSettingType.values.map((e) => e.name).toList(),
+      );
     }
   }
 }

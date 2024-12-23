@@ -9,7 +9,8 @@ import 'project_builder_controller.dart';
 class ProjectBuilder extends MobxStatefulWidget<ProjectBuilderController> {
   final String? projectName;
 
-  final Widget Function(ProjectInfoModel? project) builder;
+  final Widget Function(
+      ProjectBuilderController controller, ProjectInfoModel? project) builder;
 
   const ProjectBuilder({
     super.key,
@@ -30,6 +31,7 @@ class _ProjectBuilderState
     extends MobxState<ProjectBuilder, ProjectBuilderController> {
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) => widget.builder(controller.project));
+    return Observer(
+        builder: (context) => widget.builder(controller, controller.project));
   }
 }

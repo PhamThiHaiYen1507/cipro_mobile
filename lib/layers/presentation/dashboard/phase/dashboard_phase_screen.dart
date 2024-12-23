@@ -1,17 +1,22 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
 import 'package:base_project/core/extensions/color_extension.dart';
 import 'package:base_project/layers/domain/entities/phase_model.dart';
+import 'package:base_project/layers/presentation/dashboard/widgets/create_phase_template_button/create_phase_template_button.dart';
 import 'package:base_project/layers/presentation/widgets/grid_table/grid_table.dart';
 import 'package:base_project/layers/presentation/widgets/project_builder/project_builder.dart';
 import 'package:base_project/routes/routes.dart';
+import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
 import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:base_project/utils/helpers/app_text_style.dart';
 import 'package:base_project/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
+
+import '../../widgets/phase_template_builder/phase_template_builder.dart';
 
 class DashboardPhaseScreen extends StatelessWidget {
   final String? projectName;
@@ -89,8 +94,44 @@ class DashboardPhaseScreen extends StatelessWidget {
 
     return ProjectBuilder(
       projectName: projectName,
-      builder: (project) {
-        if (project == null) return const SizedBox();
+      builder: (c, project) {
+        if (project == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (project.phaseList.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () =>
+                      showSelectPhaseTemplateDialog(context, c.getProjectInfo),
+                  child: Padding(
+                    padding: AppPadding.a8,
+                    child: Text(
+                      'Select a phase template',
+                      style: AppTextStyle.f16B
+                          .copyWith(color: AppColors.primaryColor),
+                    ),
+                  ),
+                ),
+                CreatePhaseTemplateButton(
+                  projectName: projectName,
+                  child: Padding(
+                    padding: AppPadding.a8,
+                    child: Text(
+                      'Create a phase template',
+                      style: AppTextStyle.f16B
+                          .copyWith(color: AppColors.primaryColor),
+                    ),
+                  ),
+                  onCreateSuccess: () => c.getProjectInfo(),
+                ),
+              ],
+            ),
+          );
+        }
 
         return Column(
           children: [
@@ -227,6 +268,67 @@ class DashboardPhaseScreen extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  void showSelectPhaseTemplateDialog(
+      BuildContext context, void Function() onCreateSuccess) {
+    AppDialog.dialog(
+      context: context,
+      title: 'Select a template',
+      insetPadding: AppPadding.a16,
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: PhaseTemplateBuilder(
+              builder: (controller, templates) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: templates
+                        .map(
+                          (e) => CreatePhaseTemplateButton(
+                            projectName: projectName,
+                            template: e,
+                            onCreateSuccess: () {
+                              context.pop();
+
+                              onCreateSuccess();
+                            },
+                            child: Padding(
+                              padding: AppPadding.a8,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.library_books_outlined),
+                                  AppSpacing.w16,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          e.name,
+                                          style: AppTextStyle.f14B.copyWith(
+                                              color: AppColors.primaryColor),
+                                        ),
+                                        Text(e.description)
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                );
+              },
+            ))
+          ],
+        ),
+      ),
     );
   }
 }

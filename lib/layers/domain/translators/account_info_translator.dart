@@ -1,6 +1,7 @@
 import 'package:base_project/layers/data/response/account_info_response.dart';
 import 'package:base_project/layers/domain/entities/account_info_model.dart';
 import 'package:base_project/layers/domain/translators/third_party_info_translator.dart';
+import 'package:base_project/layers/presentation/dashboard/notification/settings/notification_settings_screen.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/utils.dart';
 
@@ -13,5 +14,7 @@ extension AccountInfoTranslator on AccountInfoResponse {
         permission: permission ?? [],
         thirdParty:
             thirdParty?.map((e) => e.toThirdPartyInfoModel()).toList() ?? [],
+        notifications: notifications ??
+            NotificationSettingType.values.map((e) => e.name).toList(),
       );
 }

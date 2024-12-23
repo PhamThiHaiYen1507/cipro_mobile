@@ -12,7 +12,8 @@ class ProjectMemberInfoBuilder
 
   final String? accountId;
 
-  final Widget Function(ProjectMemberInfoModel? member) builder;
+  final Widget Function(ProjectMemberInfoBuilderController controller,
+      ProjectMemberInfoModel? member) builder;
 
   const ProjectMemberInfoBuilder({
     super.key,
@@ -35,7 +36,7 @@ class _ProjectMemberInfoBuilderState extends MobxState<ProjectMemberInfoBuilder,
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => widget.builder(controller.member),
+      builder: (_) => widget.builder(controller, controller.member),
     );
   }
 }

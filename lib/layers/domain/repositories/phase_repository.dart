@@ -23,4 +23,13 @@ abstract class PhaseRepository {
     required bool isPrivate,
     required List<PhaseModel> phases,
   });
+
+  Future<ApiResponseData<bool>> createPhaseFromTemplate({
+    required String projectName,
+    required String name,
+    required String description,
+    required bool isPrivate,
+    required List<PhaseModel> phases,
+    String? templateId,
+  });
 }

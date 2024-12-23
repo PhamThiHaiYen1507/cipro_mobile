@@ -16,7 +16,7 @@ class MemberInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProjectMemberInfoBuilder(
       memberId: memberId,
-      builder: (member) {
+      builder: (c, member) {
         return Scaffold(
           appBar: AppBar(),
           body: ListView(

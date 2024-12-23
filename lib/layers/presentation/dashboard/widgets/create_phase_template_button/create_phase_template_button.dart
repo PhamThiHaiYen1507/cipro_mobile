@@ -25,11 +25,14 @@ class CreatePhaseTemplateButton
 
   final PhaseTemplateModel? template;
 
+  final String? projectName;
+
   const CreatePhaseTemplateButton({
     super.key,
     required this.child,
     this.onCreateSuccess,
     this.template,
+    this.projectName,
   });
 
   @override
@@ -55,49 +58,90 @@ class _CreatePhaseTemplateButtonState extends MobxState<
       insetPadding: AppPadding.a16.copyWith(bottom: 36, top: 36),
       content: CreateTemplateForm(
         template: widget.template,
+        projectName: widget.projectName,
         onCancel: context.pop,
         onCreate: (name, description, isPrivate, phases) async {
-          bool result = false;
-
-          if (isUpdate) {
-            result = await controller.onUpdatePhaseTemplate(
-              templateId: widget.template!.id,
-              name: name,
-              description: description,
-              isPrivate: isPrivate,
-              phases: phases,
-            );
+          if (widget.projectName != null) {
+            onCreatePhaseFromTemplate(
+                widget.projectName!, name, description, isPrivate, phases);
           } else {
-            result = await controller.onCreateNewPhaseTemplate(
-              name: name,
-              description: description,
-              isPrivate: isPrivate,
-              phases: phases,
-            );
-          }
-
-          context.pop();
-
-          if (result) {
-            AppDialog.showNotification(
-              context: context,
-              message:
-                  '${isUpdate ? 'Update' : 'Create'} phase template success',
-              type: NotificationType.success,
-            );
-            widget.onCreateSuccess?.call();
-          } else {
-            AppDialog.showNotification(
-              context: context,
-              message:
-                  '${isUpdate ? 'Update' : 'Create'} phase template failed',
-              type: NotificationType.error,
-            );
+            createOrUpdateTemplate(name, description, isPrivate, phases);
           }
         },
       ),
-      title: '${isUpdate ? 'Update' : 'Create'} a template\'s',
+      title: widget.projectName != null
+          ? 'Submit'
+          : '${isUpdate ? 'Update' : 'Create'} a template\'s',
     );
+  }
+
+  Future<void> onCreatePhaseFromTemplate(String projectName, String name,
+      String description, bool isPrivate, List<PhaseModel> phases) async {
+    final result = await controller.onCreateNewPhaseFromTemplate(
+      projectName: projectName,
+      name: name,
+      description: description,
+      isPrivate: isPrivate,
+      phases: phases,
+      templateId: widget.template?.id,
+    );
+
+    context.pop();
+
+    if (result) {
+      AppDialog.showNotification(
+        context: context,
+        message: 'Create phase success',
+        type: NotificationType.success,
+      );
+      widget.onCreateSuccess?.call();
+    } else {
+      AppDialog.showNotification(
+        context: context,
+        message: 'create phase failed',
+        type: NotificationType.error,
+      );
+    }
+  }
+
+  Future<void> createOrUpdateTemplate(String name, String description,
+      bool isPrivate, List<PhaseModel> phases) async {
+    bool result = false;
+    bool isUpdate = widget.template != null;
+
+    if (isUpdate) {
+      result = await controller.onUpdatePhaseTemplate(
+        templateId: widget.template!.id,
+        name: name,
+        description: description,
+        isPrivate: isPrivate,
+        phases: phases,
+      );
+    } else {
+      result = await controller.onCreateNewPhaseTemplate(
+        name: name,
+        description: description,
+        isPrivate: isPrivate,
+        phases: phases,
+      );
+    }
+
+    context.pop();
+
+    if (result) {
+      AppDialog.showNotification(
+        context: context,
+        message: '${isUpdate ? 'Update' : 'Create'} phase template success',
+        type: NotificationType.success,
+      );
+      widget.onCreateSuccess?.call();
+    } else {
+      AppDialog.showNotification(
+        context: context,
+        message: '${isUpdate ? 'Update' : 'Create'} phase template failed',
+        type: NotificationType.error,
+      );
+    }
   }
 }
 
@@ -106,6 +150,8 @@ class CreateTemplateForm extends StatefulWidget {
 
   final PhaseTemplateModel? template;
 
+  final String? projectName;
+
   final void Function(String name, String description, bool isPrivate,
       List<PhaseModel> phases) onCreate;
 
@@ -113,6 +159,7 @@ class CreateTemplateForm extends StatefulWidget {
       {super.key,
       required this.onCancel,
       required this.onCreate,
+      this.projectName,
       this.template});
 
   @override
@@ -202,7 +249,11 @@ class _CreateTemplateFormState extends State<CreateTemplateForm> {
                             name.text, description.text, isPrivate, phases);
                       }
                     },
-                    child: Text(widget.template != null ? 'Update' : 'Create'),
+                    child: Text(widget.projectName != null
+                        ? 'Create'
+                        : widget.template != null
+                            ? 'Update'
+                            : 'Create'),
                   ),
                 ),
               ],

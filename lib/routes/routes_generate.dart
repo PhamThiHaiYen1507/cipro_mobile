@@ -359,6 +359,38 @@ class DashboardNotificationScreenRoute extends GoRouteData {
   }
 }
 
+@immutable
+class ScripGuideScreenRoute extends GoRouteData {
+  final String type;
+
+  const ScripGuideScreenRoute({required this.type});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: ScripGuideScreen(
+        type: GuideType.from(type),
+      ),
+    );
+  }
+}
+
+@immutable
+class NotificationSettingsScreenRoute extends GoRouteData {
+  const NotificationSettingsScreenRoute();
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: const NotificationSettingsScreen(),
+    );
+  }
+}
+
 CustomTransitionPage _buildPageWithFadeTransition<T>({
   required BuildContext context,
   required GoRouterState state,
