@@ -21,5 +21,6 @@ extension TicketTranslator on TicketResponse {
         assigner: assigner?.toProjectMemberInfoModel(),
         projectName: projectName,
         updatedAt: updatedAt,
+        createBy: createBy,
       );
 }

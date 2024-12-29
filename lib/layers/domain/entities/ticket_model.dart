@@ -24,6 +24,8 @@ class TicketModel {
 
   final String? projectName;
 
+  final String? createBy;
+
   final DateTime createdAt;
 
   final DateTime? updatedAt;
@@ -40,6 +42,7 @@ class TicketModel {
     this.projectName,
     required this.createdAt,
     this.updatedAt,
+    this.createBy,
   });
 
   factory TicketModel.fromJson(Map<String, dynamic> json) =>

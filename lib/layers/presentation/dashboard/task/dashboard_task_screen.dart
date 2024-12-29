@@ -14,88 +14,103 @@ import 'package:flutter/material.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 import 'package:two_dimensional_scrollables/two_dimensional_scrollables.dart';
 
-class DashboardTaskScreen extends StatelessWidget {
+import 'dashboard_task_controller.dart';
+
+class DashboardTaskScreen extends MobxStatefulWidget<DashboardTaskController> {
   const DashboardTaskScreen({super.key});
 
+  @override
+  _DashboardTaskScreenState createState() => _DashboardTaskScreenState();
+}
+
+class _DashboardTaskScreenState
+    extends MobxState<DashboardTaskScreen, DashboardTaskController> {
   @override
   Widget build(BuildContext context) {
     final AccountManagerController accountManager = MobxManager.get();
 
-    final List<GridTableColumnConfig<TaskInfoModel>> configs = [
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Name'.toUpperCase()),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(data.name ?? '')),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Status'.toUpperCase()),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(data.status ?? '')),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(220)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.centerLeft,
-            child: Text('Description'.toUpperCase()),
-          );
-        },
-        cellBuilder: (context, data, index) => Align(
-            alignment: Alignment.centerLeft,
-            child: TextMarqueeWidget(child: Text(data.description ?? ''))),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.centerLeft,
-            child: Text('Due date'.toUpperCase()),
-          );
-        },
-        cellBuilder: (context, data, index) => Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            Utils.formatDateToDisplay(data.dueDate),
-          ),
-        ),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Action'.toUpperCase()),
-          );
-        },
-        cellBuilder: (context, data, index) => Center(
-          child: Checkbox(
-            value: false,
-            onChanged: (value) {},
-          ),
-        ),
-      ),
-    ];
-
     return ProjectMemberInfoBuilder(
       accountId: accountManager.accountInfo?.accountId,
-      builder: (member) {
+      builder: (c, member) {
+        final List<GridTableColumnConfig<TaskInfoModel>> configs = [
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Name'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(data.name ?? '')),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Status'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(data.status ?? '')),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(220)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.centerLeft,
+                child: Text('Description'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) => Align(
+                alignment: Alignment.centerLeft,
+                child: TextMarqueeWidget(child: Text(data.description ?? ''))),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.centerLeft,
+                child: Text('Due date'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) => Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                Utils.formatDateToDisplay(data.dueDate),
+              ),
+            ),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Action'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) => Center(
+              child: Checkbox(
+                value: data.status == 'completed',
+                onChanged: (value) async {
+                  await controller.updateStatus(
+                    data.taskId,
+                    !value!,
+                  );
+
+                  c.getProjectMemberFromId();
+                },
+              ),
+            ),
+          ),
+        ];
+
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverToBoxAdapter(

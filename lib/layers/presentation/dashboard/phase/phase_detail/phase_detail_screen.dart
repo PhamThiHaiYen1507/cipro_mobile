@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
-import '../../widgets/add_task_phase_button/add_task_phase_button.dart';
 import 'artifact_item/artifact_item.dart';
 import 'phase_detail_controller.dart';
 
@@ -202,15 +201,16 @@ class _PhaseDetailScreenState
                     ),
                     AppSpacing.h32,
                     CreateTaskButton(
-                      projectName: widget.projectName,
-                      onCreateSuccess: () {},
-                    ),
-                    AppSpacing.h16,
-                    AddTaskPhaseButton(
-                      projectName: widget.projectName,
                       phaseId: widget.phaseId,
-                      onAddSuccess: c.getPhase,
+                      projectName: widget.projectName,
+                      onCreateSuccess: c.getPhase,
                     ),
+                    // AppSpacing.h16,
+                    // AddTaskPhaseButton(
+                    //   projectName: widget.projectName,
+                    //   phaseId: widget.phaseId,
+                    //   onAddSuccess: ,
+                    // ),
                     AppSpacing.h16,
                     Button(
                       padding: AppPadding.a8,

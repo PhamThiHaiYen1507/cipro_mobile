@@ -73,22 +73,24 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           constraints: widget.constraints,
           decoration: context.defaultBox,
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widget.items
-                  .map(
-                    (e) => InkWell(
-                      onTap: () {
-                        controller.close();
-                        setState(() {
-                          widget.onSelected?.call(e);
-                        });
-                      },
-                      child: widget.itemBuilder(e),
-                    ),
-                  )
-                  .toList(),
+            child: IntrinsicWidth(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widget.items
+                    .map(
+                      (e) => InkWell(
+                        onTap: () {
+                          controller.close();
+                          setState(() {
+                            widget.onSelected?.call(e);
+                          });
+                        },
+                        child: widget.itemBuilder(e),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         ),

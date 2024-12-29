@@ -18,6 +18,8 @@ class AccountInfoResponse {
 
   List<ThirdPartyInfoResponse>? thirdParty;
 
+  List<String>? notifications;
+
   AccountInfoResponse();
 
   factory AccountInfoResponse.fromJson(Map<String, dynamic> json) =>

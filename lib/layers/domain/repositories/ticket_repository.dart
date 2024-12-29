@@ -1,5 +1,6 @@
 import 'package:base_project/core/type_def/api_response_data.dart';
 import 'package:base_project/layers/domain/entities/activity_history_info_model.dart';
+import 'package:base_project/layers/domain/entities/resolution_model.dart';
 import 'package:base_project/layers/domain/entities/ticket_model.dart';
 
 import '../entities/vulnerability_model.dart';
@@ -25,5 +26,14 @@ abstract class TicketRepository {
     required String ticketId,
     String? status,
     String? assigneeId,
+  });
+
+  Future<ApiResponseData<bool>> addResolution({
+    required String cveId,
+    required String resolution,
+  });
+
+  Future<ApiResponseData<List<ResolutionModel>>> getResolution({
+    required List<String> cveIds,
   });
 }

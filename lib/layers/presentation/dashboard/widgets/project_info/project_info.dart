@@ -17,7 +17,7 @@ class ProjectInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProjectBuilder(
         projectName: projectName,
-        builder: (project) {
+        builder: (_, project) {
           return Container(
             width: double.maxFinite,
             padding: AppPadding.a16,

@@ -2,6 +2,7 @@ import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/presentation/common/button/button.dart';
 import 'package:base_project/layers/presentation/common/text_input_validator/text_input_validator.dart';
 import 'package:base_project/layers/presentation/widgets/calendar_picker/calendar_picker.dart';
+import 'package:base_project/layers/presentation/widgets/project_member_builder/project_member_builder.dart';
 import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
 import 'package:base_project/utils/helpers/app_padding.dart';
@@ -10,10 +11,15 @@ import 'package:base_project/utils/helpers/text_input_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../utils/helpers/app_text_style.dart';
+import '../../../../domain/entities/project_member_info_model.dart';
+import '../../../widgets/custom_dropdown/custom_dropdown.dart';
 import 'create_task_button_controller.dart';
 
 class CreateTaskButton extends MobxStatefulWidget<CreateTaskButtonController> {
   final String projectName;
+
+  final String phaseId;
 
   final VoidCallback? onCreateSuccess;
 
@@ -21,6 +27,7 @@ class CreateTaskButton extends MobxStatefulWidget<CreateTaskButtonController> {
     super.key,
     required this.projectName,
     this.onCreateSuccess,
+    required this.phaseId,
   });
 
   @override
@@ -50,12 +57,15 @@ class _CreateTaskButtonState
       context: context,
       content: CreateTaskForm(
         onCancel: context.pop,
-        onCreate: (name, description, dueDate) async {
+        projectName: widget.projectName,
+        onCreate: (name, description, dueDate, assigneeId) async {
           final res = await controller.createNewTask(
             projectName: widget.projectName,
             name: name,
             description: description,
             dueDate: dueDate,
+            phaseId: widget.phaseId,
+            assigneeId: assigneeId,
           );
 
           context.pop();
@@ -84,11 +94,17 @@ class _CreateTaskButtonState
 class CreateTaskForm extends StatefulWidget {
   final VoidCallback onCancel;
 
-  final void Function(String name, String description, DateTime dueDate)
+  final String projectName;
+
+  final void Function(
+          String name, String description, DateTime dueDate, String assigneeId)
       onCreate;
 
   const CreateTaskForm(
-      {super.key, required this.onCancel, required this.onCreate});
+      {super.key,
+      required this.onCancel,
+      required this.onCreate,
+      required this.projectName});
 
   @override
   State<CreateTaskForm> createState() => _CreateTaskFormState();
@@ -102,6 +118,8 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   DateTime selectedDueDate = DateTime.now();
+
+  ProjectMemberInfoModel? selectedAssignee;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +151,32 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
           onChanged: (date) => selectedDueDate = date,
         ),
         AppSpacing.h16,
+        ProjectMemberBuilder(
+          projectName: widget.projectName,
+          builder: (_, members) => CustomDropdown(
+            items: members,
+            fitSize: true,
+            placeHolderBuilder: () => Padding(
+              padding: AppPadding.h8,
+              child: Text(
+                'Assignee',
+                style: AppTextStyle.f16R.copyWith(color: Colors.grey),
+              ),
+            ),
+            itemBuilder: (item) => Container(
+              alignment: Alignment.centerLeft,
+              padding: AppPadding.a8,
+              child: Text(
+                item.account?.username ?? '',
+              ),
+            ),
+            selectedItem: selectedAssignee,
+            onSelected: (item) => setState(() {
+              selectedAssignee = item;
+            }),
+          ),
+        ),
+        AppSpacing.h16,
         Row(
           children: [
             Expanded(
@@ -146,9 +190,10 @@ class _CreateTaskFormState extends State<CreateTaskForm> {
             Expanded(
               child: Button(
                 onPressed: () {
-                  if (formKey.currentState?.validate() == true) {
-                    widget.onCreate(
-                        name.text, description.text, selectedDueDate);
+                  if (formKey.currentState?.validate() == true &&
+                      selectedAssignee != null) {
+                    widget.onCreate(name.text, description.text,
+                        selectedDueDate, selectedAssignee!.memberId);
                   }
                 },
                 child: const Text('Create'),

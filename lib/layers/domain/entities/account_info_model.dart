@@ -59,6 +59,8 @@ class AccountInfoModel {
 
   final List<ThirdPartyInfoModel> thirdParty;
 
+  final List<String> notifications;
+
   AccountInfoModel({
     required this.accountId,
     required this.username,
@@ -66,6 +68,7 @@ class AccountInfoModel {
     required this.role,
     required this.permission,
     required this.thirdParty,
+    required this.notifications,
   });
 
   factory AccountInfoModel.fromJson(Map<String, dynamic> json) =>
