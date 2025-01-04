@@ -1,6 +1,7 @@
 import 'package:base_project/layers/data/response/project_info_response.dart';
 import 'package:base_project/layers/domain/entities/project_info_model.dart';
 import 'package:base_project/layers/domain/translators/phase_translator.dart';
+import 'package:base_project/layers/domain/translators/workflow_info_translator.dart';
 import 'package:base_project/utils/utils.dart';
 
 extension ProjectInfoTranslator on ProjectInfoResponse {
@@ -13,5 +14,7 @@ extension ProjectInfoTranslator on ProjectInfoResponse {
         url: url,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        workflows:
+            workflows?.map((e) => e.toWorkflowInfoModel()).toList() ?? [],
       );
 }

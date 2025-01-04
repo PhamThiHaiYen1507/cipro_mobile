@@ -23,7 +23,8 @@ class ProjectMemberInfoResponse {
 
   ProjectMemberInfoResponse();
 
-  factory ProjectMemberInfoResponse.fromJson(Map<String, dynamic> json) =>
-      _$ProjectMemberInfoResponseFromJson(json);
+  factory ProjectMemberInfoResponse.fromJson(Map<String, dynamic> json) {
+    return _$ProjectMemberInfoResponseFromJson(json);
+  }
   Map<String, dynamic> toJson() => _$ProjectMemberInfoResponseToJson(this);
 }

@@ -1,3 +1,4 @@
+import 'package:base_project/layers/data/response/workflow_info_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'phase_response.dart';
@@ -22,6 +23,8 @@ class ProjectInfoResponse {
   DateTime? createdAt;
 
   DateTime? updatedAt;
+
+  List<WorkflowInfoResponse>? workflows;
 
   ProjectInfoResponse();
 
