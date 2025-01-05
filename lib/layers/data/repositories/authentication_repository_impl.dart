@@ -44,7 +44,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         ghClient,
         clientId: _clientId,
         clientSecret: _clientSecret,
-        scopes: ['read:user', 'user:email'],
+        scopes: [
+          'read:user',
+          'user:email',
+          'repo',
+          'workflow',
+          'admin:repo_hook'
+        ],
       );
 
       await oauth2Helper.fetchToken();

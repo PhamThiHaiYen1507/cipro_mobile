@@ -39,4 +39,10 @@ abstract class ProjectInfoRepository {
   });
 
   Future<ApiResponseData<List<ProjectMemberInfoModel>>> getAllUser();
+
+  Future<ApiResponseData<bool>> changeActionStatus({
+    required String projectName,
+    required String workflowId,
+    required bool status,
+  });
 }

@@ -14,7 +14,7 @@ class WorkflowInfoModel {
 
   final String? nodeId;
 
-  final String? state;
+  String? state;
 
   final DateTime? createdAt;
 
@@ -73,6 +73,8 @@ class WorkflowRunInfoModel {
 
   final String? workflowId;
 
+  final String? displayTitle;
+
   WorkflowRunInfoModel({
     this.id,
     this.nodeId,
@@ -84,6 +86,7 @@ class WorkflowRunInfoModel {
     this.status,
     this.conclusion,
     this.workflowId,
+    this.displayTitle,
   });
 
   factory WorkflowRunInfoModel.fromJson(Map<String, dynamic> json) =>

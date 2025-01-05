@@ -1,4 +1,5 @@
 import 'package:base_project/core/extensions/build_context_extension.dart';
+import 'package:base_project/core/state_manager/mobx_manager.dart';
 import 'package:base_project/layers/presentation/widgets/custom_tooltip/custom_tooltip.dart';
 import 'package:base_project/layers/presentation/widgets/project_builder/project_builder.dart';
 import 'package:base_project/routes/routes.dart';
@@ -10,18 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:text_marquee_widget/text_marquee_widget.dart';
 
+import 'dashboard_script_controller.dart';
 import 'guide/guide.dart';
 
-class DashboardScriptScreen extends StatefulWidget {
+class DashboardScriptScreen
+    extends MobxStatefulWidget<DashboardScriptController> {
   final String projectName;
 
   const DashboardScriptScreen({super.key, required this.projectName});
 
   @override
-  State<DashboardScriptScreen> createState() => _DashboardScriptScreenState();
+  _DashboardScriptScreenState createState() => _DashboardScriptScreenState();
 }
 
-class _DashboardScriptScreenState extends State<DashboardScriptScreen> {
+class _DashboardScriptScreenState
+    extends MobxState<DashboardScriptScreen, DashboardScriptController> {
   final CustomToolTipController toolTipController = CustomToolTipController();
   @override
   Widget build(BuildContext context) {
@@ -184,38 +188,67 @@ class _DashboardScriptScreenState extends State<DashboardScriptScreen> {
                       itemBuilder: (context, index) {
                         final workflow = project.workflows[index];
 
-                        return Container(
-                          margin: AppPadding.a8,
-                          padding: AppPadding.a16,
-                          decoration: context.defaultBox,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                workflow.name,
-                                style: AppTextStyle.f16B,
-                              ),
-                              AppSpacing.h16,
-                              _buildWorkflowInfo(
-                                  'Name', Icons.abc, workflow.name),
-                              _buildWorkflowInfo(
-                                  'Path', Icons.link, workflow.path),
-                              _buildWorkflowInfo(
-                                'Status',
-                                Icons.online_prediction_outlined,
-                                workflow.state ?? 'active',
-                              ),
-                              _buildWorkflowInfo(
-                                'Created at',
-                                Icons.date_range,
-                                Utils.formatDateToDisplay(
-                                    workflow.createdAt ?? DateTime.now()),
-                              ),
-                              _buildWorkflowInfo('Workflow runs', Icons.history,
-                                  Utils.formatNumber(workflow.totalRuns)),
-                              _buildWorkflowInfo('URL', Icons.link_outlined,
-                                  workflow.url ?? '-'),
-                            ],
+                        return GestureDetector(
+                          onTap: () =>
+                              goToDetail(widget.projectName, workflow.id!),
+                          child: Container(
+                            margin: AppPadding.a8,
+                            padding: AppPadding.a16,
+                            decoration: context.defaultBox,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: TextMarqueeWidget(
+                                      child: Text(
+                                        workflow.name,
+                                        style: AppTextStyle.f16B,
+                                      ),
+                                    )),
+                                    // Switch(
+                                    //   value: workflow.state == 'active',
+                                    //   onChanged: (value) {
+                                    //     workflow.state =
+                                    //         value ? 'active' : 'inactive';
+
+                                    //     setState(() {});
+
+                                    //     if (workflow.id != null) {
+                                    //       controller.onChangedStatus(
+                                    //           widget.projectName,
+                                    //           workflow.id!,
+                                    //           value);
+                                    //     }
+                                    //   },
+                                    // )
+                                  ],
+                                ),
+                                AppSpacing.h16,
+                                _buildWorkflowInfo(
+                                    'Name', Icons.abc, workflow.name),
+                                _buildWorkflowInfo(
+                                    'Path', Icons.link, workflow.path),
+                                _buildWorkflowInfo(
+                                  'Status',
+                                  Icons.online_prediction_outlined,
+                                  workflow.state ?? 'active',
+                                ),
+                                _buildWorkflowInfo(
+                                  'Created at',
+                                  Icons.date_range,
+                                  Utils.formatDateToDisplay(
+                                      workflow.createdAt ?? DateTime.now()),
+                                ),
+                                _buildWorkflowInfo(
+                                    'Workflow runs',
+                                    Icons.history,
+                                    Utils.formatNumber(workflow.totalRuns)),
+                                _buildWorkflowInfo('URL', Icons.link_outlined,
+                                    workflow.url ?? '-'),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -253,6 +286,11 @@ class _DashboardScriptScreenState extends State<DashboardScriptScreen> {
         // ),
       ],
     );
+  }
+
+  void goToDetail(String projectName, String workflowId) {
+    ScriptDetailScreenRoute(projectName: projectName, workflowId: workflowId)
+        .push(context);
   }
 
   Widget _buildWorkflowInfo(String title, IconData icon, String value) {

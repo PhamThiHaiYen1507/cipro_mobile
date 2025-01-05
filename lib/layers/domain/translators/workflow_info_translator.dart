@@ -22,6 +22,7 @@ extension WorkflowInfoTranslator on WorkflowInfoResponse {
                     nodeId: e.nodeId,
                     path: e.path,
                     workflowId: e.workflowId,
+                    displayTitle: e.displayTitle,
                   ),
                 )
                 .toList() ??

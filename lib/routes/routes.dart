@@ -24,6 +24,7 @@ import '../layers/presentation/account_register/account_register_screen.dart';
 import '../layers/presentation/dashboard/notification/notification_screen.dart';
 import '../layers/presentation/dashboard/notification/settings/notification_settings_screen.dart';
 import '../layers/presentation/dashboard/script/guide/guide.dart';
+import '../layers/presentation/dashboard/script/script_detail/script_detail_screen.dart';
 import '../layers/presentation/dashboard/template/dashboard_template_screen.dart';
 import '../layers/presentation/dashboard/ticket/ticket_detail/ticket_detail_screen.dart';
 
@@ -39,6 +40,7 @@ part 'routes_generate.dart';
     TypedGoRoute<PhaseDetailScreenRoute>(path: Routes.phaseDetail),
     TypedGoRoute<TicketDetailScreenRoute>(path: Routes.ticketDetail),
     TypedGoRoute<ScripGuideScreenRoute>(path: Routes.scriptGuide),
+    TypedGoRoute<ScriptDetailScreenRoute>(path: Routes.scriptDetail),
     TypedGoRoute<NotificationSettingsScreenRoute>(
         path: Routes.notificationSettings),
     TypedStatefulShellRoute<AppShellRoute>(
@@ -111,6 +113,7 @@ abstract class Routes {
   static const String notification = '/notification';
   static const String scriptGuide = '/script_guide';
   static const String notificationSettings = '/notification_settings';
+  static const String scriptDetail = '/script_detail';
 
   static GoRouter routes = GoRouter(
     debugLogDiagnostics: kDebugMode,

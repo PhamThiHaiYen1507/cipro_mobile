@@ -204,4 +204,7 @@ abstract class ApiClient {
   @GET('/activity/scan')
   Future<BaseResponse> getScanActivities(
       @Query('projectName') String projectName);
+
+  @PUT('/thirdParty/github/workflows/status')
+  Future<BaseResponse> changeActionStatus(@Body() Map<String, dynamic> body);
 }

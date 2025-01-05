@@ -59,6 +59,8 @@ class WorkflowRunInfoResponse {
 
   String? workflowId;
 
+  String? displayTitle;
+
   WorkflowRunInfoResponse();
 
   factory WorkflowRunInfoResponse.fromJson(Map<String, dynamic> json) =>
