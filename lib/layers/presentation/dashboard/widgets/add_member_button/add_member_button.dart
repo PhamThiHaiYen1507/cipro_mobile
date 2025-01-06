@@ -50,79 +50,85 @@ class _AddMemberButtonState
       context: context,
       title: 'Add a member',
       insetPadding: AppPadding.a16,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AllUserBuilder(
-            builder: (members) => ValueListenableBuilder(
-              valueListenable: selectedUser,
-              builder: (context, value, child) =>
-                  CustomDropdown<ProjectMemberInfoModel>(
-                items: members,
-                fitSize: true,
-                useExpand: true,
-                placeHolderBuilder: () => Padding(
-                  padding: AppPadding.h8,
-                  child: Text(
-                    'User',
-                    style: AppTextStyle.f16R.copyWith(color: Colors.grey),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AllUserBuilder(
+              builder: (members) {
+                return ValueListenableBuilder(
+                  valueListenable: selectedUser,
+                  builder: (context, value, child) =>
+                      CustomDropdown<ProjectMemberInfoModel>(
+                    items: members,
+                    fitSize: true,
+                    useExpand: true,
+                    placeHolderBuilder: () => Padding(
+                      padding: AppPadding.h8,
+                      child: Text(
+                        'User',
+                        style: AppTextStyle.f16R.copyWith(color: Colors.grey),
+                      ),
+                    ),
+                    itemBuilder: (item) =>
+                        item.account?.username.isNotEmpty == true
+                            ? Container(
+                                width: double.maxFinite,
+                                padding: AppPadding.a8,
+                                child: Text(
+                                  item.account?.username ?? '',
+                                ),
+                              )
+                            : const SizedBox(),
+                    selectedItem: value,
+                    onSelected: (item) => selectedUser.value = item,
+                  ),
+                );
+              },
+            ),
+            AppSpacing.h16,
+            Row(
+              children: [
+                Expanded(
+                  child: Button(
+                    backgroundColor: Colors.red,
+                    onPressed: context.pop,
+                    child: const Text('Cancel'),
                   ),
                 ),
-                itemBuilder: (item) => item.account?.username.isNotEmpty == true
-                    ? Container(
-                        width: double.maxFinite,
-                        padding: AppPadding.a8,
-                        child: Text(
-                          item.account?.username ?? '',
-                        ),
-                      )
-                    : const SizedBox(),
-                selectedItem: value,
-                onSelected: (item) => selectedUser.value = item,
-              ),
-            ),
-          ),
-          AppSpacing.h16,
-          Row(
-            children: [
-              Expanded(
-                child: Button(
-                  backgroundColor: Colors.red,
-                  onPressed: context.pop,
-                  child: const Text('Cancel'),
-                ),
-              ),
-              AppSpacing.w16,
-              Expanded(
-                child: Button(
-                  onPressed: () async {
-                    context.pop();
+                AppSpacing.w16,
+                Expanded(
+                  child: Button(
+                    onPressed: () async {
+                      context.pop();
 
-                    final result = await controller.onAddUserToProject(
-                        widget.projectName,
-                        selectedUser.value?.account?.accountId ?? '');
+                      final result = await controller.onAddUserToProject(
+                          widget.projectName,
+                          selectedUser.value?.account?.accountId ?? '');
 
-                    if (result) {
-                      AppDialog.showNotification(
-                        context: context,
-                        message: 'Add member success',
-                        type: NotificationType.success,
-                      );
-                      widget.onAddSuccess?.call();
-                    } else {
-                      AppDialog.showNotification(
-                        context: context,
-                        message: 'Add member failed',
-                        type: NotificationType.error,
-                      );
-                    }
-                  },
-                  child: const Text('Add'),
+                      if (result) {
+                        AppDialog.showNotification(
+                          context: context,
+                          message: 'Add member success',
+                          type: NotificationType.success,
+                        );
+                        widget.onAddSuccess?.call();
+                      } else {
+                        AppDialog.showNotification(
+                          context: context,
+                          message: 'Add member failed',
+                          type: NotificationType.error,
+                        );
+                      }
+                    },
+                    child: const Text('Add'),
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

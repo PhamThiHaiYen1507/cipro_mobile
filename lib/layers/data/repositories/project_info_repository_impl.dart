@@ -195,4 +195,18 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> removeMemberFromProject(
+      {required String projectName, required String accountId}) async {
+    try {
+      await _client.removeMemberFromProject(
+        Uri.encodeComponent(projectName),
+        {'accountId': accountId},
+      );
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

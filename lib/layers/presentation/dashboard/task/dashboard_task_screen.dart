@@ -111,6 +111,18 @@ class _DashboardTaskScreenState
           ),
         ];
 
+        double progress = 0;
+
+        final taskAssigned = member?.taskAssigned ?? [];
+
+        if (taskAssigned.isNotEmpty) {
+          final completedTask = taskAssigned
+              .where((element) => element.status == 'completed')
+              .length;
+
+          progress = completedTask / taskAssigned.length;
+        }
+
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverToBoxAdapter(
@@ -164,7 +176,7 @@ class _DashboardTaskScreenState
                                 ),
                                 Text(
                                   Utils.formatNumber(
-                                    0,
+                                    progress,
                                     pattern: NumberPattern.percentInterger,
                                   ),
                                   style: AppTextStyle.f32B,

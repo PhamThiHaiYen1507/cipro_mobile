@@ -137,11 +137,16 @@ class AccountRegisterScreenRoute extends GoRouteData {
 class MemberInfoScreenRoute extends GoRouteData {
   final String memberId;
 
-  const MemberInfoScreenRoute(this.memberId);
+  final String projectName;
+
+  const MemberInfoScreenRoute(this.memberId, this.projectName);
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return MemberInfoScreen(memberId: memberId);
+    return MemberInfoScreen(
+      memberId: memberId,
+      projectName: projectName,
+    );
   }
 }
 

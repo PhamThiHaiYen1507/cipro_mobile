@@ -25,79 +25,81 @@ class DashboardPhaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<GridTableColumnConfig<PhaseModel>> configs = [
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Name'.toUpperCase(), style: AppTextStyle.f14B),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(data.name ?? '')),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Description'.toUpperCase(), style: AppTextStyle.f14B),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(data.description ?? '')),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Task'.toUpperCase(), style: AppTextStyle.f14B),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(Utils.formatNumber(data.tasks.length))),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Artifact'.toUpperCase(), style: AppTextStyle.f14B),
-          );
-        },
-        cellBuilder: (context, data, index) =>
-            Center(child: Text(Utils.formatNumber(data.artifacts.length))),
-      ),
-      GridTableColumnConfig(
-        columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
-        headerBuilder: (context) {
-          return Container(
-            color: AppColors.greyColor.o(0.2),
-            alignment: Alignment.center,
-            child: Text('Detail'.toUpperCase(), style: AppTextStyle.f14B),
-          );
-        },
-        cellBuilder: (context, data, index) => IconButton(
-          onPressed: () => PhaseDetailScreenRoute(
-                  phaseId: data.id, projectName: projectName ?? '')
-              .push(context),
-          icon: const Icon(Icons.more_vert_rounded),
-        ),
-      ),
-    ];
-
     return ProjectBuilder(
       projectName: projectName,
       builder: (c, project) {
         if (project == null) {
           return const Center(child: CircularProgressIndicator());
         }
+
+        final List<GridTableColumnConfig<PhaseModel>> configs = [
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Name'.toUpperCase(), style: AppTextStyle.f14B),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(data.name ?? '')),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child:
+                    Text('Description'.toUpperCase(), style: AppTextStyle.f14B),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(data.description ?? '')),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Task'.toUpperCase(), style: AppTextStyle.f14B),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(Utils.formatNumber(data.tasks.length))),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Artifact'.toUpperCase(), style: AppTextStyle.f14B),
+              );
+            },
+            cellBuilder: (context, data, index) =>
+                Center(child: Text(Utils.formatNumber(data.artifacts.length))),
+          ),
+          GridTableColumnConfig(
+            columnWidth: const TableSpan(extent: FixedSpanExtent(120)),
+            headerBuilder: (context) {
+              return Container(
+                color: AppColors.greyColor.o(0.2),
+                alignment: Alignment.center,
+                child: Text('Detail'.toUpperCase()),
+              );
+            },
+            cellBuilder: (context, data, index) => IconButton(
+              onPressed: () => PhaseDetailScreenRoute(
+                      phaseId: data.id, projectName: projectName ?? '')
+                  .push(context)
+                  .then((value) => c.getProjectInfo()),
+              icon: const Icon(Icons.more_vert_rounded),
+            ),
+          ),
+        ];
 
         if (project.phaseList.isEmpty) {
           return Center(

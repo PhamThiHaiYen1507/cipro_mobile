@@ -1,5 +1,6 @@
 import 'package:base_project/app/builder/app_loading_builder_controller.dart';
 import 'package:base_project/core/global/account_manager_controller.dart';
+import 'package:base_project/core/logger/logger.dart';
 import 'package:base_project/layers/domain/entities/project_from_thirdparty_model.dart';
 import 'package:base_project/layers/domain/repositories/authentication_repository.dart';
 import 'package:base_project/layers/domain/repositories/project_info_repository.dart';
@@ -34,6 +35,8 @@ abstract class _DashboardControllerBase with Store {
   Future<void> setSelectedProjectName(
       BuildContext context, String current, String? name) async {
     selectedProjectName = name;
+
+    logD(current);
 
     final route = '/${current.split('/')[3]}';
 
