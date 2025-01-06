@@ -31,7 +31,11 @@ class SelectProjectDropdown extends StatelessWidget {
             ...projects,
             if (role == AccountRole.manager)
               ProjectInfoModel(
-                  name: "Add new project", phaseList: [], projectId: '-1'),
+                name: "Add new project",
+                phaseList: [],
+                projectId: '-1',
+                workflows: [],
+              ),
           ],
           fitScreen: true,
           fitSize: true,

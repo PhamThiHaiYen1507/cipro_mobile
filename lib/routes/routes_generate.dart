@@ -391,6 +391,28 @@ class NotificationSettingsScreenRoute extends GoRouteData {
   }
 }
 
+@immutable
+class ScriptDetailScreenRoute extends GoRouteData {
+  final String workflowId;
+
+  final String projectName;
+
+  const ScriptDetailScreenRoute(
+      {required this.workflowId, required this.projectName});
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return _buildPageWithFadeTransition(
+      context: context,
+      state: state,
+      child: ScriptDetailScreen(
+        projectName: projectName,
+        workflowId: workflowId,
+      ),
+    );
+  }
+}
+
 CustomTransitionPage _buildPageWithFadeTransition<T>({
   required BuildContext context,
   required GoRouterState state,

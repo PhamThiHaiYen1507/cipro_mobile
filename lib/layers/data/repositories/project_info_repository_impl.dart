@@ -177,4 +177,22 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> changeActionStatus(
+      {required String projectName,
+      required String workflowId,
+      required bool status}) async {
+    try {
+      await _client.changeActionStatus({
+        'projectName': projectName,
+        'workflowId': workflowId,
+        'status': status,
+      });
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

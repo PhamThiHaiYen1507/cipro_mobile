@@ -1,6 +1,8 @@
 import 'package:base_project/layers/domain/entities/phase_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'workflow_info_model.dart';
+
 part 'project_info_model.g.dart';
 
 @JsonSerializable()
@@ -21,6 +23,8 @@ class ProjectInfoModel {
 
   final DateTime? updatedAt;
 
+  final List<WorkflowInfoModel> workflows;
+
   ProjectInfoModel({
     required this.projectId,
     this.name,
@@ -30,6 +34,7 @@ class ProjectInfoModel {
     required this.phaseList,
     this.createdAt,
     this.updatedAt,
+    required this.workflows,
   });
 
   factory ProjectInfoModel.fromJson(Map<String, dynamic> json) =>
