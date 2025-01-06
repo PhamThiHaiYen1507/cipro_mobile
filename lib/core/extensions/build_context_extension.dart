@@ -8,10 +8,10 @@ extension BuildContextExtension on BuildContext {
         borderRadius: AppBorderRadius.sm,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.o(0.05),
-            blurRadius: 2,
-            spreadRadius: 1,
-            offset: const Offset(0, 1),
+            color: Colors.black.o(0.1),
+            blurRadius: 4,
+            spreadRadius: 2,
+            offset: const Offset(0, 2),
           ),
         ],
       );

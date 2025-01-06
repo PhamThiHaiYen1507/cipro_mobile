@@ -37,9 +37,9 @@ class _AddMemberButtonState
       onTap: showAddMemberPopup,
       child: Row(
         children: [
-          const Icon(Icons.add, color: AppColors.primaryColor),
+          const Icon(Icons.add, color: AppColors.purple),
           Text('Add member',
-              style: AppTextStyle.f16M.copyWith(color: AppColors.primaryColor)),
+              style: AppTextStyle.f16M.copyWith(color: AppColors.purple)),
         ],
       ),
     );

@@ -29,12 +29,12 @@ class ProjectInfo extends StatelessWidget {
                   'Project details',
                   style: AppTextStyle.f24B,
                 ),
-                AppSpacing.h24,
+                Divider(color: Colors.grey.withOpacity(0.3)),
                 Padding(
                   padding: AppPadding.v8,
                   child: Row(
                     children: [
-                      const Icon(Icons.abc),
+                      const Icon(Icons.abc, color: AppColors.greyColor),
                       AppSpacing.w16,
                       Expanded(
                         child: Column(
@@ -55,7 +55,7 @@ class ProjectInfo extends StatelessWidget {
                   padding: AppPadding.v8,
                   child: Row(
                     children: [
-                      const Icon(Icons.link),
+                      const Icon(Icons.link, color: AppColors.greyColor),
                       AppSpacing.w16,
                       Expanded(
                         child: Column(
@@ -70,7 +70,7 @@ class ProjectInfo extends StatelessWidget {
                                 project?.url ?? '',
                                 style: AppTextStyle.f14R.copyWith(
                                   decoration: TextDecoration.underline,
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.purple,
                                 ),
                               ),
                             )
@@ -84,7 +84,8 @@ class ProjectInfo extends StatelessWidget {
                   padding: AppPadding.v8,
                   child: Row(
                     children: [
-                      const Icon(Icons.power_settings_new_rounded),
+                      const Icon(Icons.power_settings_new_rounded,
+                          color: AppColors.greyColor),
                       AppSpacing.w16,
                       Expanded(
                         child: Column(
@@ -106,7 +107,7 @@ class ProjectInfo extends StatelessWidget {
                   padding: AppPadding.v8,
                   child: Row(
                     children: [
-                      const Icon(Icons.access_time),
+                      const Icon(Icons.access_time, color: AppColors.greyColor),
                       AppSpacing.w16,
                       Expanded(
                         child: Column(
@@ -131,7 +132,7 @@ class ProjectInfo extends StatelessWidget {
                   padding: AppPadding.v8,
                   child: Row(
                     children: [
-                      const Icon(Icons.access_time),
+                      const Icon(Icons.access_time, color: AppColors.greyColor),
                       AppSpacing.w16,
                       Expanded(
                         child: Column(
