@@ -21,4 +21,8 @@ abstract class _DashboardScriptControllerBase with Store {
       status: status,
     );
   }
+
+  Future<void> syncWorkflowInfo(String projectName) async {
+    await _projectInfoRepository.syncWorkflowsInfo(projectName);
+  }
 }

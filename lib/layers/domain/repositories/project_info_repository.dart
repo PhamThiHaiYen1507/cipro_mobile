@@ -50,4 +50,6 @@ abstract class ProjectInfoRepository {
     required String projectName,
     required String accountId,
   });
+
+  Future<ApiResponseData<bool>> syncWorkflowsInfo(String projectName);
 }

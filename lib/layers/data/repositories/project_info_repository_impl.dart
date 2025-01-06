@@ -209,4 +209,15 @@ class ProjectInfoRepositoryImpl implements ProjectInfoRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> syncWorkflowsInfo(String projectName) async {
+    try {
+      _client.syncGithubWorkflows(projectName);
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

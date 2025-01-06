@@ -219,4 +219,9 @@ abstract class ApiClient {
     @Path('memberId') String memberId,
     @Path('taskId') String taskId,
   );
+
+  @GET('/thirdParty/github/workflows')
+  Future<BaseResponse> syncGithubWorkflows(
+    @Query('projectName') String projectName,
+  );
 }

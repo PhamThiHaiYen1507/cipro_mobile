@@ -82,11 +82,26 @@ class _DashboardScriptScreenState
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Workflow in project', style: AppTextStyle.f18B),
+                  const Expanded(
+                    child:
+                        Text('Workflow in project', style: AppTextStyle.f18B),
+                  ),
                   IconButton(
                     onPressed: toolTipController.toggle,
                     icon: const Icon(Icons.settings_suggest_sharp),
                   ),
+                  ProjectBuilder(
+                      projectName: widget.projectName,
+                      builder: (c, _) {
+                        return IconButton(
+                          onPressed: () => controller
+                              .syncWorkflowInfo(widget.projectName)
+                              .then((value) async {
+                            c.getProjectInfo();
+                          }),
+                          icon: const Icon(Icons.refresh_rounded),
+                        );
+                      })
                 ],
               ),
             ),
