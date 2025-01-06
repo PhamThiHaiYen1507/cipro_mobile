@@ -32,7 +32,7 @@ class DashboardPhaseScreen extends StatelessWidget {
           return Container(
             color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
-            child: Text('Name'.toUpperCase()),
+            child: Text('Name'.toUpperCase(), style: AppTextStyle.f14B),
           );
         },
         cellBuilder: (context, data, index) =>
@@ -44,7 +44,7 @@ class DashboardPhaseScreen extends StatelessWidget {
           return Container(
             color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
-            child: Text('Description'.toUpperCase()),
+            child: Text('Description'.toUpperCase(), style: AppTextStyle.f14B),
           );
         },
         cellBuilder: (context, data, index) =>
@@ -56,7 +56,7 @@ class DashboardPhaseScreen extends StatelessWidget {
           return Container(
             color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
-            child: Text('Task'.toUpperCase()),
+            child: Text('Task'.toUpperCase(), style: AppTextStyle.f14B),
           );
         },
         cellBuilder: (context, data, index) =>
@@ -68,7 +68,7 @@ class DashboardPhaseScreen extends StatelessWidget {
           return Container(
             color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
-            child: Text('Artifact'.toUpperCase()),
+            child: Text('Artifact'.toUpperCase(), style: AppTextStyle.f14B),
           );
         },
         cellBuilder: (context, data, index) =>
@@ -80,7 +80,7 @@ class DashboardPhaseScreen extends StatelessWidget {
           return Container(
             color: AppColors.greyColor.o(0.2),
             alignment: Alignment.center,
-            child: Text('Detail'.toUpperCase()),
+            child: Text('Detail'.toUpperCase(), style: AppTextStyle.f14B),
           );
         },
         cellBuilder: (context, data, index) => IconButton(
@@ -176,16 +176,17 @@ class DashboardPhaseScreen extends StatelessWidget {
                         animationDuration: const Duration(milliseconds: 800),
                         chartLegendSpacing: 16,
                         chartRadius: MediaQuery.of(context).size.width / 3.2,
-                        colorList: const [Colors.purple, Colors.green],
+                        colorList: const [AppColors.purple, Colors.green],
                         initialAngleInDegree: -90,
                         chartType: ChartType.ring,
                         ringStrokeWidth: 24,
-                        legendOptions: const LegendOptions(
+                        legendOptions: LegendOptions(
                           legendPosition: LegendPosition.bottom,
                           showLegends: true,
                           legendShape: BoxShape.circle,
                           showLegendsInRow: true,
-                          legendTextStyle: AppTextStyle.f14M,
+                          legendTextStyle: AppTextStyle.f14M
+                              .copyWith(color: AppColors.unselectLabelColor),
                         ),
                         chartValuesOptions: const ChartValuesOptions(
                           showChartValueBackground: false,
@@ -213,6 +214,7 @@ class DashboardPhaseScreen extends StatelessWidget {
                       style: AppTextStyle.f24B,
                     ),
                   ),
+                  AppSpacing.h16,
                   ...project.phaseList.map(
                     (e) {
                       if (e.tasks.isEmpty) return const SizedBox();
@@ -223,7 +225,9 @@ class DashboardPhaseScreen extends StatelessWidget {
 
                       return Row(
                         children: [
-                          Text(e.name ?? ''),
+                          Text(e.name ?? '',
+                              style: AppTextStyle.f18B
+                                  .copyWith(color: AppColors.errorColor)),
                           AppSpacing.w16,
                           Expanded(
                               flex: totalCompletedTasks,
@@ -256,7 +260,7 @@ class DashboardPhaseScreen extends StatelessWidget {
                                   .length,
                               child: Container(
                                 height: 38,
-                                color: Colors.transparent,
+                                color: Colors.grey.shade200,
                               )),
                         ],
                       );

@@ -142,8 +142,9 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                                     padding: AppPadding.v8,
                                     child: Row(
                                       children: [
-                                        const Icon(Icons.account_circle,
-                                            color: AppColors.greyColor),
+                                        const Icon(
+                                          Icons.account_circle,
+                                        ),
                                         AppSpacing.a8,
                                         Expanded(
                                           child: TextMarqueeWidget(
