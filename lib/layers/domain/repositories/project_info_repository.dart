@@ -45,4 +45,9 @@ abstract class ProjectInfoRepository {
     required String workflowId,
     required bool status,
   });
+
+  Future<ApiResponseData<bool>> removeMemberFromProject({
+    required String projectName,
+    required String accountId,
+  });
 }

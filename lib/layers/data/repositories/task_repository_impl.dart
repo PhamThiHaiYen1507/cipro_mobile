@@ -96,4 +96,16 @@ class TaskRepositoryImpl implements TaskRepository {
       return Left(e.handlerApiException(stackTrace));
     }
   }
+
+  @override
+  Future<ApiResponseData<bool>> assignTask(
+      {required String taskId, required String memberId}) async {
+    try {
+      await _client.assignTask(memberId, taskId);
+
+      return const Right(true);
+    } on Exception catch (e, stackTrace) {
+      return Left(e.handlerApiException(stackTrace));
+    }
+  }
 }

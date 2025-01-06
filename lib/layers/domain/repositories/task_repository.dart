@@ -30,4 +30,9 @@ abstract class TaskRepository {
     required String taskId,
     required bool active,
   });
+
+  Future<ApiResponseData<bool>> assignTask({
+    required String taskId,
+    required String memberId,
+  });
 }

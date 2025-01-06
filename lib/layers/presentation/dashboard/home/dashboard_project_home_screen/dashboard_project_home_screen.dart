@@ -116,8 +116,12 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                           children: members
                               .map(
                                 (e) => InkWell(
-                                  onTap: () => MemberInfoScreenRoute(e.memberId)
-                                      .push(context),
+                                  onTap: () => MemberInfoScreenRoute(
+                                    e.memberId,
+                                    projectName,
+                                  )
+                                      .push(context)
+                                      .then((value) => c.getProjectMembers()),
                                   child: Padding(
                                     padding: AppPadding.v8,
                                     child: Row(

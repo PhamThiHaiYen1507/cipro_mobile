@@ -207,4 +207,16 @@ abstract class ApiClient {
 
   @PUT('/thirdParty/github/workflows/status')
   Future<BaseResponse> changeActionStatus(@Body() Map<String, dynamic> body);
+
+  @DELETE('/project/{projectName}/member')
+  Future<BaseResponse> removeMemberFromProject(
+    @Path('projectName') String projectName,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @PATCH('/user/{memberId}/assign/{taskId}')
+  Future<BaseResponse> assignTask(
+    @Path('memberId') String memberId,
+    @Path('taskId') String taskId,
+  );
 }
