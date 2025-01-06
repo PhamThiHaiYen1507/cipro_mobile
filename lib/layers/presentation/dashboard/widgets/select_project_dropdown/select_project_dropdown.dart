@@ -46,11 +46,13 @@ class SelectProjectDropdown extends StatelessWidget {
                   item.projectId != '-1'
                       ? const Icon(Icons.event_note)
                       : const Icon(Icons.add),
+                  const SizedBox(width: 8),
                   Expanded(
                       child: TextMarqueeWidget(
                     child: Text(
                       item.name ?? '',
                       maxLines: 1,
+                      style: const TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ))

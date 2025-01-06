@@ -28,7 +28,7 @@ class ImportProjectDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'Import project from Github/Gitlab',
+              'Import project from Github',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),

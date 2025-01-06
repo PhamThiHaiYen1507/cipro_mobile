@@ -1,3 +1,4 @@
+import 'package:base_project/utils/helpers/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextStyle {
@@ -32,8 +33,10 @@ class AppTextStyle {
       TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600);
 
   /// Bold - fontSize: 24.0, fontWeight: FontWeight.w700
-  static const TextStyle f24B =
-      TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700);
+  static const TextStyle f24B = TextStyle(
+      fontSize: 24.0,
+      fontWeight: FontWeight.w700,
+      color: AppColors.primaryColor);
 
   // fontSize 20
   /// Regular - fontSize: 20.0, fontWeight: FontWeight.w400

@@ -19,7 +19,7 @@ class DashboardOverviewScreen extends StatelessWidget {
           child: Padding(
             padding: AppPadding.a24,
             child: Text(
-              'Import your projects from Gitlab or Github using the project selection on the topbar. If you are a member, ask your manager to add you to any project to start.',
+              'Import your projects from Github using the project selection on the topbar. If you are a member, ask your manager to add you to any project to start.',
               style: AppTextStyle.f24B,
               textAlign: TextAlign.center,
             ),

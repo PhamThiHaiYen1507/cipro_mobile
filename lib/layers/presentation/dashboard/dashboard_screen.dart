@@ -8,7 +8,6 @@ import 'package:base_project/utils/app_dialog/app_dialog.dart';
 import 'package:base_project/utils/enum/account_role.dart';
 import 'package:base_project/utils/enum/bottom_navigation_type.dart';
 import 'package:base_project/utils/enum/notification_type.dart';
-import 'package:base_project/utils/helpers/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
@@ -52,8 +51,6 @@ class _DashboardScreenState
           leadingWidth: 0,
           title: Row(
             children: [
-              const Text('Dashboard'),
-              AppSpacing.w16,
               if (widget.role != AccountRole.admin)
                 Expanded(
                   child: Observer(
@@ -112,8 +109,12 @@ class _DashboardScreenState
           onTap: (i) =>
               context.go(controller.dashboardRoute(widget.navItems[i].route)),
           type: BottomNavigationBarType.shifting,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.indigo,
+          unselectedItemColor: Colors.black,
+          selectedFontSize: 14,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+          iconSize: 28,
           items: widget.navItems
               .map((e) => BottomNavigationBarItem(
                     icon: Icon(e.icon),

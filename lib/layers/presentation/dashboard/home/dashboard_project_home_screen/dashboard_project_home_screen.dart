@@ -43,7 +43,7 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                       TextMarqueeWidget(
                         child: Text(
                           'Total commits'.toUpperCase(),
-                          style: AppTextStyle.f16B,
+                          style: AppTextStyle.f14B.copyWith(color: Colors.red),
                         ),
                       ),
                       ProjectActivityBuilder(
@@ -52,9 +52,18 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                           final commits = activities
                               .where((element) => element.action == 'commit')
                               .toList();
-                          return Text(
-                            Utils.formatNumber(commits.length),
-                            style: AppTextStyle.f32B,
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.commit_outlined,
+                                  color: Colors.red, size: 32),
+                              const SizedBox(width: 8),
+                              Text(
+                                Utils.formatNumber(commits.length),
+                                style: AppTextStyle.f32B
+                                    .copyWith(color: Colors.red),
+                              ),
+                            ],
                           );
                         },
                       )
@@ -74,7 +83,8 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                         child: TextMarqueeWidget(
                           child: Text(
                             'Total pull requests'.toUpperCase(),
-                            style: AppTextStyle.f16B,
+                            style:
+                                AppTextStyle.f14B.copyWith(color: Colors.green),
                           ),
                         ),
                       ),
@@ -84,9 +94,18 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                           final pullRequests = activities
                               .where((element) => element.action == 'pr')
                               .toList();
-                          return Text(
-                            Utils.formatNumber(pullRequests.length),
-                            style: AppTextStyle.f32B,
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.arrow_circle_right_outlined,
+                                  color: Colors.green, size: 32),
+                              const SizedBox(width: 8),
+                              Text(
+                                Utils.formatNumber(pullRequests.length),
+                                style: AppTextStyle.f32B
+                                    .copyWith(color: Colors.green),
+                              ),
+                            ],
                           );
                         },
                       )
@@ -107,11 +126,12 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Members',
-                          style: AppTextStyle.f24B,
+                          style: AppTextStyle.f24B
+                              .copyWith(color: AppColors.primaryColor),
                         ),
-                        AppSpacing.h16,
+                        Divider(color: Colors.grey.withOpacity(0.3)),
                         Column(
                           children: members
                               .map(
@@ -122,15 +142,14 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                                     padding: AppPadding.v8,
                                     child: Row(
                                       children: [
-                                        const Icon(Icons.account_circle),
+                                        const Icon(Icons.account_circle,
+                                            color: AppColors.greyColor),
                                         AppSpacing.a8,
                                         Expanded(
                                           child: TextMarqueeWidget(
                                             child: Text(
                                               '${e.account?.username} (${e.name})',
-                                              style: AppTextStyle.f16M.copyWith(
-                                                  color:
-                                                      AppColors.primaryColor),
+                                              style: AppTextStyle.f16R,
                                             ),
                                           ),
                                         )
@@ -214,20 +233,22 @@ class DashboardProjectHomeScreen extends StatelessWidget {
                                 x: i,
                                 barRods: [
                                   BarChartRodData(
+                                    width: 16,
                                     toY: e.value
                                         .where(
                                             (element) => element.action == 'pr')
                                         .length
                                         .toDouble(),
-                                    color: AppColors.primaryColor.o(0.4),
+                                    color: AppColors.purple.o(0.4),
                                   ),
                                   BarChartRodData(
+                                    width: 16,
                                     toY: e.value
                                         .where((element) =>
                                             element.action == 'commit')
                                         .length
                                         .toDouble(),
-                                    color: AppColors.primaryColor,
+                                    color: AppColors.purple,
                                   ),
                                 ],
                               );
